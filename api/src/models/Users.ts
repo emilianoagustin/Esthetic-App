@@ -28,7 +28,7 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    asignated: {
+    asigned: {
       type: Date,
       required: true,
     },
