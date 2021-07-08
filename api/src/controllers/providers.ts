@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import Providers from "../models/Providers";
 
-const getAllProviders: RequestHandler = async (req, res) => {
+export const getAllProviders: RequestHandler = async (req, res) => {
   try {
     const prov = await Providers.find();
     return res.send(prov);
@@ -9,8 +9,8 @@ const getAllProviders: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
-const getProviderByName: RequestHandler = async (req, res) => {
-  const { name } = req.body;
+export const getProviderByName: RequestHandler = async (req, res) => {
+  const { name } = req.query;
   try {
     const foundProv = await Providers.findOne(name);
     if (foundProv) return res.send(foundProv);
@@ -21,7 +21,7 @@ const getProviderByName: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
-const getProviderById: RequestHandler = async (req, res) => {
+export const getProviderById: RequestHandler = async (req, res) => {
   const { id } = req.params;
   try {
     const foundProv = await Providers.findById(id);
@@ -33,7 +33,7 @@ const getProviderById: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
-const createProvider: RequestHandler = async (req, res) => {
+export const createProvider: RequestHandler = async (req, res) => {
   //   const { image, firstName, lastName, document, email, cellphone, password } =
   //     req.body;
   const { document, email } = req.body;
@@ -59,8 +59,8 @@ const createProvider: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
-// const updateProvider: RequestHandler = async (req, res) => {};
-// const deleteProvider: RequestHandler = async (req, res) => {};
+// export const updateProvider: RequestHandler = async (req, res) => {};
+// export const deleteProvider: RequestHandler = async (req, res) => {};
 
 // export const updateUser: RequestHandler = async (req, res) => {
 //   const userUpdate = await Users.findByIdAndUpdate(req.params.id, req.body, {
@@ -76,11 +76,11 @@ const createProvider: RequestHandler = async (req, res) => {
 //   return res.json();
 // };
 
-module.exports = {
-  getAllProviders,
-  getProviderById,
-  getProviderByName,
-  createProvider,
-  //   updateProvider,
-  //   deleteProvider,
-};
+// module.exports = {
+//   getAllProviders,
+//   getProviderById,
+//   getProviderByName,
+//   createProvider,
+//     updateProvider,
+//     deleteProvider,
+// };
