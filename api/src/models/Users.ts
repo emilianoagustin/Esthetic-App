@@ -15,17 +15,17 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    dni: {
-      type: Number,
-      required: true,
-      trim: true,
-      unique: true, // con el fin de que no deje crear otro usuario con el mismo dni o cc segun el pais
-    },
     email: {
       type: String,
       required: true,
       trim: true,
       unique: true,
+      // validate: {
+      //   validator: function (v: string) {
+      //     return /\S@\S.\mail.\S/.test(v);
+      //   },
+      //   message: 'Por favor ingresar un email válido',
+      // },
     },
     phone: {
       type: Number,
@@ -39,13 +39,20 @@ const UserSchema = new Schema(
     },
     asignated: {
       type: Date,
-      required: true,
+      required: false,
     },
+    // services: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'services',
+    //     autopopulate: true,
+    //   },
+    // ],
   },
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
 
-UserSchema.methods.setPicture = function setPicture() {};
+UserSchema.plugin(require('mongoose-autopopulate')); // codigo para usar mongoose autopopulate
 
 export default model('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema

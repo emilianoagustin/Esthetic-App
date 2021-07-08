@@ -22,7 +22,7 @@ export const getUser: RequestHandler = async (req, res) => {
 };
 
 export const createUser: RequestHandler = async (req, res) => {
-  const userFound = await Users.findOne({ dni: req.body.dni }); // busco en la db
+  const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
   if (userFound)
     return res.status(301).json({ message: 'The user alredy exists' });
 
@@ -38,6 +38,28 @@ export const updateUser: RequestHandler = async (req, res) => {
   if (!userUpdate) return res.status(204).json();
   return res.json(userUpdate);
 };
+
+// export const assignService: RequestHandler = async (req, res) => {
+//   const userWithService = await Users.findByIdAndUpdate(
+//     req.params.id,
+//     { $push: { services: req.body } },
+//     {
+//       new: true,
+//     }
+//   );
+//   return res.json(userWithService);
+// };
+
+// export const removeService: RequestHandler = async (req, res) => {
+//   const userWithService = await Users.findByIdAndUpdate(
+//     req.params.id,
+//     { $pull: { services: req.body } },
+//     {
+//       new: true,
+//     }
+//   );
+//   return res.json(userWithService);
+// };
 
 export const deleteUser: RequestHandler = async (req, res) => {
   const userDelete = await Users.findByIdAndDelete(req.params.id);
