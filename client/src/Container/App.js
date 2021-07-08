@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Header from '../components/Header/Header'
 import Login from '../components/Login/Login'
 import UserRegister from '../components/UserRegister/UserRegister'
