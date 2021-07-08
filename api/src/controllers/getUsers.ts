@@ -14,7 +14,8 @@ export const getUser: RequestHandler = async (req, res) => {
   // para traer un solo usuario
   try {
     const userFound = await Users.findById(req.params.id);
-    if (!userFound) return res.json(404).json({ message: 'not exist user' });
+    if (!userFound)
+      return res.json(404).json({ message: 'El usuario no existe' });
     return res.json(userFound);
   } catch (error) {
     res.json(error);

@@ -1,4 +1,11 @@
-import React from 'react';
+
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
+import { useInput } from "../../hooks/customHooks";
+import { UserContext } from "../../index";
+import { log, success, error } from "../../utils/logs";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +19,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { InputLabel } from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -49,6 +56,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const { setUser } = useContext(UserContext);
+  const history = useHistory();
+  const email = useInput("email");
+  const password = useInput("password");
+  const firstName = useInput("firstName");
+  const lastName = useInput("lastName");
+  const cellphone = useInput("cellphone");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    log("intento de logeo");
+    try {
+      // posteo de user
+      const { data } = await axios.post("http://localhost:3001/users", {
+        email: email.value,
+        password: password.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        cellphone: cellphone.value,
+
+      });
+      // seteo de estado
+      setUser(data);
+      success(`logged user ${data.email}`);
+      // redirect home
+      history.push("/home");
+    } catch ({ response }) {
+      // algo no esta.
+      error(response);
+    }
+};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,7 +98,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -72,6 +110,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                {...firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,7 +121,8 @@ export default function SignUp() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="lname"
+                autoComplete="lastname"
+                {...lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,6 +134,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                {...email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,6 +147,22 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                {...password}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+               error={cellphone.value.split("").length > 10}
+                variant="outlined"
+                required
+                fullWidth
+                name="cellphone"
+                label="Cellphone"
+                type="number"
+                id="cellphone"
+                autoComplete="cellphone"
+                inputProps={{ maxlength: 10 }}
+                {...cellphone}
               />
             </Grid>
             <Grid item xs={12}>

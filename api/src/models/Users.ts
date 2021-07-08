@@ -37,18 +37,15 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    asignated: {
-      type: Date,
-      required: false,
-    },
-    // services: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'services',
-    //     autopopulate: true,
-    //   },
-    // ],
+    events: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Events',
+        autopopulate: true,
+      },
+    ],
   },
+
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
