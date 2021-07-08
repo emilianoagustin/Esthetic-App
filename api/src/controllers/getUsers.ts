@@ -24,7 +24,7 @@ export const getUser: RequestHandler = async (req, res) => {
 export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ dni: req.body.dni }); // busco en la db
   if (userFound)
-    return res.status(301).json({ nessage: 'The user alredy exists' });
+    return res.status(301).json({ message: 'The user alredy exists' });
 
   const newUser = new Users(req.body);
   const savedUser = await newUser.save();
