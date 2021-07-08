@@ -1,11 +1,20 @@
 import React from 'react';
 import './App.css';
+import Header from '../Header/Header'
+import Login from '../Login/Login'
+import { Route } from "react-router-dom";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="">
-      
-    </div>
+   <React.Fragment>
+     
+   
+    <Route path={["/login", "/home"]} component={Header} />
+    <Route path="/login" exact component={Login} />
+   
+   </React.Fragment>
+
   );
 }
 
