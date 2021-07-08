@@ -1,48 +1,36 @@
 import { Schema, model } from "mongoose";
 
-const Providors = new Schema(
+const ProvidersSchema = new Schema(
   {
     image: {
-      type: Buffer,
-      required: true,
+      data: Buffer,
+      contentType: String,
     },
     firstName: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     lastName: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
-    },
-    document: {
-      type: Number,
-      required: true,
-      trim: true,
-      unique: true,
     },
     email: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
-      validate: {
-        validator: function (v: string) {
-          return /\S@\S.\mail.\S/.test(v);
-        },
-        message: "Por favor ingresar un email válido",
-      },
     },
     cellphone: {
-      type: String,
-      required: true,
+      type: Number,
+      // required: true,
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   { versionKey: false, timestamps: true }
 );
 
-export default model("Providors", Providors);
+export default model("Providers", ProvidersSchema);

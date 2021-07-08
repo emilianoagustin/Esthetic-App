@@ -12,12 +12,6 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    document: {
-      type: Number,
-      required: true,
-      trim: true,
-      unique: true, // con el fin de que no deje crear otro usuario con el mismo dni o cc segun el pais
-    },
     password: {
       type: String,
       required: true,

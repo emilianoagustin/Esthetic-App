@@ -12,7 +12,7 @@ export const getAllProviders: RequestHandler = async (req, res) => {
 export const getProviderByName: RequestHandler = async (req, res) => {
   const { name } = req.query;
   try {
-    const foundProv = await Providers.findOne(name);
+    const foundProv = await Providers.findOne({ name: name });
     if (foundProv) return res.send(foundProv);
     return res.send(404).send({
       message: `No encontramos ningún proveedor con el nombre ${name}. Lamentamos los inconvenientes`,
@@ -34,29 +34,25 @@ export const getProviderById: RequestHandler = async (req, res) => {
   }
 };
 export const createProvider: RequestHandler = async (req, res) => {
-  //   const { image, firstName, lastName, document, email, cellphone, password } =
-  //     req.body;
-  const { document, email } = req.body;
+  const { email } = req.body;
   try {
-    const validateDocument = await Providers.findOne({ document: document });
     const validateEmail = await Providers.findOne({ email: email });
-    if (validateDocument) {
-      res
-        .status(300)
-        .send({ message: "Lo sentimos. Ese documento ya ha sido registrado" });
-      res.redirect("/login");
-    } else if (validateEmail) {
-      res
+    if (validateEmail) {
+      return res
         .status(300)
         .send({ message: "Lo sentimos. Ese email ya ha sido registrado" });
       res.redirect("/login");
     } else {
+      // validator: function (v: string) {
+      //   return /\S@\S.\mail.\S/.test(v);
+      // },
+      // message: "Por favor ingresar un email válido",
       const provToCreate = new Providers(req.body);
       const newProv = await provToCreate.save();
-      res.send(newProv);
+      return res.status(301).send(newProv);
     }
   } catch (error) {
-    res.send(error);
+    return res.status(400).send(error);
   }
 };
 // export const updateProvider: RequestHandler = async (req, res) => {};
@@ -74,13 +70,4 @@ export const createProvider: RequestHandler = async (req, res) => {
 //   const userDelete = await Users.findByIdAndDelete(req.params.id);
 //   if (!userDelete) return res.status(204).json();
 //   return res.json();
-// };
-
-// module.exports = {
-//   getAllProviders,
-//   getProviderById,
-//   getProviderByName,
-//   createProvider,
-//     updateProvider,
-//     deleteProvider,
 // };
