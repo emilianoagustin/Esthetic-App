@@ -1,0 +1,14 @@
+.service{
+    height: 150px;
+    width: 220px;
+    padding: 25px;
+    margin: 25px;
+    border-radius: 25px;
+
+}
+
+.img{
+    height: 200px;
+    width: 200px;
+    border-radius: 10%;
+}

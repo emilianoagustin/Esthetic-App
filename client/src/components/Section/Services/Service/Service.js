@@ -1,11 +1,13 @@
 import React from "react";
+import "./Service.css";
 
-function Service({data}) {
+function Service({ data }) {
   return (
-    <div>
+    <div className="service">
       <div>
-        <span>{data.title}</span>
+        <img className="img" src={data.img} alt="barberia"></img>
       </div>
+      <span>{data.title}</span>
       <span>{data.price}</span>
       <span>{data.description}</span>
     </div>

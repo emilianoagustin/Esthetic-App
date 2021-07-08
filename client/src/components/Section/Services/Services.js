@@ -7,7 +7,7 @@ import "./Services.css";
 function Services() {
   return (
     <div>
-      <h3>Servicios </h3>
+      <h3 className="title">Servicios </h3>
 
       <div className="services-container">
         {Data.map((s, index) => (
