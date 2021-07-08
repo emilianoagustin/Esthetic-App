@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 
-const DiarySchema = new Schema(
+const CalendarSchema = new Schema(
     {
         eventsHours: {
-            type: Array,
+            type: Array, // ['15:00', '']
             required: true,
         },
         provider: {
@@ -18,4 +18,4 @@ const DiarySchema = new Schema(
     { versionKey: false, timestamps: true }
 );
 
-export default model('Diaries', DiarySchema);
+export default model('Calendar', CalendarSchema);

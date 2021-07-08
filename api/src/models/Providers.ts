@@ -8,26 +8,26 @@ const ProvidersSchema = new Schema(
     },
     firstName: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     lastName: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
     },
     cellphone: {
       type: Number,
-      // required: true,
+      required: true,
     },
     password: {
       type: String,
-      // required: true,
+      required: true,
     },
   },
   { versionKey: false, timestamps: true }

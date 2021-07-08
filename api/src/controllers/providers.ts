@@ -33,27 +33,19 @@ export const getProviderById: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
-export const createProvider: RequestHandler = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const validateEmail = await Providers.findOne({ email: email });
-    if (validateEmail) {
-      return res
-        .status(300)
-        .send({ message: "Lo sentimos. Ese email ya ha sido registrado" });
-      res.redirect("/login");
-    } else {
-      // validator: function (v: string) {
-      //   return /\S@\S.\mail.\S/.test(v);
-      // },
-      // message: "Por favor ingresar un email válido",
-      const provToCreate = new Providers(req.body);
-      const newProv = await provToCreate.save();
-      return res.status(301).send(newProv);
-    }
-  } catch (error) {
-    return res.status(400).send(error);
-  }
+export const createProvider: RequestHandler = (req, res) => {
+  const newProvider = new Providers(req.body);
+  newProvider.save()
+    .then((result: any) => {
+      return res.status(200).send(result);
+    })
+    .catch(() => {
+      return res.status(400).send({ message: "Lo sentimos. Ese email ya ha sido registrado" });
+    })
+  // validator: function (v: string) {
+  //   return /\S@\S.\mail.\S/.test(v);
+  // },
+  // message: "Por favor ingresar un email válido",
 };
 // export const updateProvider: RequestHandler = async (req, res) => {};
 // export const deleteProvider: RequestHandler = async (req, res) => {};

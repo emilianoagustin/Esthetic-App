@@ -16,7 +16,7 @@ const ServiceSchema = new Schema(
             type: String
         },
     },
-    { versionKey: false, timestamps: true }
+    { timestamps: true }
 );
 
 export default model('Services', ServiceSchema);

@@ -30,12 +30,16 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-    }
+    },
+    events: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Events'
+    }]
   },
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
 
-UserSchema.methods.setPicture = function setPicture() {};
+UserSchema.methods.setPicture = function setPicture() { };
 
 export default model('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema
