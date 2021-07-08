@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { CreateCalendar } from "../controllers/calendar";
 // import * as ctrlProv from "../controllers/providers";
 import {
   getAllProviders,
@@ -16,4 +17,9 @@ router.get("/:id", getProviderById);
 router.post("/", createProvider);
 // router.delete("/:id", deleteProvider);
 // router.put("/:id", updateProvider);
+
+//Calendar Routes
+
+router.post("/calendar", CreateCalendar);
+
 export default router;
