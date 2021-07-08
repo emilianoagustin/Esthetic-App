@@ -20,7 +20,6 @@ const ServiceSchema = new Schema(
         description: {
             type: String
         },
-
     },
     { versionKey: false, timestamps: true }
 );
