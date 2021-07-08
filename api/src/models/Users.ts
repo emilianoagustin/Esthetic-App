@@ -30,11 +30,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-    },
-    asignated: {
-      type: Date,
-      required: true,
-    },
+    }
   },
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
