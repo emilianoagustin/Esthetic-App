@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { SERVICES_TYPES } from '../utils/constants';
 
 const ServiceSchema = new Schema(
     {
@@ -10,9 +9,9 @@ const ServiceSchema = new Schema(
         },
         name: {
             type: String,
-            enum: SERVICES_TYPES,
             trim: true,
-            required: true
+            required: true,
+            unique: true
         },
         price: {
             type: Number,
@@ -21,7 +20,6 @@ const ServiceSchema = new Schema(
         description: {
             type: String
         },
-
     },
     { versionKey: false, timestamps: true }
 );

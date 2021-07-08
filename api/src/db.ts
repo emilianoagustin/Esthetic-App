@@ -11,7 +11,7 @@ import config from './config';
       //   password: config.MONGO_PASSWORD
     };
     const db = await mongoose.connect(
-      `mongodb://${config.MONGO_HOST}/${config.MONGO_DATABASE}`,
+      `mongodb://${config.MONGO_HOST}:27017/${config.MONGO_DATABASE}`,
       mongooseOptions
     );
     console.log('database is connected to:', db.connection.name);

@@ -2,6 +2,9 @@ import { Schema, model } from 'mongoose';
 
 const UserSchema = new Schema(
   {
+    picture: {
+      type: String,
+    },
     firstName: {
       type: String,
       required: true,
@@ -12,23 +15,27 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
     password: {
       type: String,
       required: true,
       trim: true,
-    },
-    type: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    asigned: {
-      type: Date,
-      required: true,
-    },
+    }
   },
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
+
+UserSchema.methods.setPicture = function setPicture() {};
 
 export default model('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema
