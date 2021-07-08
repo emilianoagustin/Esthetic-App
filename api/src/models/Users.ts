@@ -37,11 +37,6 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    type: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     asignated: {
       type: Date,
       required: true,
