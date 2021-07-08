@@ -14,7 +14,7 @@ export const getUser: RequestHandler = async (req, res) => {
   // para traer un solo usuario
   try {
     const userFound = await Users.findById(req.params.id);
-    if (!userFound) return res.json(404).json({ message: 'not exist user' });
+    if (!userFound) return res.json(404).json({ message: 'El usuario no existe' });
     return res.json(userFound);
   } catch (error) {
     res.json(error);
@@ -23,8 +23,9 @@ export const getUser: RequestHandler = async (req, res) => {
 
 export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ dni: req.body.dni }); // busco en la db
-  if (userFound)
-    return res.status(301).json({ message: 'The user alredy exists' });
+  if (userFound) {
+    return res.status(301).json({ message: 'Este usuario ya existe' });
+  }
 
   const newUser = new Users(req.body);
   const savedUser = await newUser.save();
