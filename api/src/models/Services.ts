@@ -2,11 +2,6 @@ import { Schema, model } from 'mongoose';
 
 const ServiceSchema = new Schema(
     {
-        id: {
-            type: Number,
-            index: true,
-            unique: true
-        },
         name: {
             type: String,
             trim: true,
