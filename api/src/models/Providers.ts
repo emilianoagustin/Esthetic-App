@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const ProvidersSchema = new Schema(
   {
@@ -33,4 +33,6 @@ const ProvidersSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-export default model("Providers", ProvidersSchema);
+// ProvidersSchema.plugin(require('mongoose-autopopulate'));
+
+export default model('Providers', ProvidersSchema);
