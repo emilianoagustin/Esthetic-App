@@ -4,7 +4,7 @@ import barberia from "../../../img/Barberia.jpg"
 export const Data = [
   {
     img: barberia,
-    title: "Baberia",
+    title: "Barberia",
     price: "$400",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",

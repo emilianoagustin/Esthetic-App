@@ -7,9 +7,9 @@ function Service({ data }) {
       <div>
         <img className="img" src={data.img} alt="barberia"></img>
       </div>
-      <span>{data.title}</span>
+      <span className="service-title">{data.title}</span>
       <span>{data.price}</span>
-      <span>{data.description}</span>
+      <span className="service-desciption">{data.description}</span>
     </div>
   );
 }
