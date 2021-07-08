@@ -21,7 +21,7 @@ const ProvidersSchema = new Schema(
       required: true,
       unique: true,
     },
-    cellphone: {
+    cellPhone: {
       type: Number,
       required: true,
     },
@@ -29,6 +29,10 @@ const ProvidersSchema = new Schema(
       type: String,
       required: true,
     },
+    hasCalendar: {
+      type: Boolean,
+      default: false
+    }
   },
   { versionKey: false, timestamps: true }
 );
