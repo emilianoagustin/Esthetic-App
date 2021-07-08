@@ -12,7 +12,7 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    dni: {
+    document: {
       type: Number,
       required: true,
       trim: true,
