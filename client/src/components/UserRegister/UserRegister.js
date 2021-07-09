@@ -63,6 +63,8 @@ export default function SignUp() {
   const firstName = useInput("firstName");
   const lastName = useInput("lastName");
   const cellphone = useInput("cellphone");
+  const file = useInput('file')
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +77,7 @@ export default function SignUp() {
         firstName: firstName.value,
         lastName: lastName.value,
         phone: cellphone.value,
+        picture: file.value,
       });
       // seteo de estado
       setUser(data);
@@ -163,7 +166,20 @@ export default function SignUp() {
                 inputProps={{ maxLength: 10 }}
                 {...cellphone}
               />
-            </Grid>
+               </Grid>
+               <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="file"
+                type="file"
+                id="file"
+                autoComplete="file"
+                {...file}
+              /> 
+              </Grid>
+          
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
