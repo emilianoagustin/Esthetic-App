@@ -35,12 +35,13 @@ const ProvidersSchema = new Schema(
     },
     services: [{
       type: Schema.Types.ObjectId,
-      ref: 'Services'
+      ref: 'Services',
+      autopopulate: true
     }]
   },
   { versionKey: false, timestamps: true }
 );
 
-// ProvidersSchema.plugin(require('mongoose-autopopulate'));
+ProvidersSchema.plugin(require('mongoose-autopopulate'));
 
 export default model('Providers', ProvidersSchema);
