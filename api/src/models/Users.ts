@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
@@ -14,6 +14,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Non-binary"],
     },
     email: {
       type: String,
@@ -34,7 +38,7 @@ const UserSchema = new Schema(
     events: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Events',
+        ref: "Events",
       },
     ],
   },
@@ -43,6 +47,6 @@ const UserSchema = new Schema(
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
 
-UserSchema.plugin(require('mongoose-autopopulate')); // codigo para usar mongoose autopopulate
+UserSchema.plugin(require("mongoose-autopopulate")); // codigo para usar mongoose autopopulate
 
-export default model('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema
+export default model("Users", UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema
