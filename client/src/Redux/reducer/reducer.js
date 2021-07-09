@@ -5,6 +5,7 @@ const initialState = {
     loading: true,
     data: []
   },
+  userActive: false,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -24,6 +25,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { loading: false, error: action.payload },
+      };
+    case actionsTypes.LOGIN_SUCCESSFUL:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        userActive: action.payload.userActive
       };
     default:
       return state;
