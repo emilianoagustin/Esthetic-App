@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -82,19 +81,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const loggin = useSelector((state) => state.userActive);
   console.log(loggin);
 
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
  
   const logeado = [
     <Link to={"/login"} style={{ color: "white", textDecoration: "none" }}>
       <Button color="inherit">INGRESAR</Button>
-    </Link>,
+    </Link>, "|" , 
     <Link
       to={"/userRegister"}
       style={{ color: "white", textDecoration: "none" }}
@@ -138,26 +133,30 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>
           <div style={{ display: "flex", marginRight: "2rem" }}>
+            <div>
+
             <Link
               to={"/zonas"}
               style={{ color: "white", textDecoration: "none" }}
-            >
-              <Button color="inherit">ZONAS</Button>
+              >
+              <Button color="inherit">ZONAS </Button>
             </Link>
+            |
             <Link
               to={"/provaiderRegister"}
               style={{ color: "white", textDecoration: "none" }}
-            >
+              >
               <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
             </Link>
           </div>
 
+              </div>
           <b>
             {!loggin ? (
               logeado
             ) : (
               <Link to= '/Perfil' style={{ color: "white", textDecoration: "none" }}>
-              <MenuItem onClick={handleProfileMenuOpen}>
+              <MenuItem >
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="primary-search-account-menu"
@@ -180,6 +179,8 @@ export default function PrimarySearchAppBar() {
               textDecoration: "none",
               backgroundColor: "gray",
               borderRadius: 50,
+              marginLeft: "1rem",
+              
             }}
           >
             <Button color="inherit">

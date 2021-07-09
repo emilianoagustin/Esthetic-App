@@ -19,6 +19,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -54,16 +56,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const loggin = useSelector((state) => state.userActive);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const email = useInput("email");
   const password = useInput("password");
+  const data = { email: email.value, password: password.value }
+  const { setUser } = useContext(UserContext);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit =  (e) => {
     e.preventDefault();
     log("intento de logeo");
-    dispatch(getUser({ email: email.value, password: password.value }));
+    dispatch(getUser(data));
+    try{ if(loggin){ 
+      
+      setUser(data);
+      success(`logged user ${data.email}`);
+      // redirect home
+      history.push("/home")};
+    } catch ({ response }) {
+      // algo no esta.
+      error(response);
+    }
   };
   /*   console.log(data)
       // seteo de estado

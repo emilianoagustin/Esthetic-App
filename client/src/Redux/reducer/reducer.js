@@ -32,6 +32,12 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userActive: action.payload.userActive
       };
+    case actionsTypes.LOGIN_FAIL:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        error: action.payload
+      };
     default:
       return state;
   }
