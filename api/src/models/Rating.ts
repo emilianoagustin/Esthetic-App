@@ -5,6 +5,7 @@ const RatingSchema = new Schema(
     assessment: {
       type: Number,
       required: true,
+      trim: true,
     },
     Avg_assessment: {
       type: Number,
@@ -16,6 +17,7 @@ const RatingSchema = new Schema(
     comments: {
       type: String,
       required: true,
+      trim: true,
     },
     provider: {
       type: Schema.Types.ObjectId,

@@ -9,6 +9,7 @@ export const getAllProviders: RequestHandler = async (req, res) => {
     res.send(error);
   }
 };
+
 // export const getProviderByName: RequestHandler = async (req, res) => {
 //   const { name } = req.query;
 //   try {
@@ -21,34 +22,36 @@ export const getAllProviders: RequestHandler = async (req, res) => {
 //     res.send(error);
 //   }
 // };
+
 export const getProviderById: RequestHandler = async (req, res) => {
   const { id } = req.params;
   try {
     const foundProv = await Providers.findById(id);
     if (foundProv) return res.send(foundProv);
-    return res.send(404).send({
+    return res.status(404).send({
       message: `Proveedor con id ${id} no encontrado. Lamentamos los inconvenientes`,
     });
   } catch (error) {
     res.send(error);
   }
 };
+
 export const createProvider: RequestHandler = async (req, res) => {
   try {
     const foundProv = await Providers.findOne({ email: req.body.email });
     if (foundProv)
       return res.status(301).send({
         message:
-          "Lo sentimos. Ese email ya ha sido registrado. Recordar contraseña",
+          "Lo sentimos. Ese email ya ha sido registrado. Puedes intentar dirigirte a la sección de 'Login' e ingresar con tu contraseña o crear un nuevo usuario con un email distinto",
       });
     const newProvider = new Providers(req.body);
     newProvider.save();
     return res.status(202).send({
       data: newProvider,
-      message: `Proveedor ${newProvider.firstName} creado satisfactoriamente`,
+      message: `Felicitaciones, ${newProvider.firstName}! Ya eres parte del equipo de Estetic-Aap.`,
     });
   } catch (error: any) {
-    res.status(404).send({
+    res.status(501).send({
       message: "Algo salió mal. Por favor vuelve a intentarlo.",
     });
   }
@@ -58,6 +61,7 @@ export const createProvider: RequestHandler = async (req, res) => {
   // },
   // message: "Por favor ingresar un email válido",
 };
+
 export const updateProvider: RequestHandler = async (req, res) => {
   const updateProv = await Providers.findByIdAndUpdate(
     req.params.id,
@@ -69,6 +73,7 @@ export const updateProvider: RequestHandler = async (req, res) => {
   if (!updateProv) return res.status(202).send();
   return res.send(updateProv);
 };
+
 export const deleteProvider: RequestHandler = async (req, res) => {
   const deleteProv = await Providers.findByIdAndDelete(req.params.id);
   if (!deleteProv) return res.status(202).send();

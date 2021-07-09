@@ -6,22 +6,28 @@ const CreditCardSchema = new Schema(
       type: String,
       enum: ["Visa", "MasterCard", "Amex"],
       required: true,
+      trim: true,
     },
     card_number: {
       type: String,
       required: true,
+      trim: true,
+      unique: true,
     },
     card_holder: {
       type: String,
       required: true,
+      trim: true,
     },
     exp_date: {
       type: String,
       required: true,
+      trim: true,
     },
     verif_code: {
       type: String,
       required: true,
+      trim: true,
     },
     is_main: {
       type: Boolean,

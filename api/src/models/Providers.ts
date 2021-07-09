@@ -3,8 +3,7 @@ import { Schema, model } from "mongoose";
 const ProvidersSchema = new Schema(
   {
     image: {
-      data: Buffer,
-      contentType: String,
+      type: String,
     },
     firstName: {
       type: String,
@@ -25,7 +24,7 @@ const ProvidersSchema = new Schema(
       required: true,
       unique: true,
     },
-    cellPhone: {
+    phone: {
       type: Number,
       required: true,
     },
