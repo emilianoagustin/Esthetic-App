@@ -15,10 +15,12 @@ const ServiceSchema = new Schema(
     description: {
       type: String,
     },
+    events: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Events'
+    }]
   },
   { timestamps: true }
 );
-
-ServiceSchema.plugin(require('mongoose-autopopulate'));
 
 export default model('Services', ServiceSchema);
