@@ -18,6 +18,10 @@ const ServiceSchema = new Schema(
     events: [{
       type: Schema.Types.ObjectId,
       ref: 'Events'
+    }],
+    providers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Providers'
     }]
   },
   { versionKey: false, timestamps: true }

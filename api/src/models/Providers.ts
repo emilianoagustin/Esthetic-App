@@ -32,7 +32,11 @@ const ProvidersSchema = new Schema(
     hasCalendar: {
       type: Boolean,
       default: false
-    }
+    },
+    services: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Services'
+    }]
   },
   { versionKey: false, timestamps: true }
 );
