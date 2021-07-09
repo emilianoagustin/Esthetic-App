@@ -1,59 +1,3 @@
-/* import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: "violet",
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    color:"black",
-    
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root} >
-      <AppBar position="static" style={{backgroundColor:"#FFF5DE"}}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-          
-          </Typography>
-          <Link to={"/login"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit">Login</Button>
-          </Link>
-          <Link to={"/register"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit">Register</Button>
-          </Link>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
- */
-
 import React from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -72,7 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import loto from '../../img/loto.png'
-import { RiShoppingCartLine } from 'react-icons/ri';
+import { BiShoppingBag } from 'react-icons/bi'; 
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -89,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: 20,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -220,7 +164,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor: "#c0b3c2"}}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -228,7 +172,7 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+         
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
           <Link to={"/home"} style={{textDecoration:'none' }}>
@@ -236,11 +180,11 @@ export default function PrimarySearchAppBar() {
             </Link>
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
+            <div className={classes.searchIcon} >
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Buscar Tratamiento…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -252,23 +196,26 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>  
           </div>
           <div style={{display:"flex", marginRight: "2rem"}}>
-          <Link to={"/zonas"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit">Zonas</Button>
+          <Link to={"/zonas"} style={{color:"white",textDecoration:'none' }}>
+            <Button color="inherit">ZONAS</Button>
           </Link>
-          <Link to={"/provaiderRegister"} style={{color:"black",textDecoration:'none' }}>
+          <Link to={"/provaiderRegister"} style={{color:"white",textDecoration:'none' }}>
             <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
           </Link>
           </div>
           
-          <Link to={"/login"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit">LOGIN</Button>
+          <Link to={"/login"} style={{color:"white",textDecoration:'none' }}>
+            <Button color="inherit">INGRESAR</Button>
           </Link>
-          <Link to={"/userRegister"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit">REGISTER</Button>
+          <div>
+            |
+          </div>
+          <Link to={"/userRegister"} style={{color:"white",textDecoration:'none' }}>
+            <Button color="inherit">REGISTRARSE </Button>
           </Link>
-          <Link to={"/cart"} style={{color:"black",textDecoration:'none' }}>
-            <Button color="inherit"><RiShoppingCartLine/></Button>
-          </Link>
+          <Link to={"/cart"} style={{color:"white",textDecoration:'none', backgroundColor: "gray", borderRadius: 50 }}>
+            <Button color="inherit"><BiShoppingBag/></Button>
+          </Link> 
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

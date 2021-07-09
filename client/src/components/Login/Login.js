@@ -66,7 +66,7 @@ export default function SignIn() {
     log("intento de logeo");
     try {
       // posteo de user
-      const { data } = await axios.post("http://localhost:3001/users", {
+      const { data } = await axios.post("http://localhost:3002/users", {
         email: email.value,
         password: password.value,
       });

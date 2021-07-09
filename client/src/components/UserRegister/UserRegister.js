@@ -66,20 +66,19 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    log("intento de logeo");
+    log("intento de registro");
     try {
       // posteo de user
-      const { data } = await axios.post("http://localhost:3001/users", {
+      const { data } = await axios.post("http://localhost:3002/users", {
         email: email.value,
         password: password.value,
         firstName: firstName.value,
         lastName: lastName.value,
         cellphone: cellphone.value,
-
       });
       // seteo de estado
       setUser(data);
-      success(`logged user ${data.email}`);
+      success(`register user ${data.email}`);
       // redirect home
       history.push("/home");
     } catch ({ response }) {
@@ -161,7 +160,7 @@ export default function SignUp() {
                 type="number"
                 id="cellphone"
                 autoComplete="cellphone"
-                inputProps={{ maxlength: 10 }}
+                inputProps={{ maxLength: 10 }}
                 {...cellphone}
               />
             </Grid>
