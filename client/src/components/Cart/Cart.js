@@ -1,29 +1,54 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Typography, Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Service from '../Service/Service';
+import CartItem from './CartItem/CartItem';
+import CartOrder from './CartOrder/CartOrder';
+import Image from '../../img/wall-cart.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        marginTop: theme.spacing(10),
-    }
+        height: '100vh',
+        backgroundImage: `url(${Image})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+    },
+    gridContainer: {
+        marginTop: '90px'
+    },
 }));
 
 function Cart() {
     const classes = useStyles();
     return(
-        <Container maxWidth="lg" className={classes.root}>
-            <Grid 
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Grid item xs={12} lg={6}>
-                    <Service />
-                    <Service />
-                    <Service />
+        <Container maxWidth="false" className={classes.root}>
+            <Grid container direction="row">
+                <Grid
+                    container
+                    item
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    xs={12} 
+                    sm={6}
+                    className={classes.gridContainer}
+                    
+                >
+                    <CartItem />
+                    <CartItem />
+                    <CartItem />
+                </Grid>
+
+                <Grid
+                    container
+                    item
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    xs={12} 
+                    sm={6} 
+                >
+                    <CartOrder />
                 </Grid>
             </Grid>
         </Container>
