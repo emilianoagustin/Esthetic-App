@@ -1,15 +1,13 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 /* import { RiServiceLine } from "react-icons/ri"; */
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { getServices } from "../../../Redux/actions/actions";
-import { Data } from "./Data";
 import Service from "./Service/Service";
 import "./Services.css";
 
-function Services() {
+export function Services({ services }) {
 
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.appReducer.services.data)
 
   useEffect(() => {
     dispatch(getServices());
@@ -20,7 +18,7 @@ function Services() {
       <h3 className="title">SERVICIOS</h3>
 
       <div className="services-container">
-        {data && data.map((service, index) => (
+        {services.data && services.data.map((service, index) => (
           <Service key={index} data={service} />
         ))}
       </div>
@@ -28,5 +26,10 @@ function Services() {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    services: state.services,
+  }
+}
 
-export default Services;
+export default connect(mapStateToProps)(Services);
