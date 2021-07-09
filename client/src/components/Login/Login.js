@@ -1,8 +1,8 @@
-
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
+import { useDispatch } from "react-redux";
+import {getUser} from '../../Redux/actions/actions'
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
@@ -19,7 +19,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
 
 function Copyright() {
   return (
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const email = useInput("email");
@@ -64,12 +63,9 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     log("intento de logeo");
-    try {
-      // posteo de user
-      const { data } = await axios.post("http://localhost:3002/users", {
-        email: email.value,
-        password: password.value,
-      });
+    dispatch(getUser({ email: email.value, password: password.value }));
+  };
+  /*   console.log(data)
       // seteo de estado
       setUser(data);
       success(`logged user ${data.email}`);
@@ -79,7 +75,7 @@ export default function SignIn() {
       // algo no esta.
       error(response);
     }
-  };
+  }; */
 
   return (
     <Container component="main" maxWidth="xs">

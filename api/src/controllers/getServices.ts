@@ -2,13 +2,15 @@ import { RequestHandler } from 'express';
 import Services from '../models/Services';
 
 export const createService: RequestHandler = (req, res) => {
-    const newService = new Services(req.body);
+    var newService = new Services(req.body)
+    console.log(newService)
+    console.log(req.body)
     newService.save()
         .then((result: any) => {
             return res.status(200).json(result);
         })
-        .catch(() => {
-            return res.status(301).json({ message: 'Este servicio ya existe' });
+        .catch((err: Error) => {
+            return res.status(301).json(err);
         })
 };
 
