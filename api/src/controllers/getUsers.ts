@@ -1,5 +1,7 @@
 import { RequestHandler } from 'express';
 import Users from '../models/Users';
+import path from 'path';
+import fs from 'fs-extra';
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {
@@ -26,8 +28,17 @@ export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
   if (userFound)
     return res.status(301).json({ message: 'The user alredy exists' });
+  const { firstName, lastName, email, phone, password } = req.body;
 
-  const newUser = new Users(req.body);
+  const dataUser = {
+    picture: `uploads\\${req.body.file}`,
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+  };
+  const newUser = new Users(dataUser);
   const savedUser = await newUser.save();
   res.json(savedUser);
 };
@@ -65,5 +76,6 @@ export const updateUser: RequestHandler = async (req, res) => {
 export const deleteUser: RequestHandler = async (req, res) => {
   const userDelete = await Users.findByIdAndDelete(req.params.id);
   if (!userDelete) return res.status(204).json();
+  if (userDelete) await fs.unlink(path.resolve(userDelete.picture));
   return res.json();
 };
