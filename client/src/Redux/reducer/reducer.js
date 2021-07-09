@@ -1,10 +1,13 @@
 import actionsTypes from "../constants/constants";
 
 const initialState = {
-  services: { loading: false, data: [] },
+  services: {
+    loading: true,
+    data: []
+  },
 };
 
-export const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) => {
   switch (action.type) {
     //GET SERVICES
     case actionsTypes.SET_SERVICES_REQUEST:
@@ -17,7 +20,7 @@ export const appReducer = (state = initialState, action) => {
         ...state,
         services: { loading: false, data: action.payload },
       };
-    case actionsTypes.SET_SERVICES_SUCCESS:
+    case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
         services: { loading: false, error: action.payload },
@@ -26,3 +29,5 @@ export const appReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default appReducer;

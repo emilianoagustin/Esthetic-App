@@ -2,6 +2,8 @@ import React from "react";
 import "./Service.css";
 
 function Service({ data }) {
+  
+  console.log(data)
   return (
     <div className="service">
       <div>
