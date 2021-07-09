@@ -18,6 +18,10 @@ const EventSchema = new Schema(
             type: Boolean,
             default: true,
         },
+        isAvailable: {
+            type: Boolean,
+            default: true,
+        },
         service: {
             type: Schema.Types.ObjectId,
             ref: 'Services',

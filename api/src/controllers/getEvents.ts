@@ -7,11 +7,27 @@ import Calendar from '../models/Calendar';
 export const getCalendarEventsByDay: RequestHandler = (req, res) => {
     Calendar.findById(req.body.calendar)
         .then((result: any) => {
-            const events = result.events.filter((event: any) => {
-                if (event.date === req.body.date) return event
-            });
-            const hours = result.eventsHours;
+            const events: Array<any> = [];
 
+            result.eventsHours.forEach((hour: Number, index: any) => {
+                events[index] = {
+                    isActive: true,
+                    isAvailable: true,
+                    date: req.body.date,
+                    hour: hour,
+                }
+            })
+
+            result.events.map((event: any) => {
+                if (event.date === req.body.date) {
+                    result.eventsHours.forEach((hour: Number, index: any) => {
+                        if (event.hour === hour) {
+                            events[index] = event;
+
+                        }
+                    })
+                }
+            });
 
             return res.status(200).json(events);
         })
@@ -24,6 +40,8 @@ export const createEvent: RequestHandler = (req, res) => {
     const event = new Events(req.body);
     event.save()
         .then((result: any) => {
+            result.isAvailable = false;
+            result.save();
             Services.findById(req.body.service)
                 .then((service: any) => {
                     service.events.push(event);
