@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/', usersCtrl.getUsers);
 router.get('/:id', usersCtrl.getUser);
-router.post('/', upload.single('picture'), usersCtrl.createUser);
+router.post('/', upload.single('image'), usersCtrl.createUser);
 // router.post('/', usersCtrl.createUser);
 router.delete('/:id', usersCtrl.deleteUser);
 router.put('/:id', usersCtrl.updateUser);
