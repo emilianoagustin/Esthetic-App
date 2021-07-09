@@ -74,7 +74,7 @@ export default function SignUp() {
         password: password.value,
         firstName: firstName.value,
         lastName: lastName.value,
-        cellphone: cellphone.value,
+        phone: cellphone.value,
       });
       // seteo de estado
       setUser(data);
