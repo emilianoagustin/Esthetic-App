@@ -1,5 +1,7 @@
 import app from './src/app';
-import './src/db'
+import './src/db';
 
-const PORT = 3002;
-app.listen(PORT, () => console.log('Server on port 3002'));
+async function main() {
+  await app.listen(app.get('port'), () => console.log('Server on port 3002'));
+}
+main();
