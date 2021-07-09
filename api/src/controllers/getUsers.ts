@@ -28,10 +28,10 @@ export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
   if (userFound)
     return res.status(301).json({ message: 'The user alredy exists' });
-  const { firstName, lastName, email, phone, password } = req.body;
+  const { firstName, lastName, email, phone, password, file } = req.body;
 
   const dataUser = {
-    picture: `uploads\\${req.body.file}`,
+    image: `uploads\\${file}`,
     firstName,
     lastName,
     email,
@@ -44,11 +44,29 @@ export const createUser: RequestHandler = async (req, res) => {
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
-  const userUpdate = await Users.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  }); // 1params id para buscar, 2params los datos para actualizar, 3params pasarle new para poder retornar el usuario con los datos actualizados
-  if (!userUpdate) return res.status(204).json();
-  return res.json(userUpdate);
+  try {
+    const userUpdate = await Users.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    }); // 1params id para buscar, 2params los datos para actualizar, 3params pasarle new para poder retornar el usuario con los datos actualizados
+    if (!userUpdate) return res.status(204).json();
+    return res.json(userUpdate);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const deleteUser: RequestHandler = async (req, res) => {
+  try {
+    const userDelete = await Users.findByIdAndDelete(req.params.id);
+    if (!userDelete) return res.status(204).json();
+    if (userDelete) await fs.unlink(path.resolve(userDelete.image));
+    return res.json({
+      message: 'user deleted',
+      userDelete,
+    });
+  } catch (error) {
+    res.json({ message: 'not found' });
+  }
 };
 
 // export const assignService: RequestHandler = async (req, res) => {
@@ -72,10 +90,3 @@ export const updateUser: RequestHandler = async (req, res) => {
 //   );
 //   return res.json(userWithService);
 // };
-
-export const deleteUser: RequestHandler = async (req, res) => {
-  const userDelete = await Users.findByIdAndDelete(req.params.id);
-  if (!userDelete) return res.status(204).json();
-  if (userDelete) await fs.unlink(path.resolve(userDelete.picture));
-  return res.json();
-};
