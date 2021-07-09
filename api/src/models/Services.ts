@@ -18,9 +18,16 @@ const ServiceSchema = new Schema(
     events: [{
       type: Schema.Types.ObjectId,
       ref: 'Events'
+    }],
+    providers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Providers',
+      autopopulate: true
     }]
   },
   { versionKey: false, timestamps: true }
 );
+
+ServiceSchema.plugin(require('mongoose-autopopulate'));
 
 export default model('Services', ServiceSchema);
