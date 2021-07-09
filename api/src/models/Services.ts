@@ -10,7 +10,7 @@ const ServiceSchema = new Schema(
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, 'Product price required'],
     },
     description: {
       type: String,
@@ -20,7 +20,7 @@ const ServiceSchema = new Schema(
       ref: 'Events'
     }]
   },
-  { timestamps: true }
+  { versionKey: false, timestamps: true }
 );
 
 export default model('Services', ServiceSchema);

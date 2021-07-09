@@ -3,6 +3,8 @@ import Services from '../models/Services';
 
 export const createService: RequestHandler = (req, res) => {
     var newService = new Services(req.body)
+    console.log(newService)
+    console.log(req.body)
     newService.save()
         .then((result: any) => {
             return res.status(200).json(result);
