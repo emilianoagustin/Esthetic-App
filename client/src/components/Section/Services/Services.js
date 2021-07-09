@@ -1,46 +1,32 @@
-import React from "react";
+import React, {useEffect} from "react";
 /* import { RiServiceLine } from "react-icons/ri"; */
+import { useSelector, useDispatch } from "react-redux";
+import { getServices } from "../../../Redux/actions/actions";
 import { Data } from "./Data";
 import Service from "./Service/Service";
 import "./Services.css";
 
 function Services() {
+
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.appReducer.services.data)
+
+  useEffect(() => {
+    dispatch(getServices());
+  }, []);
+
   return (
     <div>
       <h3 className="title">SERVICIOS</h3>
 
       <div className="services-container">
-        {Data.map((s, index) => (
-          <Service key={index} data={s} />
+        {data && data.map((service, index) => (
+          <Service key={index} data={service} />
         ))}
       </div>
     </div>
   );
 }
 
-/* 
-const ServiceSchema = new Schema(
-    {
-        name: {
-            type: String,
-            trim: true,
-            required: true,
-            unique: true
-        },
-        price: {
-            type: Number,
-            required: true
-        },
-        description: {
-            type: String
-        },
-    },
-    { versionKey: false, timestamps: true }
-);
-
-router.post('/', createService);
-router.get('/', getServices);
-router.get('/:id', getServiceDetail);
-/services/ */
 
 export default Services;
