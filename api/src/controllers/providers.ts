@@ -39,8 +39,8 @@ export const createProvider: RequestHandler = (req, res) => {
     .then((result: any) => {
       return res.status(200).send(result);
     })
-    .catch(() => {
-      return res.status(400).send({ message: "Lo sentimos. Ese email ya ha sido registrado" });
+    .catch((err: any) => {
+      return res.status(400).send(err);
     })
   // validator: function (v: string) {
   //   return /\S@\S.\mail.\S/.test(v);
