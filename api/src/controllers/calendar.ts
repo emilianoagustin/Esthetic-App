@@ -4,7 +4,6 @@ import Providers from '../models/Providers';
 
 
 export const CreateCalendar: RequestHandler = (req, res) => {
-
     Providers.findById(req.body.provider)
         .then((provider: any) => {
             if (!provider.hasCalendar) {

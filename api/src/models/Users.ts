@@ -37,13 +37,12 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    // events: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Events',
-    //     autopopulate: true,
-    //   },
-    // ],
+    events: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Events',
+      },
+    ],
   },
 
   { versionKey: false, timestamps: true }
