@@ -2,6 +2,9 @@ import { Schema, model } from 'mongoose';
 
 const UserSchema = new Schema(
   {
+    picture: {
+      type: String,
+    },
     firstName: {
       type: String,
       required: true,
@@ -12,29 +15,41 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    dni: {
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      // validate: {
+      //   validator: function (v: string) {
+      //     return /\S@\S.\mail.\S/.test(v);
+      //   },
+      //   message: 'Por favor ingresar un email válido',
+      // },
+    },
+    phone: {
       type: Number,
       required: true,
       trim: true,
-      unique: true, // con el fin de que no deje crear otro usuario con el mismo dni o cc segun el pais
     },
     password: {
       type: String,
       required: true,
       trim: true,
     },
-    type: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    asignated: {
-      type: Date,
-      required: true,
-    },
+    events: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Events',
+        autopopulate: true,
+      },
+    ],
   },
+
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
+
+UserSchema.plugin(require('mongoose-autopopulate')); // codigo para usar mongoose autopopulate
 
 export default model('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema

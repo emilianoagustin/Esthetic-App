@@ -8,7 +8,7 @@ export const createService: RequestHandler = (req, res) => {
             return res.status(200).json(result);
         })
         .catch(() => {
-            return res.status(301).json({ message: 'This service alredy exists' });
+            return res.status(301).json({ message: 'Este servicio ya existe' });
         })
 };
 
@@ -18,7 +18,7 @@ export const getServices: RequestHandler = (req, res) => {
             return res.status(200).json(result);
         })
         .catch(() => {
-            return res.status(404).json({ message: 'There is no service' });
+            return res.status(404).json({ message: 'No se encontraron servicios' });
         })
 };
 
@@ -28,6 +28,6 @@ export const getServiceDetail: RequestHandler = (req, res) => {
             return res.status(200).json(result);
         })
         .catch(() => {
-            return res.status(404).json({ message: 'This service does not exist' });
+            return res.status(404).json({ message: 'Este servicio no existe' });
         })
 };
