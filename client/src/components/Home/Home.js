@@ -4,10 +4,9 @@ import Services from "../Section/Services/Services"
 function Home() {
     return (
         <div>
-
-            <Services/>
+            <Services />
         </div>
     )
 }
 
-export default Home
+export default Home;
