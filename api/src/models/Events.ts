@@ -7,15 +7,20 @@ const EventSchema = new Schema(
             trim: true,
         },
         date: {
-            type: Date,
+            type: String,
             required: true,
         },
         hour: {
-            type: Date,
+            type: Number,
             required: true,
         },
         isActive: {
             type: Boolean,
+            default: true,
+        },
+        isAvailable: {
+            type: Boolean,
+            default: true,
         },
         service: {
             type: Schema.Types.ObjectId,
@@ -27,10 +32,9 @@ const EventSchema = new Schema(
             ref: 'Users',
             autopopulate: true,
         },
-        provider: {
+        calendar: {
             type: Schema.Types.ObjectId,
-            ref: 'Providers',
-            autopopulate: true,
+            ref: 'Calendar',
         },
     },
     { versionKey: false, timestamps: true }
