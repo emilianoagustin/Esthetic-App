@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Image from '../../img/Barberia.jpg';
+import Image from '../../../img/Barberia.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Service() {
+function CartItem() {
     const classes = useStyles();
 
     return (
@@ -67,4 +67,4 @@ function Service() {
     )
 }
 
-export default Service
+export default CartItem
