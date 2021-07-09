@@ -3,6 +3,7 @@ import Events from '../models/Events';
 import Services from '../models/Services';
 import Users from '../models/Users';
 import Calendar from '../models/Calendar';
+import { isValidDate } from '../utils/functions';
 
 export const getCalendarEventsByDay: RequestHandler = (req, res) => {
     Calendar.findById(req.body.calendar)
@@ -10,8 +11,11 @@ export const getCalendarEventsByDay: RequestHandler = (req, res) => {
             const events: Array<any> = [];
 
             result.eventsHours.forEach((hour: Number, index: any) => {
+                let validate = false;
+                isValidDate(req.body.date, hour) ? validate = true : null;
+
                 events[index] = {
-                    isActive: true,
+                    isActive: validate,
                     isAvailable: true,
                     date: req.body.date,
                     hour: hour,
