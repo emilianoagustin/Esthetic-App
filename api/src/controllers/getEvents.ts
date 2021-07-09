@@ -4,10 +4,16 @@ import Services from '../models/Services';
 import Users from '../models/Users';
 import Calendar from '../models/Calendar';
 
-export const getProviderEventsByDay: RequestHandler = (req, res) => {
-    Events.find({ date: req.body.date, calendar: { _id: req.params.id } })
+export const getCalendarEventsByDay: RequestHandler = (req, res) => {
+    Calendar.findById(req.body.calendar)
         .then((result: any) => {
-            return res.status(200).json(result);
+            const events = result.events.filter((event: any) => {
+                if (event.date === req.body.date) return event
+            });
+            const hours = result.eventsHours;
+
+
+            return res.status(200).json(events);
         })
         .catch(() => {
             return res.status(404).json({ message: 'No se encontraron Eventos' });
