@@ -13,7 +13,8 @@ const CalendarSchema = new Schema(
         },
         events: [{
             type: Schema.Types.ObjectId,
-            ref: 'Events'
+            ref: 'Events',
+            autopopulate: true,
         }]
     },
     { versionKey: false, timestamps: true }

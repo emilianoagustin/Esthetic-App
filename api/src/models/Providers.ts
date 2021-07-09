@@ -1,10 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const ProvidersSchema = new Schema(
   {
     image: {
-      data: Buffer,
-      contentType: String,
+      type: String,
     },
     firstName: {
       type: String,
@@ -16,12 +15,16 @@ const ProvidersSchema = new Schema(
       required: true,
       trim: true,
     },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Non-binary"],
+    },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    cellPhone: {
+    phone: {
       type: Number,
       required: true,
     },
@@ -31,12 +34,17 @@ const ProvidersSchema = new Schema(
     },
     hasCalendar: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    services: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Services',
+      autopopulate: true
+    }]
   },
   { versionKey: false, timestamps: true }
 );
 
-// ProvidersSchema.plugin(require('mongoose-autopopulate'));
+ProvidersSchema.plugin(require('mongoose-autopopulate'));
 
-export default model('Providers', ProvidersSchema);
+export default model("Providers", ProvidersSchema);
