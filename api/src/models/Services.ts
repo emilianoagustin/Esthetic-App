@@ -10,15 +10,17 @@ const ServiceSchema = new Schema(
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, 'Product price required'],
     },
     description: {
       type: String,
     },
+    events: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Events'
+    }]
   },
-  { timestamps: true }
+  { versionKey: false, timestamps: true }
 );
-
-ServiceSchema.plugin(require('mongoose-autopopulate'));
 
 export default model('Services', ServiceSchema);

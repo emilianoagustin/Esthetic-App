@@ -21,4 +21,6 @@ router.put("/:id", updateProvider);
 
 router.post("/calendar", CreateCalendar);
 
+router.get("/calendar/:id", )
+
 export default router;
