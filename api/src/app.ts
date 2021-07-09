@@ -1,15 +1,24 @@
-import express, { Application } from 'express';
+import express, { Application, Request } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import router from './routes/index.routes';
+import path from 'path';
+import bodyParser from 'body-parser';
+// const fileUpload = require('express-fileupload');
 
 const app: Application = express();
 
+app.set('port', process.env.PORT || 3002);
 app.use(express.json());
+app.use(bodyParser.json());
+// app.use(fileUpload());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', router);
+
+// storage para guardar img en mi db
+app.use('/uploads', express.static(path.join(__dirname + 'uploads')));
 
 export default app;
