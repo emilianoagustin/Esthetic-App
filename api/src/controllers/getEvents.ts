@@ -11,9 +11,8 @@ export const getCalendarEventsByDay: RequestHandler = (req, res) => {
             const events: Array<any> = [];
 
             result.eventsHours.forEach((hour: Number, index: any) => {
-                let validate = false;
-                isValidDate(req.body.date, hour) ? validate = true : null;
-
+                let validate = isValidDate(req.body.date, hour);
+                
                 events[index] = {
                     isActive: validate,
                     isAvailable: true,
