@@ -3,8 +3,7 @@ import { Schema, model } from 'mongoose';
 const ProvidersSchema = new Schema(
   {
     image: {
-      data: Buffer,
-      contentType: String,
+      type: String,
     },
     firstName: {
       type: String,
@@ -31,8 +30,8 @@ const ProvidersSchema = new Schema(
     },
     hasCalendar: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { versionKey: false, timestamps: true }
 );

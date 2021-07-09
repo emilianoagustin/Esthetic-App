@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const UserSchema = new Schema(
   {
-    picture: {
+    image: {
       type: String,
     },
     firstName: {
@@ -20,12 +20,6 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
       unique: true,
-      // validate: {
-      //   validator: function (v: string) {
-      //     return /\S@\S.\mail.\S/.test(v);
-      //   },
-      //   message: 'Por favor ingresar un email válido',
-      // },
     },
     phone: {
       type: Number,
