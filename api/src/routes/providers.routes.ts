@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CreateCalendar } from "../controllers/calendar";
-import { addServiceToProvider } from '../controllers/servicesProviders';
+import { addServiceToProvider, getProvidersByService } from '../controllers/servicesProviders';
 import {
   getAllProviders,
   // getProviderByName,
@@ -16,6 +16,7 @@ const router = Router();
 router.post("/calendar", CreateCalendar);
 router.post('/services', addServiceToProvider)
 
+router.get('/:serviceName', getProvidersByService)  // Get providers by service
 router.get("/", getAllProviders);
 // router.get("/?name", getProviderByName);
 router.get("/:id", getProviderById);

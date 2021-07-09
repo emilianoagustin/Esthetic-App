@@ -39,7 +39,7 @@ const ProvidersSchema = new Schema(
     services: [{
       type: Schema.Types.ObjectId,
       ref: 'Services',
-      autopopulate: true
+      unique: true
     }]
   },
   { versionKey: false, timestamps: true }

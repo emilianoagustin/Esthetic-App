@@ -22,6 +22,7 @@ const ServiceSchema = new Schema(
     providers: [{
       type: Schema.Types.ObjectId,
       ref: 'Providers',
+      unique: true,
       autopopulate: true
     }]
   },
