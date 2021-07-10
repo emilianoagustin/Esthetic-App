@@ -36,15 +36,24 @@ const ProvidersSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    services: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Services',
-      autopopulate: true
-    }]
+    addresses: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Address",
+        autopopulate: true,
+      },
+    ],
+    services: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Services",
+        unique: true,
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
 
-ProvidersSchema.plugin(require('mongoose-autopopulate'));
+ProvidersSchema.plugin(require("mongoose-autopopulate"));
 
 export default model("Providers", ProvidersSchema);

@@ -109,6 +109,6 @@ export const deleteProvider: RequestHandler = async (req, res) => {
       deleteProv,
     });
   } catch (error) {
-    res.status(500).json({ message: 'something bad things 😅' });
+    res.status(500).json({ message: 'Ups! Something went wrong 😅' });
   }
 };
