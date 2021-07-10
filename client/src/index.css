@@ -3,4 +3,13 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Mulish', sans-serif;
+
+}
+
+:root {
+  --primary-color: #58abf6;
+  --border: #007aff;
+  --error: #e94040;
+  --success: #00c469;
+  --background_color:#f5f5f5;
 }
