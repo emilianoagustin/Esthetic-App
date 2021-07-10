@@ -106,7 +106,7 @@ export const deleteProvider: RequestHandler = async (req, res) => {
     if (deleteProv) await fs.unlink(path.resolve(deleteProv.image));
     return res.json({
       message: 'provider deleted',
-      userDelete,
+      deleteProv,
     });
   } catch (error) {
     res.status(500).json({ message: 'something bad things 😅' });
