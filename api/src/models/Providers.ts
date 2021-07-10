@@ -47,6 +47,7 @@ const ProvidersSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Address",
+        autopopulate: true,
       },
     ],
   },
