@@ -30,10 +30,11 @@ function ServiceDetails() {
         ) : (
           <img className="img" src={defaultImg} alt="Default Image"></img>
         )}
-
-        <h1>Service Name {service && service.name}</h1>
-        <p>{service && service.desciption}</p>
-        <p>{service && service.price}</p>
+        <div className="service-data">
+          <h1>{service && service.name}</h1>
+          <p>{service && service.description}</p>
+          <p>{service && service.price}</p>
+        </div>
       </div>
     </div>
   );
