@@ -16,8 +16,7 @@ import { useSelector } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Tooltip from '@material-ui/core/Tooltip';
+import SearchBar from '../Searchbar/Searchbar'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -208,19 +207,8 @@ export default function PrimarySearchAppBar() {
               />
             </Link>
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Buscar Tratamiento…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+       
+          <SearchBar/>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>
           <div style={{ display: "flex", marginRight: "2rem" }}>
