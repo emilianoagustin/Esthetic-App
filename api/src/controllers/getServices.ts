@@ -23,6 +23,8 @@ export const getServices: RequestHandler = (req, res) => {
 };
 
 export const getServiceDetail: RequestHandler = (req, res) => {
+    const {id} = req.params 
+    console.log(id)
     Services.findById(req.params.id)
         .then((result: any) => {
             return res.status(200).json(result);
