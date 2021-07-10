@@ -34,7 +34,6 @@ export const getServices: RequestHandler = (req, res) => {
 };
 
 export const getServiceDetail: RequestHandler = (req, res) => {
-<<<<<<< HEAD
   Services.findById(req.params.id)
     .then((result: any) => {
       return res.status(200).json(result);
@@ -54,15 +53,3 @@ export const deleteService: RequestHandler = async (req, res) => {
       return res.status(404).json({ message: 'Este servicio no existe' });
     });
 };
-=======
-    const {id} = req.params 
-    console.log(id)
-    Services.findById(req.params.id)
-        .then((result: any) => {
-            return res.status(200).json(result);
-        })
-        .catch(() => {
-            return res.status(404).json({ message: 'Este servicio no existe' });
-        })
-};
->>>>>>> e0ec289c2756860a280c1a6525908630a7f6ae84
