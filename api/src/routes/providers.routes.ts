@@ -19,7 +19,8 @@ import {
   updateAddress,
   deleteAddress,
 } from "../controllers/addresses";
-import upload from "../libs/multer";
+var multer = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 const router = Router();
 
