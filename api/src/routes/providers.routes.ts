@@ -23,7 +23,7 @@ import upload from "../libs/multer";
 
 const router = Router();
 
-// <<PLAIN PROVIDERS' ROUTES>>
+// <<PLAIN PROVIDERS ROUTES>>
 router.get("/", getAllProviders);
 // router.get("/?name", getProviderByName);
 router.get("/:id", getProviderById);
@@ -36,7 +36,7 @@ router.post("/calendar", CreateCalendar);
 router.post("/services", addServiceToProvider);
 router.get("/:serviceName", getProvidersByService);
 
-// <<Routes to users' addresses>>
+// <<Routes to providers' addresses>>
 router.get("/addresses", getAllAddresses);
 router.get("/addresses/:id", getOneAddress);
 router.post("/addresses", createAddress);
