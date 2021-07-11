@@ -18,25 +18,7 @@ export const getServices = () => async (dispatch) => {
 
 
 
-  // posteo de user
-  export const  getUser = ()  => {
-    return (dispatch ) => {
-      return axios.get("http://localhost:3002/users")
-      .then((response)=>{
-        console.log(response.data.token)
-        dispatch({type: actionsTypes.LOGIN_SUCCESSFUL,
-          payload: {
-            token: response.data.token,
-            /* userActive: decoded.unique_name, */
-          }})
-      })
-      .catch((error) => {
-        if (error.response?.status !== 404||422) alert("Usuario no encontrdo");
-        dispatch({ type: actionsTypes.LOGIN_FAIL, payload: null });
-      });
-    }
-  }
-
+ 
 
 export const getServiceDetails = (serviceId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_SERVICES_DETAILS_REQUEST });
