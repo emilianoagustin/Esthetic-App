@@ -7,8 +7,8 @@ import {
   updateAddress,
   deleteAddress,
 } from "../controllers/addresses";
-// var multer = require('multer')
-// var upload = multer({ dest: 'uploads/' })
+var multer = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 const router = Router();
 
