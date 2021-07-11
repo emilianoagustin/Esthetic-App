@@ -38,7 +38,7 @@ const appReducer = (state = initialState, action) => {
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        error: action.payload
+        error: action.payload.userActive
       }
 
       //GET SERVICES --> DETAILS
