@@ -7,14 +7,15 @@ import {
   updateAddress,
   deleteAddress,
 } from "../controllers/addresses";
-import upload from "../libs/multer";
+// var multer = require('multer')
+// var upload = multer({ dest: 'uploads/' })
 
 const router = Router();
 
 // <<PLAIN USERS ROUTES>>
 router.get("/", usersCtrl.getUsers);
 router.get("/:id", usersCtrl.getUser);
-router.post("/", upload.single("image"), usersCtrl.createUser);
+// router.post("/", upload.single("image"), usersCtrl.createUser);
 // router.post('/', usersCtrl.createUser);
 router.delete("/:id", usersCtrl.deleteUser);
 router.put("/:id", usersCtrl.updateUser);

@@ -12,7 +12,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+/* import Link from '@material-ui/core/Link'; */
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -20,6 +20,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { InputLabel } from "@material-ui/core";
+import { Link } from "react-router-dom";
+
+
 
 function Copyright() {
   return (
@@ -63,23 +66,25 @@ export default function SignUp() {
   const firstName = useInput("firstName");
   const lastName = useInput("lastName");
   const cellphone = useInput("cellphone");
+  const file = useInput('file')
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    log("intento de logeo");
+    log("intento de registro");
     try {
       // posteo de user
-      const { data } = await axios.post("http://localhost:3001/users", {
+      const { data } = await axios.post("http://localhost:3002/users", {
         email: email.value,
         password: password.value,
         firstName: firstName.value,
         lastName: lastName.value,
-        cellphone: cellphone.value,
-
+        phone: cellphone.value,
+        picture: file.value,
       });
       // seteo de estado
       setUser(data);
-      success(`logged user ${data.email}`);
+      success(`register user ${data.email}`);
       // redirect home
       history.push("/home");
     } catch ({ response }) {
@@ -96,7 +101,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+         
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -108,7 +113,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Nombre"
                 autoFocus
                 {...firstName}
               />
@@ -119,7 +124,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Apellido"
                 name="lastName"
                 autoComplete="lastname"
                 {...lastName}
@@ -131,7 +136,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 {...email}
@@ -143,7 +148,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Contraseña"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -157,18 +162,32 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="cellphone"
-                label="Cellphone"
+                label="Telefono"
                 type="number"
                 id="cellphone"
                 autoComplete="cellphone"
-                inputProps={{ maxlength: 10 }}
+                inputProps={{ maxLength: 10 }}
                 {...cellphone}
               />
-            </Grid>
+               </Grid>
+               <Grid item xs={12}>
+                 Foto de perfil
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="file"
+                type="file"
+                id="file"
+                autoComplete="file"
+                {...file}
+                /> 
+              </Grid>
+          
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="Quiero recibir información y promociones via email."
               />
             </Grid>
           </Grid>
@@ -179,12 +198,12 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Registrarme
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <Link to={"/login"}  variant="body2">
+                Ya tienes cuenta? Ingresar
               </Link>
             </Grid>
           </Grid>

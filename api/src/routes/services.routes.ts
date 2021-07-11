@@ -5,7 +5,8 @@ import {
   getServiceDetail,
   deleteService,
 } from '../controllers/getServices';
-import upload from '../libs/multer';
+var multer = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 const router = Router();
 

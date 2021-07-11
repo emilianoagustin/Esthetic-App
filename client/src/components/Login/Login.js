@@ -1,8 +1,8 @@
-
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
+import { useDispatch } from "react-redux";
+import {getUser} from '../../Redux/actions/user.actions'
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
@@ -12,13 +12,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 function Copyright() {
@@ -55,21 +57,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const { setUser } = useContext(UserContext);
+  const loggin = useSelector((state) => state.userActive);
+  const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const email = useInput("email");
   const password = useInput("password");
+  const data = { email: email.value, password: password.value }
+  const { setUser } = useContext(UserContext);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit =  (e) => {
     e.preventDefault();
     log("intento de logeo");
-    try {
-      // posteo de user
-      const { data } = await axios.post("http://localhost:3001/users", {
-        email: email.value,
-        password: password.value,
-      });
+    dispatch(getUser(data));
+    console.log(data)
+    try{ if(loggin){ 
+      
+      setUser(data);
+      success(`logged user ${data.email}`);
+      // redirect home
+      history.push("/home")};
+    } catch ({ response }) {
+      // algo no esta.
+      error(response);
+    }
+  };
+  /*   console.log(data)
       // seteo de estado
       setUser(data);
       success(`logged user ${data.email}`);
@@ -79,7 +93,7 @@ export default function SignIn() {
       // algo no esta.
       error(response);
     }
-  };
+  }; */
 
   return (
     <Container component="main" maxWidth="xs">
@@ -88,9 +102,6 @@ export default function SignIn() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -98,7 +109,7 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
@@ -110,7 +121,7 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contraseña"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -118,7 +129,7 @@ export default function SignIn() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="Recordarme"
           />
           <Button
             type="submit"
@@ -127,17 +138,17 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Entrar
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                Olvidaste la contraseña? 
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link to={"/userRegister"} variant="body2">
+                {"No tienes cuenta? Registrate"}
               </Link>
             </Grid>
           </Grid>

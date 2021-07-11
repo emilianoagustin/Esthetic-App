@@ -1,5 +1,5 @@
 import axios from "axios";
-import actionsTypes from "../constants/constants";
+import actionsTypes  from "../constants/constants";
 import { getProvidersByService, getServicesBack } from "../../utils/constants.js";
 //GET SERVICES
 
@@ -15,6 +15,10 @@ export const getServices = () => async (dispatch) => {
     dispatch({ type: actionsTypes.SET_SERVICES_FAIL, payload: error.message });
   }
 };
+
+
+
+ 
 
 export const getServiceDetails = (serviceId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_SERVICES_DETAILS_REQUEST });
