@@ -218,7 +218,7 @@ export default function PrimarySearchAppBar() {
               |
               <Link
                 to={"/provaiderRegister"}
-                style={{ color: "white", textDecoration: "none" }}
+                style={{ color: "white", textDecoration: "none", background:"grey" }}
               >
                 <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
               </Link>
