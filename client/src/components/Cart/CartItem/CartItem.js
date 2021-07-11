@@ -29,9 +29,7 @@ function CartItem() {
     const classes = useStyles();
 
     return (
-        <>
             <Grid xs item>
-
                 <Paper className={classes.paper}>
                     <Grid container spacing={2}>
                         <Grid item>
@@ -63,7 +61,6 @@ function CartItem() {
                     </Grid>
                 </Paper>
             </Grid>
-        </>
     )
 }
 
