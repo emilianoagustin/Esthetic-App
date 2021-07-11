@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
         padding: 10,
         backgroundColor: '#ebebeb'
     },
+    content: {
+        height:'100%'
+    },
     submit: {
         backgroundColor: '#43945c',
         color: '#FFFFFF',
@@ -17,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
             color: '#FFF'
         }
     },
-    content: {
-        height:'100%'
+    submitContent: {
+        height: '40%'
     }
 }))
 
@@ -31,21 +34,41 @@ function CartOrder() {
             item
         >
             <Paper className={classes.paper}>
-                <Grid container direction='column' className={classes.content}>
+                <Grid container direction='column' justifyContent='space-between' className={classes.content}>
                 <Typography variant='h4' className={classes.title}>
                     Detalle de compra
                 </Typography>
-                <Typography variant='subtitle1' color="textSecondary">
-                    Subtotal
-                </Typography>
+                <Grid item container justifyContent='space-between'>
+                    <Grid item>
+                    <Typography variant='subtitle1' color="textSecondary">
+                        Subtotal
+                    </Typography>
+                    </Grid>
+                    <Grid item>
+                    <Typography variant='subtitle1' color="textSecondary">
+                        $1500
+                    </Typography>
+                    </Grid>
+                </Grid>
                 <Divider variant="inset" />
-                <Typography variant='body1'>
-                    Total
-                </Typography>
-                <Grid container direction='column' justifyContent='flex-end' style={{height: '65%'}}>
-                <Button fullWidth='true' className={classes.submit}>
-                    PAGAR
-                </Button>
+                <Grid item container justifyContent='space-between'>
+                    <Grid item>
+                    <Typography variant='body1'>
+                        Total
+                    </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant='body1'>
+                            $1500
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container direction='column-reverse' className={classes.submitContent}>
+                    <Grid item>
+                        <Button fullWidth='true' className={classes.submit}>
+                            PAGAR
+                        </Button>
+                    </Grid>
                 </Grid>
                 </Grid>
             </Paper>
