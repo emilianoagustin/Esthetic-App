@@ -36,7 +36,6 @@ const ProvidersSchema = new Schema(
       type: Boolean,
       default: false,
     },
-
     addresses: [
       {
         type: Schema.Types.ObjectId,
@@ -48,7 +47,6 @@ const ProvidersSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Services',
-        unique: true,
       },
     ],
   },
