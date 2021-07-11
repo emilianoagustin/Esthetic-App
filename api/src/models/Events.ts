@@ -16,6 +16,11 @@ const EventSchema = new Schema(
         },
         isActive: {
             type: Boolean,
+            default: true,
+        },
+        isAvailable: {
+            type: Boolean,
+            default: true,
         },
         service: {
             type: Schema.Types.ObjectId,
@@ -30,7 +35,6 @@ const EventSchema = new Schema(
         calendar: {
             type: Schema.Types.ObjectId,
             ref: 'Calendar',
-            autopopulate: true,
         },
     },
     { versionKey: false, timestamps: true }
