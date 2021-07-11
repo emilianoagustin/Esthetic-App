@@ -6,7 +6,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import { getServiceDetails } from "../../Redux/actions/actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
 import { getServices } from "../../Redux/actions/actions";
 
 const useStyles = makeStyles((theme) => ({
