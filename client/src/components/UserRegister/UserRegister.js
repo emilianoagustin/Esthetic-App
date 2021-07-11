@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -6,33 +5,35 @@ import axios from "axios";
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 /* import Link from '@material-ui/core/Link'; */
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import { InputLabel } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
-
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -40,16 +41,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -66,9 +67,9 @@ export default function SignUp() {
   const firstName = useInput("firstName");
   const lastName = useInput("lastName");
   const cellphone = useInput("cellphone");
-  const file = useInput('file')
-
-
+  const file = useInput("file");
+  const gender = useInput("gender");
+console.log(gender)
   const handleSubmit = async (e) => {
     e.preventDefault();
     log("intento de registro");
@@ -81,6 +82,7 @@ export default function SignUp() {
         lastName: lastName.value,
         phone: cellphone.value,
         picture: file.value,
+        gender: gender.value,
       });
       // seteo de estado
       setUser(data);
@@ -91,7 +93,7 @@ export default function SignUp() {
       // algo no esta.
       error(response);
     }
-};
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -100,9 +102,7 @@ export default function SignUp() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-         
-        </Typography>
+        <Typography component="h1" variant="h5"></Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -157,7 +157,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-               error={cellphone.value.split("").length > 10}
+                error={cellphone.value.split("").length > 10}
                 variant="outlined"
                 required
                 fullWidth
@@ -169,9 +169,9 @@ export default function SignUp() {
                 inputProps={{ maxLength: 10 }}
                 {...cellphone}
               />
-               </Grid>
-               <Grid item xs={12}>
-                 Foto de perfil
+            </Grid>
+            <Grid item xs={12}>
+              Foto de perfil
               <TextField
                 variant="outlined"
                 required
@@ -181,9 +181,21 @@ export default function SignUp() {
                 id="file"
                 autoComplete="file"
                 {...file}
-                /> 
-              </Grid>
-          
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel id="demo-simple-select-label">Gnero</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={gender}
+                {...gender}
+              >
+                <MenuItem value={"Hombre"}>Hombre</MenuItem>
+                <MenuItem value={"Mujer"}>Mujer </MenuItem>
+                <MenuItem value={"No Binario"}>No Binario</MenuItem>
+              </Select>
+            </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -202,7 +214,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to={"/login"}  variant="body2">
+              <Link to={"/login"} variant="body2">
                 Ya tienes cuenta? Ingresar
               </Link>
             </Grid>
