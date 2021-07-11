@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import {getUser} from '../../Redux/actions/actions'
+import {getUser} from '../../Redux/actions/user.actions'
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
@@ -71,6 +71,7 @@ export default function SignIn() {
     e.preventDefault();
     log("intento de logeo");
     dispatch(getUser(data));
+    console.log(data)
     try{ if(loggin){ 
       
       setUser(data);
