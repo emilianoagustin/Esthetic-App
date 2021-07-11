@@ -1,15 +1,13 @@
 import React from 'react';
-import { Grid, Paper, Typography, Button} from '@material-ui/core';
+import { Grid, Paper, Typography, Button, Divider} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
         width: 500,
-        height: 500,
-        padding: 10
-    },
-    title: {
-        backgroundColor: 'lightgray'
+        height: 300,
+        padding: 10,
+        backgroundColor: '#ebebeb'
     },
     submit: {
         backgroundColor: '#43945c',
@@ -37,10 +35,14 @@ function CartOrder() {
                 <Typography variant='h4' className={classes.title}>
                     Detalle de compra
                 </Typography>
-                <Typography>
-                    otra cosa
+                <Typography variant='subtitle1' color="textSecondary">
+                    Subtotal
                 </Typography>
-                <Grid container direction='column' justifyContent='flex-end' style={{height: '80%'}}>
+                <Divider variant="inset" />
+                <Typography variant='body1'>
+                    Total
+                </Typography>
+                <Grid container direction='column' justifyContent='flex-end' style={{height: '65%'}}>
                 <Button fullWidth='true' className={classes.submit}>
                     PAGAR
                 </Button>
