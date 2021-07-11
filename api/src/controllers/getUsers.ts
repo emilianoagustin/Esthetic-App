@@ -28,12 +28,14 @@ export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
   if (userFound)
     return res.status(301).json({ message: 'The user alredy exists' });
-  const { firstName, lastName, email, phone, password, file } = req.body;
+  const { firstName, lastName, gender, email, phone, password, file } =
+    req.body;
 
   const dataUser = {
     image: `uploads\\${file}`,
     firstName,
     lastName,
+    gender,
     email,
     phone,
     password,
@@ -65,7 +67,7 @@ export const deleteUser: RequestHandler = async (req, res) => {
       userDelete,
     });
   } catch (error) {
-    res.json({ message: 'not found' });
+    res.status(500).json({ message: 'something bad things 😅' });
   }
 };
 

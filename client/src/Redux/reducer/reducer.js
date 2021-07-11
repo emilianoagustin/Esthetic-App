@@ -6,6 +6,7 @@ const initialState = {
     data: [],
   },
   serviceDetails: { loading: true, data: {} },
+  providers: {loading:true, data: []}
 };
 
 const appReducer = (state = initialState, action) => {
@@ -45,8 +46,34 @@ const appReducer = (state = initialState, action) => {
         ...state,
         serviceDetails: { loading: false, error: action.payload },
       };
+
+
+      //GET PROVIDERTS
+      
+      case actionsTypes.GET_PROVIDERS_REQUEST:
+      return {
+        ...state,
+        providers: { loading: true },
+      };
+    case actionsTypes.GET_PROVIDERS_SUCCES:
+      return {
+        ...state,
+        providers: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_PROVIDERS_FAIL:
+      return {
+        ...state,
+        providers: { loading: false, error: action.payload },
+      };
+
+
     default:
       return state;
+
+
+
+
+
 
 
 
