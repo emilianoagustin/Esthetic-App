@@ -5,6 +5,7 @@ const initialState = {
     loading: true,
     data: [],
   },
+  userActive: false,
   serviceDetails: { loading: true, data: {} },
   providers: {loading:true, data: []}
 };
@@ -27,7 +28,18 @@ const appReducer = (state = initialState, action) => {
         ...state,
         services: { loading: false, error: action.payload },
       };
-    
+    case actionsTypes.LOGIN_SUCCESSFUL:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        userActive: action.payload.userActive
+      };
+    case actionsTypes.LOGIN_FAIL:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        error: action.payload.userActive
+      }
 
       //GET SERVICES --> DETAILS
 
