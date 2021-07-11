@@ -18,7 +18,7 @@ const App = () => {
       <Route exact path="/userRegister"  component={UserRegister} />
       <Route path="/services/details/:id" component={ServiceDetails}/>
       <Route exact path="/cart"  component={Cart}/>
-      <Route exact path="/home"  component={searchPlace}/>
+     
     </React.Fragment>
   );
 };
