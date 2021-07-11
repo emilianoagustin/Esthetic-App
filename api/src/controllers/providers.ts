@@ -112,3 +112,4 @@ export const deleteProvider: RequestHandler = async (req, res) => {
     res.status(500).json({ message: 'Ups! Something went wrong 😅' });
   }
 };
+
