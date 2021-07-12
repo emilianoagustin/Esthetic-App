@@ -1,4 +1,5 @@
 import actionsTypes from "../constants/constants";
+import {findService} from "../../utils/filter.js";
 
 const initialState = {
   services: {
@@ -7,7 +8,8 @@ const initialState = {
   },
   userActive: false,
   serviceDetails: { loading: true, data: {} },
-  providers: {loading:true, data: []}
+  providers: { loading: true, data: [] },
+  providersByService: { loading: true, data: [] },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -17,33 +19,36 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { loading: true },
+        allServices: { loading: false, data: action.payload },
       };
     case actionsTypes.SET_SERVICES_SUCCESS:
       return {
         ...state,
+        allServices: { loading: false, data: action.payload },
         services: { loading: false, data: action.payload },
       };
     case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
         services: { loading: false, error: action.payload },
+        allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        userActive: action.payload.userActive
+        userActive: action.payload.userActive,
       };
     case actionsTypes.LOGIN_FAIL:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        error: action.payload.userActive
-      }
+        error: action.payload.userActive,
+      };
 
-      //GET SERVICES --> DETAILS
+    //GET SERVICES --> DETAILS
 
-      case actionsTypes.GET_SERVICES_DETAILS_REQUEST:
+    case actionsTypes.GET_SERVICES_DETAILS_REQUEST:
       return {
         ...state,
         serviceDetails: { loading: true },
@@ -59,10 +64,9 @@ const appReducer = (state = initialState, action) => {
         serviceDetails: { loading: false, error: action.payload },
       };
 
+    //GET PROVIDERS
 
-      //GET PROVIDERTS
-      
-      case actionsTypes.GET_PROVIDERS_REQUEST:
+    case actionsTypes.GET_PROVIDERS_REQUEST:
       return {
         ...state,
         providers: { loading: true },
@@ -78,17 +82,34 @@ const appReducer = (state = initialState, action) => {
         providers: { loading: false, error: action.payload },
       };
 
+    //GET PROVIDERS BY SERVICE
+
+    case actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST:
+      return {
+        ...state,
+        providersByService: { loading: true },
+      };
+    case actionsTypes.GET_PROVIDERS_BY_SERVICE_SUCCES:
+      return {
+        ...state,
+        providersByService: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+      return {
+        ...state,
+        providersByService: { loading: false, error: action.payload },
+      };
+
+    ///SEARCH SERVICE BY NAME
+
+    case actionsTypes.SEARCH_SERVICE_BY_NAME:
+      return {
+        ...state,
+        services: { data: findService(state.allServices.data, action.payload) },
+      };
 
     default:
       return state;
-
-
-
-
-
-
-
-
   }
 };
 

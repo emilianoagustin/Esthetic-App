@@ -1,6 +1,7 @@
 import React from "react";
+
 import defaultImg from "../../../../img/wall-cart.jpg";
-import "./Provider.css"
+import "./Provider.css";
 
 function Provider({ provider }) {
   return (
@@ -17,8 +18,10 @@ function Provider({ provider }) {
       </button>
 
       <span className="service-desciption">{provider.lastName}</span>
-      <span className="service-desciption">{provider.addresses}</span>
-      <span className="service-desciption">{provider.services[0].name}</span>
+      <span className="service-desciption">{provider.email}</span>
+      <span className="service-desciption">
+        {provider.services.map((s) => s.name)}
+      </span>
     </div>
   );
 }

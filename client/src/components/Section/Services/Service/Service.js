@@ -7,11 +7,12 @@ function Service({ data }) {
   console.log(data);
   return (
     <div className="service">
-      
       <Link to={`/services/providers/${data.name}`}>
-        <button>
-          <span className="service-title">{data.name}</span>
-        </button>
+        <div className="service-title-btn">
+          <button >
+            <span className="service-title">{data.name}</span>
+          </button>
+        </div>
         <div>
           {data.img ? (
             <img className="img" src={data.img} alt="Service Image"></img>
@@ -21,7 +22,6 @@ function Service({ data }) {
         </div>
       </Link>
       <span className="service-desciption">{data.description}</span>
-      <span>{data.price}</span>
       <Link to={`/services/details/${data._id}`}>
         <button className="more-details">
           <span className="more-details-text">More Details</span>

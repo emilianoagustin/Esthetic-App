@@ -3,5 +3,11 @@
     display: flex;
     flex-wrap: wrap;
     padding: 10%;
+    background-color: var(--background_color);
 
+
+}
+
+.providers-container-main{
+    background-color: var(--background_color)
 }
