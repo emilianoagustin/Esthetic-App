@@ -7,12 +7,12 @@ const ProvidersSchema = new Schema(
     },
     firstName: {
       type: String,
-      required: true,
+      /* required: true, */
       trim: true,
     },
     lastName: {
       type: String,
-      required: true,
+      /* required: true, */
       trim: true,
     },
     gender: {
@@ -21,16 +21,16 @@ const ProvidersSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
+      /* required: true, */
       unique: true,
     },
     phone: {
       type: Number,
-      required: true,
+    /*   required: "Please enter your phone number", */
     },
     password: {
       type: String,
-      required: true,
+      /* required: true, */
     },
     hasCalendar: {
       type: Boolean,
