@@ -35,7 +35,7 @@ router.put("/:id", updateProvider);
 //Calendar Routes, ADD service to provider Route
 router.post("/calendar", CreateCalendar);
 router.post("/services", addServiceToProvider);
-router.get("/:serviceName", getProvidersByService);
+router.get("/services/:serviceName", getProvidersByService);
 
 // <<Routes to users' addresses>>
 router.get("/addresses", getAllAddresses);

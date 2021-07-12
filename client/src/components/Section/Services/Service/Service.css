@@ -1,9 +1,9 @@
 .service {
   flex-direction: column;
   display: flex;
-  height: 390px;
+  height: 480px;
   width: 220px;
-  padding: 50px;
+  padding: 20px;
   margin: 30px;
   border-radius: 25px;
   justify-content: space-between;
@@ -26,9 +26,16 @@
   padding: 10px;
   font-size: 15px;
 }
+.service-title-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+  }
 
 .service-desciption {
   text-align: center;
+  font-size: small;
 }
 
 .more-details {

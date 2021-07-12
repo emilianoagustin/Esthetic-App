@@ -32,7 +32,6 @@ const UserSchema = new Schema(
     },
     username: {
       type: String,
-      unique: true,
       min: 4,
       lowercase: true,
     },
@@ -44,7 +43,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     phone: {
       type: Number,

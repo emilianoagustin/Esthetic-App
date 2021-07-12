@@ -72,23 +72,23 @@ export default function SignUp() {
 console.log(gender)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    log("intento de registro");
+    log('intento de registro');
     try {
       // posteo de user
-      const { data } = await axios.post("http://localhost:3002/users", {
+      const { data } = await axios.post('http://localhost:3002/auth/signup  ', {
         email: email.value,
         password: password.value,
         firstName: firstName.value,
         lastName: lastName.value,
         phone: cellphone.value,
-        picture: file.value,
         gender: gender.value,
+        image: file.value,
       });
       // seteo de estado
       setUser(data);
       success(`register user ${data.email}`);
       // redirect home
-      history.push("/home");
+      history.push('/home');
     } catch ({ response }) {
       // algo no esta.
       error(response);
@@ -96,62 +96,62 @@ console.log(gender)
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5"></Typography>
+        <Typography component='h1' variant='h5'></Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
+                autoComplete='fname'
+                name='firstName'
+                variant='outlined'
                 required
                 fullWidth
-                id="firstName"
-                label="Nombre"
+                id='firstName'
+                label='Nombre'
                 autoFocus
                 {...firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                variant="outlined"
+                variant='outlined'
                 required
                 fullWidth
-                id="lastName"
-                label="Apellido"
-                name="lastName"
-                autoComplete="lastname"
+                id='lastName'
+                label='Apellido'
+                name='lastName'
+                autoComplete='lastname'
                 {...lastName}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                variant='outlined'
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
+                id='email'
+                label='Email'
+                name='email'
+                autoComplete='email'
                 {...email}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant="outlined"
+                variant='outlined'
                 required
                 fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name='password'
+                label='Contraseña'
+                type='password'
+                id='password'
+                autoComplete='current-password'
                 {...password}
               />
             </Grid>
@@ -161,11 +161,11 @@ console.log(gender)
                 variant="outlined"
                 required
                 fullWidth
-                name="cellphone"
-                label="Telefono"
-                type="number"
-                id="cellphone"
-                autoComplete="cellphone"
+                name='cellphone'
+                label='Telefono'
+                type='number'
+                id='cellphone'
+                autoComplete='cellphone'
                 inputProps={{ maxLength: 10 }}
                 {...cellphone}
               />
@@ -173,16 +173,17 @@ console.log(gender)
             <Grid item xs={12}>
               Foto de perfil
               <TextField
-                variant="outlined"
+                variant='outlined'
                 required
                 fullWidth
-                name="file"
-                type="file"
-                id="file"
-                autoComplete="file"
+                name='file'
+                type='file'
+                id='file'
+                autoComplete='file'
                 {...file}
               />
             </Grid>
+
             <Grid item xs={12}>
               <InputLabel id="demo-simple-select-label">Gnero</InputLabel>
               <Select
@@ -196,23 +197,24 @@ console.log(gender)
                 <MenuItem value={"No Binario"}>No Binario</MenuItem>
               </Select>
             </Grid>
+            
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Quiero recibir información y promociones via email."
+                control={<Checkbox value='allowExtraEmails' color='primary' />}
+                label='Quiero recibir información y promociones via email.'
               />
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
           >
             Registrarme
           </Button>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent='flex-end'>
             <Grid item>
               <Link to={"/login"} variant="body2">
                 Ya tienes cuenta? Ingresar

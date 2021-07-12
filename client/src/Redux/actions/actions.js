@@ -47,3 +47,7 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
     });
   }
 };
+
+export const serviceSearch = (payload) => (dispatch ) =>{
+  dispatch({type: actionsTypes.SEARCH_SERVICE_BY_NAME, payload})
+}
