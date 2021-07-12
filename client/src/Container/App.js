@@ -8,6 +8,9 @@ import Section from "../components/Section/Section.js";
 import Cart from "../components/Cart/Cart";
 import ServiceDetails from "../components/Section/Services/Service/ServiceDetails/ServiceDetails";
 import searchPlace from '../components/SerachPlace/searchPlace'
+import { ProvidersByService } from "../components/Section/Providers/ProvidersByService";
+
+
 
 const App = () => {
   return (
@@ -16,6 +19,7 @@ const App = () => {
       <Route path={["/home"]} component={(Home, Section)}/>
       <Route exact path="/login"  component={Login}/>
       <Route exact path="/userRegister"  component={UserRegister} />
+      <Route path="/services/providers/:serviceName" component={ProvidersByService}/>
       <Route path="/services/details/:id" component={ServiceDetails}/>
       <Route exact path="/cart"  component={Cart}/>
       <Route exact path="/home"  component={searchPlace}/>
