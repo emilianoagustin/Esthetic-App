@@ -45,6 +45,12 @@ const appReducer = (state = initialState, action) => {
         ...state,
         error: action.payload.userActive,
       };
+    case actionsTypes.LOGOUT:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        userActive: action.payload.userActive,
+      };
 
     //GET SERVICES --> DETAILS
 
