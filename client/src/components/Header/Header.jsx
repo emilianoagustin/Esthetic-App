@@ -92,10 +92,8 @@ const options = [
   "Zona Norte ",
   "Zona Sur",
   "Centro",
-  "Y. Buena Norte ",
-  "Y. Buena Sur",
-  "El Corte",
-  "La Banda",
+  "Zona Este",
+  "Zona Oeste"
 ];
 const ITEM_HEIGHT = 48;
 

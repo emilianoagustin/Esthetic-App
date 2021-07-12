@@ -185,16 +185,16 @@ console.log(gender)
             </Grid>
 
             <Grid item xs={12}>
-              <InputLabel id="demo-simple-select-label">Gnero</InputLabel>
+              <InputLabel id="demo-simple-select-label">Género</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={gender}
                 {...gender}
               >
-                <MenuItem value={"Hombre"}>Hombre</MenuItem>
-                <MenuItem value={"Mujer"}>Mujer </MenuItem>
-                <MenuItem value={"No Binario"}>No Binario</MenuItem>
+                <MenuItem value={"Male"}>Hombre</MenuItem>
+                <MenuItem value={"Female"}>Mujer </MenuItem>
+                <MenuItem value={"Non-binary"}>No Binario</MenuItem>
               </Select>
             </Grid>
             
