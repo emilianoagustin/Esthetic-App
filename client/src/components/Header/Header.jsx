@@ -12,11 +12,13 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import loto from "../../img/loto.png";
 import { BiShoppingBag } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
 import SearchBar from '../Searchbar/Searchbar'
+import {logout} from '../../Redux/actions/user.actions'
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -99,6 +101,7 @@ const ITEM_HEIGHT = 48;
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const logginState = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
@@ -123,6 +126,9 @@ export default function PrimarySearchAppBar() {
   const handleCloseZona = () => {
     setzona(null);
   };
+  const handleCloseLogin=() => {
+    dispatch(logout())
+  }
 
   const loginAndRegister = [
     <Link to={"/login"} style={{ color: "black", textDecoration: "none" }}>
@@ -160,7 +166,7 @@ export default function PrimarySearchAppBar() {
       >
         <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
       </Link>
-      <MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
     </Menu>,
   ];
 

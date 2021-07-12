@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
-
+import { getUser } from "../../Redux/actions/user.actions";
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const { setUser } = useContext(UserContext);
   const history = useHistory();
   const email = useInput("email");
@@ -69,7 +71,10 @@ export default function SignUp() {
   const cellphone = useInput("cellphone");
   const file = useInput("file");
   const gender = useInput("gender");
-console.log(gender)
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     log('intento de registro');
@@ -84,11 +89,13 @@ console.log(gender)
         gender: gender.value,
         image: file.value,
       });
+      
       // seteo de estado
       setUser(data);
       success(`register user ${data.email}`);
       // redirect home
-      history.push('/home');
+      history.push('/home')
+      dispatch(getUser())
     } catch ({ response }) {
       // algo no esta.
       error(response);

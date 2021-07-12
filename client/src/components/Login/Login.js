@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const loggin = useSelector((state) => state.userActive);
+  
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -88,6 +88,7 @@ export default function SignIn() {
       });
       setUser(data);
       success(`logged user ${data.email}`);
+      dispatch(getUser())
       history.push('/home');
       // history.push("/home")};
     } catch ({ response }) {
