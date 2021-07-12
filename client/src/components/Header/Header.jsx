@@ -10,7 +10,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import loto from "../../img/loto.png";
+import logo from "../../img/logo.png";
 import { BiShoppingBag } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import Menu from "@material-ui/core/Menu";
@@ -127,13 +127,13 @@ export default function PrimarySearchAppBar() {
   };
 
   const loginAndRegister = [
-    <Link to={"/login"} style={{ color: "white", textDecoration: "none" }}>
+    <Link to={"/login"} style={{ color: "black", textDecoration: "none" }}>
       <Button color="inherit">INGRESAR</Button>
     </Link>,
     "|",
     <Link
       to={"/userRegister"}
-      style={{ color: "white", textDecoration: "none" }}
+      style={{ color: "black", textDecoration: "none" }}
     >
       <Button color="inherit">REGISTRARSE </Button>
     </Link>,
@@ -169,7 +169,7 @@ export default function PrimarySearchAppBar() {
   const zonas = [ <Button
     onClick={handleClickZona}
     color="inherit"
-    style={{ color: "white", textDecoration: "none" }}
+    style={{ color: "black", textDecoration: "none" }}
   >
     ZONAS{" "}
   </Button>,
@@ -196,14 +196,14 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: "#14224F" }}>
+      <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to={"/home"} style={{ textDecoration: "none" }}>
               <img
-                src={loto}
+                src={logo}
                 alt="img no founded"
-                style={{ width: "3rem", height: "2rem " }}
+                style={{ width: "8rem", height: "4rem ", marginBottom: "-1rem" }}
               />
             </Link>
           </Typography>
@@ -218,7 +218,7 @@ export default function PrimarySearchAppBar() {
               |
               <Link
                 to={"/provaiderRegister"}
-                style={{ color: "white", textDecoration: "none" }}
+                style={{ color: "black", textDecoration: "none", background:"grey" }}
               >
                 <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
               </Link>
@@ -230,9 +230,8 @@ export default function PrimarySearchAppBar() {
          
             to={"/cart"}
             style={{
-              color: "white",
+              color: "black",
               textDecoration: "none",
-              backgroundColor: "gray",
               borderRadius: 50,
               marginLeft: "1rem",
             }}
