@@ -78,6 +78,10 @@ const UserSchema = new Schema(
         ref: "CreditCards",
       },
     ],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "Users",
+    },
   },
 
   { versionKey: false, timestamps: true }
