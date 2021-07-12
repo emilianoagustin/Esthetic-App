@@ -21,7 +21,7 @@ export const signUp: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ email: email }); // busco en la db
   if (userFound)
     return res.status(301).json({ message: 'The user alredy exists' });
-
+  console.log(req.file);
   const dataUser = {
     // image: `uploads\\${file}`,
     image: req.file?.path,
