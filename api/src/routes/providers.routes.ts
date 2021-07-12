@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { CreateCalendar } from "../controllers/calendar";
-import { addServiceToProvider, getProvidersByService } from '../controllers/servicesProviders';
+import {
+  addServiceToProvider,
+  getProvidersByService,
+} from "../controllers/servicesProviders";
 import {
   getAllProviders,
   // getProviderByName,
@@ -9,21 +12,36 @@ import {
   deleteProvider,
   updateProvider,
 } from "../controllers/providers";
+import {
+  getAllAddresses,
+  getOneAddress,
+  createAddress,
+  updateAddress,
+  deleteAddress,
+} from "../controllers/addresses";
+var multer = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 const router = Router();
 
-//Calendar Routes, ADD service to provider Route
-
-router.post("/calendar", CreateCalendar);
-router.post('/services', addServiceToProvider)
-
-router.get('/:serviceName', getProvidersByService)  // Get providers by service
+// <<PLAIN PROVIDERS ROUTES>>
 router.get("/", getAllProviders);
 // router.get("/?name", getProviderByName);
 router.get("/:id", getProviderById);
-router.post("/", createProvider);
+router.post("/", upload.single("image"), createProvider);
 router.delete("/:id", deleteProvider);
 router.put("/:id", updateProvider);
 
+//Calendar Routes, ADD service to provider Route
+router.post("/calendar", CreateCalendar);
+router.post("/services", addServiceToProvider);
+router.get("/services/:serviceName", getProvidersByService);
 
+// <<Routes to providers' addresses>>
+router.get("/addresses", getAllAddresses);
+router.get("/addresses/:id", getOneAddress);
+router.post("/addresses", createAddress);
+router.put("/addresses/:id", updateAddress);
+router.delete("/addresses/:id", deleteAddress);
 
 export default router;

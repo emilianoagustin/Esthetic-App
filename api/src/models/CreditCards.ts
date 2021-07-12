@@ -9,7 +9,7 @@ const CreditCardSchema = new Schema(
       trim: true,
     },
     card_number: {
-      type: String,
+      type: Number,
       required: true,
       trim: true,
       unique: true,
@@ -25,7 +25,7 @@ const CreditCardSchema = new Schema(
       trim: true,
     },
     verif_code: {
-      type: String,
+      type: Number,
       required: true,
       trim: true,
     },

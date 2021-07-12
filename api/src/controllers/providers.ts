@@ -1,5 +1,7 @@
-import { RequestHandler } from "express";
-import Providers from "../models/Providers";
+import { RequestHandler } from 'express';
+import Providers from '../models/Providers';
+import path from 'path';
+import fs from 'fs-extra';
 
 export const getAllProviders: RequestHandler = async (req, res) => {
   try {
@@ -44,7 +46,30 @@ export const createProvider: RequestHandler = async (req, res) => {
         message:
           "Lo sentimos. Ese email ya ha sido registrado. Puedes intentar dirigirte a la sección de 'Login' e ingresar con tu contraseña o crear un nuevo usuario con un email distinto",
       });
-    const newProvider = new Providers(req.body);
+
+    const {
+      firstName,
+      lastName,
+      gender,
+      email,
+      phone,
+      password,
+      hasCalendar,
+      file,
+    } = req.body;
+
+    const provider = {
+      image: `uploads\\${file}`,
+      firstName,
+      lastName,
+      gender,
+      email,
+      phone,
+      password,
+      hasCalendar,
+    };
+
+    const newProvider = new Providers(provider);
     newProvider.save();
     return res.status(202).send({
       data: newProvider,
@@ -52,7 +77,7 @@ export const createProvider: RequestHandler = async (req, res) => {
     });
   } catch (error: any) {
     res.status(501).send({
-      message: "Algo salió mal. Por favor vuelve a intentarlo.",
+      message: 'Algo salió mal. Por favor vuelve a intentarlo.',
     });
   }
   // <<< PASAR VALIDACION ORTOGRÁFICA Y DE DOMINIO AL FRONT >>>
@@ -75,7 +100,16 @@ export const updateProvider: RequestHandler = async (req, res) => {
 };
 
 export const deleteProvider: RequestHandler = async (req, res) => {
-  const deleteProv = await Providers.findByIdAndDelete(req.params.id);
-  if (!deleteProv) return res.status(202).send();
-  return res.send();
+  try {
+    const deleteProv = await Providers.findByIdAndDelete(req.params.id);
+    if (!deleteProv) return res.status(202).send();
+    if (deleteProv) await fs.unlink(path.resolve(deleteProv.image));
+    return res.json({
+      message: 'provider deleted',
+      deleteProv,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Ups! Something went wrong 😅' });
+  }
 };
+
