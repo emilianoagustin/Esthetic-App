@@ -1,5 +1,8 @@
 .provider-card{
-    margin: 0 30px;
+    margin: 15px 30px;
     display: flex;
     flex-direction: column;
+    border: none;
+    height: 350px;
+
 }
