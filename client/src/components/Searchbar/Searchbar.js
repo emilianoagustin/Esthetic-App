@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import { getServiceDetails } from "../../Redux/actions/actions";
+import { getServiceDetails, serviceSearch } from "../../Redux/actions/actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import { getServices } from "../../Redux/actions/actions";
@@ -61,8 +61,10 @@ const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
 
   console.log(keyword);
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     setKeyword(e.target.value);
+    dispatch(serviceSearch(keyword))
+    console.log("prueba")
   };
 
 
@@ -98,10 +100,10 @@ const SearchBar = () => {
       }}
       renderInput={(params) => (
         <div ref={params.InputProps.ref}>
-          <input style={{ width: 200 }} placeholder="Buscar Tratamiento..." type="text" {...params.inputProps} />
+          <input onChange={(e) => handleChange(e)} style={{ width: 200 }} placeholder="Buscar Tratamiento..." type="text" {...params.inputProps} />
         </div>
       )}
-      onChange={(e) => handleChange(e)}
+      
       inputProps={{ "aria-label": "search" }}
       onSubmit={onFormSubmit} 
     />

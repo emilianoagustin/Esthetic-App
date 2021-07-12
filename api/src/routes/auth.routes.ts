@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import * as authCtrl from '../controllers/auth.controller';
-var multer = require('multer')
-var upload = multer({ dest: 'uploads/' })
+import upload from '../libs/multer';
 
 const router = Router();
 
