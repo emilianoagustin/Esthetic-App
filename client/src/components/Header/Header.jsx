@@ -203,7 +203,7 @@ export default function PrimarySearchAppBar() {
               <img
                 src={logo}
                 alt="img no founded"
-                style={{ width: "8rem", height: "4rem " }}
+                style={{ width: "8rem", height: "4rem ", marginBottom: "-1rem" }}
               />
             </Link>
           </Typography>
