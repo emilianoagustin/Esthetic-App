@@ -129,7 +129,6 @@ export default function PrimarySearchAppBar() {
     setzona(null);
   };
   const handleCloseLogin=() => {
-    
     dispatch(logout())
   }
 

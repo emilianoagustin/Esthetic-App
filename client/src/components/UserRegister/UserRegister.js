@@ -89,13 +89,13 @@ export default function SignUp() {
         gender: gender.value,
         image: file.value,
       });
-      console.log({data})
+      
       // seteo de estado
       setUser(data);
       success(`register user ${data.email}`);
       // redirect home
-      dispatch(getUser())
       history.push('/home')
+      dispatch(getUser())
     } catch ({ response }) {
       // algo no esta.
       error(response);
