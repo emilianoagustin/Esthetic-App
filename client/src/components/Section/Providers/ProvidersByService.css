@@ -1,0 +1,7 @@
+.providers-container{
+    margin: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10%;
+
+}
