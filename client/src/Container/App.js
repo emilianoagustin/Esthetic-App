@@ -22,7 +22,7 @@ const App = () => {
       <Route path="/services/providers/:serviceName" component={ProvidersByService}/>
       <Route path="/services/details/:id" component={ServiceDetails}/>
       <Route exact path="/cart"  component={Cart}/>
-      <Route exact path="/home"  component={searchPlace}/>
+     
     </React.Fragment>
   );
 };
