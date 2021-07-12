@@ -11,7 +11,7 @@ export const signUp: RequestHandler = async (req, res) => {
     email,
     phone,
     password,
-    file,
+    // file,
   } = req.body;
   if (!email || !password)
     return res
@@ -23,7 +23,8 @@ export const signUp: RequestHandler = async (req, res) => {
     return res.status(301).json({ message: 'The user alredy exists' });
 
   const dataUser = {
-    image: `uploads\\${file}`,
+    // image: `uploads\\${file}`,
+    image: req.file?.path,
     firstName,
     lastName,
     username,
