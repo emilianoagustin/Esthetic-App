@@ -10,7 +10,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import logo from "../../img/logo.png";
+import loto from "../../img/loto.png";
 import { BiShoppingBag } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import Menu from "@material-ui/core/Menu";
@@ -201,9 +201,9 @@ export default function PrimarySearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to={"/home"} style={{ textDecoration: "none" }}>
               <img
-                src={logo}
+                src={loto}
                 alt="img no founded"
-                style={{ width: "8rem", height: "4rem ", marginBottom: "-1rem" }}
+                style={{ width: "4rem", height: "3rem ", marginBottom: "-1rem" }}
               />
             </Link>
           </Typography>

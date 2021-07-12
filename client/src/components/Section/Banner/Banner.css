@@ -1,17 +1,33 @@
 .banner-container {
   width: 100%;
-  display: flex;
   padding: 50px 200px;
   justify-content: center;
   align-items: center;
+  position: relative;
+  display: inline-block;
+  text-align: center;
 }
 .banner {
   display: flex;
   justify-content: center;
 }
-
+.titulo{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.texto{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 200%;
+  margin-top: 5rem;
+}
 .banner-img {
   height: 90%;
-  width: 90%;
-  border-radius: 25px;
+  width: 152%;
+  border-radius: 60px;
+}
+.about{
+  justify-content: center;
 }
