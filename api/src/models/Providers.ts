@@ -36,6 +36,10 @@ const ProvidersSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    calendar: {
+      type: Schema.Types.ObjectId,
+      ref: 'Calendar'
+    },
     addresses: [
       {
         type: Schema.Types.ObjectId,
