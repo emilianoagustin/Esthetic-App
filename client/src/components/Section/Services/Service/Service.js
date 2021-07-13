@@ -21,7 +21,7 @@ function Service({ data }) {
           )}
         </div>
       </Link>
-      <span className="service-desciption">{data.description}</span>
+      <span>{`Contrata servicios de ${data.name} a domicilio`}</span>
       <Link to={`/services/details/${data._id}`}>
         <button className="more-details">
           <span className="more-details-text">More Details</span>

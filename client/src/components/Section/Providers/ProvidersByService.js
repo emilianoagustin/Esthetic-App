@@ -16,18 +16,24 @@ export function ProvidersByService() {
 
   useEffect(() => {
     dispatch(getProvidersbyServiceName(serviceName));
-    return () => {};
+    return () => { };
   }, []);
 
   return (
     <div className="providers-container-main">
-      <h3 className="title">PROVIDERS</h3>
-      <h4>{serviceName}</h4>
-      <div className="providers-container">
-        {providers &&
-          providers.map((provider, index) => (
-            <Provider key={index} provider={provider} />
-          ))}
+      <div className='providers-container'>
+        <div className='providers-filters'>
+          <div>
+            <h1 className="title">{`${serviceName}`}</h1>
+            <h4 className='title'>Proveedores disponibles</h4>
+          </div>
+        </div>
+        <div className="providers-list">
+          {providers &&
+            providers.map((provider, index) => (
+              <Provider key={index} provider={provider} service={serviceName} />
+            ))}
+        </div>
       </div>
     </div>
   );
