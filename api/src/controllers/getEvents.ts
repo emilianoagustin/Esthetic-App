@@ -4,36 +4,43 @@ import Services from '../models/Services';
 import Users from '../models/Users';
 import Calendar from '../models/Calendar';
 import { isValidDate } from '../utils/functions';
+import Providers from '../models/Providers';
 
 export const getCalendarEventsByDay: RequestHandler = (req, res) => {
-    Calendar.findById(req.body.calendar)
-        .then((result: any) => {
-            const events: Array<any> = [];
 
-            result.eventsHours.forEach((hour: Number, index: any) => {
-                let validate = isValidDate(req.body.date, hour);
-                
-                events[index] = {
-                    isActive: validate,
-                    isAvailable: true,
-                    date: req.body.date,
-                    hour: hour,
-                }
-            })
+    Providers.findById(req.body.provider)
+        .then((prov: any) => {
+            Calendar.findOne({ provider: prov })
+                .then((result: any) => {
+                    const events: Array<any> = [];
 
-            result.events.map((event: any) => {
-                if (event.date === req.body.date) {
                     result.eventsHours.forEach((hour: Number, index: any) => {
-                        if (event.hour === hour) {
-                            events[index] = event;
+                        let validate = isValidDate(req.body.date, hour);
 
+                        events[index] = {
+                            isActive: validate,
+                            isAvailable: true,
+                            date: req.body.date,
+                            hour: hour,
                         }
                     })
-                }
-            });
 
-            return res.status(200).json(events);
+                    result.events.map((event: any) => {
+                        if (event.date === req.body.date) {
+                            result.eventsHours.forEach((hour: Number, index: any) => {
+                                if (event.hour === hour) {
+                                    events[index] = event;
+
+                                }
+                            })
+                        }
+                    });
+
+                    return res.status(200).json(events);
+                })
+
         })
+
         .catch(() => {
             return res.status(404).json({ message: 'No se encontraron Eventos' });
         })

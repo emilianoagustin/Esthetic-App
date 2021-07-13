@@ -36,10 +36,6 @@ const ProvidersSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    calendar: {
-      type: Schema.Types.ObjectId,
-      ref: 'Calendar'
-    },
     addresses: [
       {
         type: Schema.Types.ObjectId,
@@ -53,6 +49,10 @@ const ProvidersSchema = new Schema(
         ref: 'Services',
       },
     ],
+    calendar: {
+      type: Schema.Types.ObjectId,
+      ref: 'Calendar',
+    },
   },
   { versionKey: false, timestamps: true }
 );
