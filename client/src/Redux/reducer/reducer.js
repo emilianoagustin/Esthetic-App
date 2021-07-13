@@ -9,7 +9,7 @@ const initialState = {
   userActive: false,
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
-  providersByService: { loading: true, data: [] },
+  providersByService: { loading: true, data: [] }
 };
 
 const appReducer = (state = initialState, action) => {

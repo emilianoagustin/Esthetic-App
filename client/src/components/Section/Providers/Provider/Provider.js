@@ -21,8 +21,8 @@ function Provider({ provider, service }) {
             </div>
           </div>
           <div className='card-options'>
-            <NavLink className='navLink card-button' to='/'>Ver Agenda</NavLink>
-            <NavLink className='navLink card-button' to='/'>Ver Historial</NavLink>
+            <NavLink className='navLink card-button' to='/'>Ver Perfil</NavLink>
+            <NavLink className='navLink card-button' to={`/services/providers/${service}/${provider._id}/calendar`}>Ver Agenda</NavLink>
             <NavLink className='navLink card-button' to='/'>Ver Reseñas</NavLink>
           </div>
         </div>
