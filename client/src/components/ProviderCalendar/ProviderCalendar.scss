@@ -7,7 +7,7 @@
 
 .calendar-events{
     width: 50%;
-
+    margin: 30px;
 }
 
 .calendar-container{
@@ -21,4 +21,33 @@
     width: 50%;
     margin: auto;
 }
+
+.event{
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.available {
+    background-color: rgb(206, 236, 255);
+}
+
+.not-available {
+    background-color: rgb(254, 255, 206);
+}
+
+.not-active {
+    background-color: rgb(255, 206, 206);
+}
+
+.fc-day:hover {
+    background-color: rgb(173, 204, 253);
+}
+
+.fc-day-past {
+    background-color: rgb(185, 185, 185);
+}
+
 

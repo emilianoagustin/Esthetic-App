@@ -48,11 +48,7 @@ const ProvidersSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Services',
       },
-    ],
-    calendar: {
-      type: Schema.Types.ObjectId,
-      ref: 'Calendar',
-    },
+    ]
   },
   { versionKey: false, timestamps: true }
 );
