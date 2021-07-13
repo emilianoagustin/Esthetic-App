@@ -1,5 +1,5 @@
 import actionsTypes from "../constants/constants";
-import {findService} from "../../utils/filter.js";
+import { findService } from "../../utils/filter.js";
 
 const initialState = {
   services: {
@@ -9,7 +9,11 @@ const initialState = {
   userActive: false,
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
-  providersByService: { loading: true, data: [] }
+  providersByService: { loading: true, data: [] },
+  session_id: {
+    user: '',
+    provider: ''
+  }
 };
 
 const appReducer = (state = initialState, action) => {
