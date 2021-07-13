@@ -6,6 +6,8 @@ const RatingSchema = new Schema(
       type: Number,
       required: true,
       trim: true,
+      min: 0,
+      max: 5,
     },
     Avg_assessment: {
       type: Number,
