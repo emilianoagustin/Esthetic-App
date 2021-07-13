@@ -31,9 +31,9 @@ function ServiceDetails() {
           <img className="img" src={defaultImg} alt="Default Image"></img>
         )}
         <div className="service-data">
-          <h1>{service && service.name}</h1>
+          <h1>{service && service.name}</h1><hr />
           <p>{service && service.description}</p>
-          <p>{service && service.price}</p>
+          <p>AR$ {service && service.price}</p>
         </div>
       </div>
     </div>
