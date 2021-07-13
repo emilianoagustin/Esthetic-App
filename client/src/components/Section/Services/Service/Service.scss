@@ -8,23 +8,32 @@
   border-radius: 25px;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid black;
+  border: 1px solid rgb(139, 139, 139);
   -webkit-box-shadow: 8px 3px 8px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 8px 3px 8px 0px rgba(0, 0, 0, 0.75);
+  transition: background-color 2s ease-out 100ms;
+  transition: width 100ms ease-out 100ms;
+}
+
+.service-text{
+  opacity: 0%;
+  transition-property: opacity, left;
+  transition-duration: 2s, 4s ;
+}
+
+.service:hover  {
+  background-color: rgb(255, 197, 247);
+  width: 250px;
+  .service-text{
+    opacity: 100%;
+  }
 }
 
 .img {
+  position: relative;
   height: 200px;
   width: 200px;
   border-radius: 10%;
-}
-
-.service-title {
-  height: 15px;
-  font-weight: 600;
-  border: none;
-  padding: 10px;
-  font-size: 15px;
 }
 .service-title-btn{
   display: flex;

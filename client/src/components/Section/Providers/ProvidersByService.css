@@ -1,13 +1,29 @@
 .providers-container{
-    margin: 50px;
+    min-width: 90vw;
+    background-color: rgb(243, 219, 174);
     display: flex;
-    flex-wrap: wrap;
-    padding: 10%;
-    background-color: var(--background_color);
-
-
+    min-height: 93vh;
+    border-left: 1px solid rgb(90, 90, 90);
+    border-right: 1px solid rgb(90, 90, 90);
 }
 
 .providers-container-main{
-    background-color: var(--background_color)
+    /* background-color: var(--background_color) */
+    background-image: url('https://cdn.pixabay.com/photo/2021/04/12/19/35/flowers-6173793_960_720.jpg');
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.providers-filters {
+    width: 50%;
+}
+
+.providers-list {
+    width: 50%;
+    overflow-y: scroll;
+}
+.providers-list::-webkit-scrollbar {
+    width: 10px;
 }
