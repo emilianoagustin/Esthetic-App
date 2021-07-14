@@ -9,7 +9,7 @@ const CreditCardSchema = new Schema(
       trim: true,
     },
     card_number: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
       unique: true,
@@ -41,4 +41,4 @@ const CreditCardSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 CreditCardSchema.plugin(require("mongoose-autopopulate"));
-export default model("CreditCard", CreditCardSchema);
+export default model("CreditCards", CreditCardSchema);

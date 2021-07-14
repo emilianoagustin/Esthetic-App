@@ -12,6 +12,7 @@ export interface IUser extends Document {
   password: string;
   event: any[];
   addresses: any[];
+  creditCards: any[];
   comparePassword(password: string): Promise<boolean>;
 }
 
@@ -73,7 +74,7 @@ const UserSchema = new Schema(
         autopopulate: true,
       },
     ],
-    crediCards: [
+    creditCards: [
       {
         type: Schema.Types.ObjectId,
         ref: "CreditCards",

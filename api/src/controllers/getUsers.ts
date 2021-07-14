@@ -1,7 +1,7 @@
-import { RequestHandler } from 'express';
-import Users from '../models/Users';
-import path from 'path';
-import fs from 'fs-extra';
+import { RequestHandler } from "express";
+import Users from "../models/Users";
+import path from "path";
+import fs from "fs-extra";
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {
@@ -17,7 +17,9 @@ export const getUser: RequestHandler = async (req, res) => {
   try {
     const userFound = await Users.findById(req.params.id);
     if (!userFound)
-      return res.json(404).json({ message: 'El usuario no existe' });
+      return res
+        .json(404)
+        .json({ message: "No encontramos el usuario solicitado" });
     return res.json(userFound);
   } catch (error) {
     res.json(error);
@@ -27,7 +29,9 @@ export const getUser: RequestHandler = async (req, res) => {
 export const createUser: RequestHandler = async (req, res) => {
   const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
   if (userFound)
-    return res.status(301).json({ message: 'The user alredy exists' });
+    return res
+      .status(300)
+      .json({ message: "Ya existe un usuario con ese email." });
   const {
     firstName,
     lastName,
@@ -51,32 +55,40 @@ export const createUser: RequestHandler = async (req, res) => {
   };
   const newUser = new Users(dataUser);
   const savedUser = await newUser.save();
-  res.json(savedUser);
+  res.status(201).json(savedUser);
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
   try {
     const userUpdate = await Users.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-    }); // 1params id para buscar, 2params los datos para actualizar, 3params pasarle new para poder retornar el usuario con los datos actualizados
-    if (!userUpdate) return res.status(204).json();
-    return res.json(userUpdate);
+    });
+    if (!userUpdate)
+      return res
+        .status(404)
+        .json({ message: "No encontramos el usuario solicitado" });
+    return res.status(201).json(userUpdate);
   } catch (error) {
-    res.send(error);
+    res.status(500).json({ message: "Ha habido un problema con tu pedido" });
   }
 };
 
 export const deleteUser: RequestHandler = async (req, res) => {
   try {
     const userDelete = await Users.findByIdAndDelete(req.params.id);
-    if (!userDelete) return res.status(204).json();
-    if (userDelete) await fs.unlink(path.resolve(userDelete.image));
-    return res.json({
-      message: 'user deleted',
-      userDelete,
-    });
+    if (!userDelete)
+      return res
+        .status(404)
+        .json({ message: "No encontramos el usuario solicitado" });
+    else {
+      await fs.unlink(path.resolve(userDelete.image));
+      return res.json({
+        message: "Usuario eliminado con éxito.",
+        userDelete,
+      });
+    }
   } catch (error) {
-    res.status(500).json({ message: 'something bad things 😅' });
+    res.status(500).json({ message: "Ha habido un problema con tu pedido" });
   }
 };
 
