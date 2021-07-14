@@ -17,9 +17,6 @@ import {
 var multer = require("multer");
 var upload = multer({ dest: "uploads/" });
 
-var multer = require("multer");
-var upload = multer({ dest: "uploads/" });
-
 const router = Router();
 
 // <<PLAIN USERS ROUTES>>
