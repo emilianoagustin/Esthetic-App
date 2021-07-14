@@ -4,6 +4,8 @@ import cors from 'cors';
 import router from './routes/index.routes';
 import path from 'path';
 import bodyParser from 'body-parser';
+import passport from 'passport';
+import JWTStrategy from './libs/passport-jwt';
 // const fileUpload = require('express-fileupload');
 
 const app: Application = express();
@@ -15,10 +17,14 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
+//authentication passport (read token)
+app.use(passport.initialize());
+passport.use(JWTStrategy);
 
 app.use('/', router);
 
 // storage para guardar img en mi db
-app.use('/uploads', express.static(path.join(__dirname + 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname + 'uploads')));
+app.use('/upload', express.static(path.join(__dirname + '../uploads')));
 
 export default app;

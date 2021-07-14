@@ -1,6 +1,7 @@
 import actionsTypes from "../constants/constants";
 import { findService } from "../../utils/filter.js";
 
+
 const initialState = {
   services: {
     loading: true,
@@ -35,24 +36,27 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
+
         services: { loading: false, error: action.payload },
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
+
        /* ocalStorage.setItem("token", action.payload.token) */;
+
       return {
         ...state,
         loginData: action.payload,
         userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         userActive: action.payload.userActive,
