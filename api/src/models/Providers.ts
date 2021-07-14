@@ -39,7 +39,7 @@ const ProvidersSchema = new Schema(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Address',
+        ref: 'Addresses',
         autopopulate: true,
       },
     ],
@@ -48,7 +48,7 @@ const ProvidersSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Services',
       },
-    ],
+    ]
   },
   { versionKey: false, timestamps: true }
 );

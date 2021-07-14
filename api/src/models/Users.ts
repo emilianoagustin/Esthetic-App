@@ -69,7 +69,8 @@ const UserSchema = new Schema<IUser>(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Address',
+        ref: 'Addresses',
+        autopopulate: true,
       },
     ],
     crediCards: [

@@ -10,6 +10,10 @@ const initialState = {
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
+  session_id: {
+    user: '',
+    provider: '',
+  },
 };
 
 const appReducer = (state = initialState, action) => {
