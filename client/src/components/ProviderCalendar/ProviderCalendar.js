@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import './ProviderCalendar.scss';
+import Reservation from './Reservation/Reservation.js';
 import { NavLink } from 'react-router-dom';
 
 export default function ProviderCalendar({ match }) {
@@ -12,6 +13,7 @@ export default function ProviderCalendar({ match }) {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [events, setEvents] = useState([]);
+    const [active, setActive] = useState(false);
     const [providerID, setProviderID] = useState(match.params.provider);
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
@@ -59,8 +61,12 @@ export default function ProviderCalendar({ match }) {
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
         console.log(e)
-        e.dayEl.style.backgroundColor = '#5A72F5';
+        e.dayEl.style.backgroundColor = '#8999F1';
         setInfo(e);
+    }
+
+    const handleClick = (e) => {
+        setActive(!active)
     }
 
     return (
@@ -91,7 +97,7 @@ export default function ProviderCalendar({ match }) {
                                                             : 'event not-active'
                                                     }>
                                                         <div>
-                                                            <h4>{e.date}</h4>
+                                                            <h4>{`${e.date} - ${e.hour}:00hs`}</h4>
                                                             {`Disponibilidad: ${e.isActive ?
                                                                 e.isAvailable ? 'Disponible'
                                                                     : 'Reservado'
@@ -101,12 +107,26 @@ export default function ProviderCalendar({ match }) {
                                                         {
                                                             e.isActive ?
                                                                 e.isAvailable ? (
-                                                                    <NavLink className='navLink card-button' to={`/`}>
+                                                                    <button
+                                                                        className='card-button'
+                                                                        onClick={handleClick}
+                                                                    >
                                                                         Reservar
-                                                                    </NavLink>
+                                                                    </button>
                                                                 )
                                                                     : null
                                                                 : null
+                                                        }
+                                                        {
+                                                            active
+                                                                ? (
+                                                                    <Reservation
+                                                                        handleClick={handleClick}
+                                                                        provider={`${provider.firstName} ${provider.lastName}`}
+                                                                        date={e.date}
+                                                                        hour={`${e.hour}:00hs`}
+                                                                    />
+                                                                ) : null
                                                         }
                                                     </div>
                                                 ))

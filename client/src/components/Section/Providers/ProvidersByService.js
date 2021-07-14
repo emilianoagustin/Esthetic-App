@@ -9,8 +9,6 @@ export function ProvidersByService() {
   const dispatch = useDispatch();
   const providers = useSelector((state) => state.providersByService.data);
 
-  console.log(providers, "Esto es el  providers");
-
   const { serviceName } = useParams();
 
   useEffect(() => {

@@ -38,7 +38,12 @@
 }
 
 .fc-day-past {
-    background-color: rgb(185, 185, 185);
+    color: rgb(180, 1, 1);
+    background-color: rgb(194, 194, 194);
+}
+
+.fc-daygrid {
+    box-shadow: 0 0 5px black;
 }
 
 @media (max-width: 1200px) {
@@ -56,5 +61,3 @@
         margin: auto;
     }
 }
-
-

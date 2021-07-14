@@ -27,3 +27,19 @@
 .providers-list {
     width: 50%;
 }
+
+@media (max-width: 1200px) {
+    .providers-container{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+    .providers-filters{
+        width: 100%;
+        margin: auto;
+    }
+    .providers-list{
+        width: 100%;
+        margin: auto;
+    }
+}
