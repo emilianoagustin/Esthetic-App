@@ -64,17 +64,16 @@ export default function ProviderCalendar({ match }) {
     }
 
     return (
-        <div>
+        <div className='container-main'>
             {
                 loading ? (<div>cargando...</div>) :
                     error ? (<div>error...</div>) :
                         (<div className='container'>
-                            <h1>{`Agenda de ${provider.firstName}`}</h1>
+                            <h1 className='title'>{`Agenda de ${provider.firstName}`}</h1>
                             <div className=''>
                                 <div className='calendar-container'>
                                     <div className='calendar-division'>
                                         <FullCalendar
-                                            className='calendar'
                                             plugins={[dayGridPlugin, interactionPlugin]}
                                             initialView="dayGridMonth"
                                             dateClick={handleDateClick}
