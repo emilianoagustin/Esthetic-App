@@ -1,7 +1,7 @@
 import React from 'react';
 import './Reservation.scss'
 
-export default function Reservation({ handleClick, date, hour, provider }) {
+export default function Reservation({ handleClick, date, hour, provider, service, price }) {
     return (
         <div className='modal'>
             <div className='modal-content'>
@@ -24,11 +24,11 @@ export default function Reservation({ handleClick, date, hour, provider }) {
                         </tr>
                         <tr>
                             <td>Servicio</td>
-                            <td>{date}</td>
+                            <td>{service}</td>
                         </tr>
                         <tr>
                             <td>Precio</td>
-                            <td>{date}</td>
+                            <td>{price}</td>
                         </tr>
                         <tr>
                             <td>Dirección</td>

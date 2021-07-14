@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function ProviderCalendar({ match }) {
     const [provider, setProvider] = useState();
+    const [service, setService] = useState(match.params.service);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [events, setEvents] = useState([]);
@@ -33,6 +34,13 @@ export default function ProviderCalendar({ match }) {
                 setError(true);
                 setLoading(false);
             })
+        axios.get(`${HOST}/services/name/${match.params.service}`)
+            .then(service => {
+                setService(service.data);
+            })
+            .catch(err => {
+                setError(true);
+            })
     }, [])
 
     useEffect(() => {
@@ -48,7 +56,6 @@ export default function ProviderCalendar({ match }) {
         })
             .then(eventsList => {
                 setEvents(eventsList.data)
-                console.log(eventsList.data)
             })
             .catch(err => {
                 setError(true);
@@ -60,7 +67,6 @@ export default function ProviderCalendar({ match }) {
         const actual = e.date;
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
-        console.log(e)
         e.dayEl.style.backgroundColor = '#8999F1';
         setInfo(e);
     }
@@ -125,6 +131,8 @@ export default function ProviderCalendar({ match }) {
                                                                         provider={`${provider.firstName} ${provider.lastName}`}
                                                                         date={e.date}
                                                                         hour={`${e.hour}:00hs`}
+                                                                        service={service.name}
+                                                                        price={service.price}
                                                                     />
                                                                 ) : null
                                                         }
