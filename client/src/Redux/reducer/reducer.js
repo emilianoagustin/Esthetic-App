@@ -11,9 +11,13 @@ const initialState = {
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   session_id: {
-    user: '',
-    provider: ''
-  }
+    user: "",
+    provider: "",
+  },
+  userData: {
+    loading: true,
+    data: {},
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -116,6 +120,24 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { data: findService(state.allServices.data, action.payload) },
+      };
+
+    /// GET USER DATA (PROFILE)
+
+    case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
+      return {
+        ...state,
+        userData: { loading: true },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userData: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_FAIL:
+      return {
+        ...state,
+        userData: { loading: false, error: action.payload },
       };
 
     default:
