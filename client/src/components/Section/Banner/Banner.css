@@ -11,12 +11,12 @@
   display: flex;
   justify-content: center;
 }
-.titulo{
+.titulo {
   position: absolute;
   top: 10px;
   left: 10px;
 }
-.texto{
+.texto {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -28,6 +28,6 @@
   width: 152%;
   border-radius: 30px;
 }
-.about{
+.about {
   justify-content: center;
 }

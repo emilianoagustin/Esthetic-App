@@ -20,7 +20,6 @@ import SearchBar from '../Searchbar/Searchbar'
 import {logout} from '../../Redux/actions/user.actions'
 import './Header.scss'
 
-
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -96,7 +95,7 @@ const options = [
   "Zona Sur",
   "Centro",
   "Zona Este",
-  "Zona Oeste"
+  "Zona Oeste",
 ];
 const ITEM_HEIGHT = 48;
 
@@ -118,27 +117,26 @@ export default function PrimarySearchAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleClickZona = (event) => {
     setzona(event.currentTarget);
   };
- 
 
   const handleCloseZona = () => {
     setzona(null);
   };
-  const handleCloseLogin=() => {
-    dispatch(logout())
-  }
+  const handleCloseLogin = () => {
+    dispatch(logout());
+  };
 
   const loginAndRegister = [
-    <Link to={"/login"} style={{ color: "black", textDecoration: "none" }}>
+    <Link to={"/login"} style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}>
       <Button color="inherit">INGRESAR</Button>
     </Link>,
     "|",
     <Link
       to={"/userRegister"}
-      style={{ color: "black", textDecoration: "none" }}
+      style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
     >
       <Button color="inherit">REGISTRARSE </Button>
     </Link>,
@@ -158,12 +156,12 @@ export default function PrimarySearchAppBar() {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
-      <Link to={"/perfil"} style={{ color: "black", textDecoration: "none" }}>
+      <Link to={"/perfil"} style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}>
         <MenuItem onClick={handleClose}>Perfil</MenuItem>
       </Link>
       <Link
         to={"/perfil/historial"}
-        style={{ color: "black", textDecoration: "none" }}
+        style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
       >
         <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
       </Link>
@@ -171,71 +169,78 @@ export default function PrimarySearchAppBar() {
     </Menu>,
   ];
 
-  const zonas = [ <Button
-    onClick={handleClickZona}
-    color="inherit"
-    style={{ color: "black", textDecoration: "none" }}
-  >
-    ZONAS{" "}
-  </Button>,
-      <Menu
-        id="long-menu"
-        anchorEl={zona}
-        keepMounted
-        open={abrir}
-        onClose={handleCloseZona}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
-          },
-        }}
-      >
-        {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleCloseZona}>
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
-     ]
+  const zonas = [
+    <Button
+      onClick={handleClickZona}
+      color="inherit"
+      style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
+    >
+      ZONAS{" "}
+    </Button>,
+    <Menu
+      id="long-menu"
+      anchorEl={zona}
+      keepMounted
+      open={abrir}
+      onClose={handleCloseZona}
+      PaperProps={{
+        style: {
+          color: "rgb(121, 47, 111)",
+          maxHeight: ITEM_HEIGHT * 4.5,
+          width: "20ch",
+        },
+      }}
+    >
+      {options.map((option) => (
+        <MenuItem
+          key={option}
+          selected={option === "Pyxis"}
+          onClick={handleCloseZona}
+        >
+          {option}
+        </MenuItem>
+      ))}
+    </Menu>,
+  ];
 
   return (
     <div className={`${classes.grow} header`}>
       <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            <Link to={"/home"} style={{ textDecoration: "none" }}>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
               <img
                 src={loto}
                 alt="img no founded"
-                style={{ width: "4rem", height: "3rem ", marginBottom: "-1rem" }}
+                style={{
+                  width: "4rem",
+                  height: "3rem ",
+                  marginBottom: "-1rem",
+                }}
               />
             </Link>
           </Typography>
-       
-          <SearchBar/>
+
+          <SearchBar />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>
           <div style={{ display: "flex", marginRight: "2rem" }}>
             <div>
-             
-              {zonas}
-              |
-              <Link
+              {zonas}|
+              {/* <Link
                 to={"/provaiderRegister"}
                 style={{ color: "black", textDecoration: "none", background:"grey" }}
               >
                 <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <b>{!logginState ? loginAndRegister : loginProfile}</b>
 
           <Link
-         
             to={"/cart"}
             style={{
-              color: "black",
+              color: "rgb(121, 47, 111)",
               textDecoration: "none",
               borderRadius: 50,
               marginLeft: "1rem",
