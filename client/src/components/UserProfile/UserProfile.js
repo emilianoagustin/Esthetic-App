@@ -1,12 +1,8 @@
 import React, {useEffect} from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getUserProfile } from '../../Redux/actions/user.actions';
 import "./UserProfile.css"
-
-
-
-
 
 function UserProfile() {
     const dispatch = useDispatch();

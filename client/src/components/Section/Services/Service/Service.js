@@ -10,7 +10,7 @@ function Service({ data }) {
     <div className="service">
       <Link to={`/services/providers/${data.name}`}>
         <div className="service-title-btn">
-          <button >
+          <button>
             <span className="service-title">{data.name}</span>
           </button>
         </div>
@@ -22,7 +22,7 @@ function Service({ data }) {
           )}
         </div>
       </Link>
-      <span className='service-text'>{`Contrata servicios de ${data.name} a domicilio`}</span>
+      <span className="service-text">{`Contrata servicios de ${data.name} a domicilio`}</span>
       <Link to={`/services/details/${data._id}`}>
         <button className="more-details">
           <span className="more-details-text">Ver Detalles</span>
