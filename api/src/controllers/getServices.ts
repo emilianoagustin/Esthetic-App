@@ -43,6 +43,16 @@ export const getServiceDetail: RequestHandler = (req, res) => {
     });
 };
 
+export const getServiceDetailByName: RequestHandler = (req, res) => {
+  Services.findOne({ name: req.params.serviceName })
+    .then((result: any) => {
+      return res.status(200).json(result);
+    })
+    .catch(() => {
+      return res.status(404).json({ message: 'Este servicio no existe' });
+    });
+};
+
 export const deleteService: RequestHandler = async (req, res) => {
   Services.findByIdAndDelete(req.params.id)
     .then((result: any) => {

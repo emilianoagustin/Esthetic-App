@@ -1,17 +1,19 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { getUser } from '../../Redux/actions/user.actions';
-import { useInput } from '../../hooks/customHooks';
-import { UserContext } from '../../index';
-import { log, success, error } from '../../utils/logs';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { loginUser } from "../../Redux/actions/user.actions";
+import { useInput } from "../../hooks/customHooks";
+import { UserContext } from "../../index";
+import { log, success, error } from "../../utils/logs";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
 /* import Link from '@material-ui/core/Link'; */
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -142,8 +144,10 @@ export default function SignUp() {
       setUser(data);
       success(`register user ${data.email}`);
       // redirect home
-      history.push('/home');
-      dispatch(getUser());
+      
+      history.push('/home')
+      dispatch(loginUser())
+
     } catch ({ response }) {
       // algo no esta.
       error(response);

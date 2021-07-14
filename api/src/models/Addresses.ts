@@ -5,7 +5,6 @@ const AddressSchema = new Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     country: {
@@ -44,15 +43,15 @@ const AddressSchema = new Schema(
     provider: {
       type: Schema.Types.ObjectId,
       ref: "Providers",
-      autopopulate: true,
+      // autopopulate: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       ref: "Users",
-      autopopulate: true,
+      // autopopulate: true,
     },
   },
   { versionKey: false, timestamps: true }
 );
 AddressSchema.plugin(require("mongoose-autopopulate"));
-export default model("Address", AddressSchema);
+export default model("Addresses", AddressSchema);

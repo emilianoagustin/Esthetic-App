@@ -15,7 +15,7 @@ export function Services({ services }) {
 
   return (
     <div>
-      <h3 className="title">SERVICIOS</h3>
+      <h1 className="title">SERVICIOS</h1>
       <div className="services-container">
         {services.data && services.data.map((service, index) => (
           <Service key={index} data={service} />

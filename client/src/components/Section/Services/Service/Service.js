@@ -1,10 +1,11 @@
 import React from "react";
-import "./Service.css";
+import "./Service.scss";
 import { Link } from "react-router-dom";
 import defaultImg from "../../../../img/wall-cart.jpg";
 
 function Service({ data }) {
-  console.log(data);
+ 
+
   return (
     <div className="service">
       <Link to={`/services/providers/${data.name}`}>
@@ -21,10 +22,10 @@ function Service({ data }) {
           )}
         </div>
       </Link>
-      <span className="service-desciption">{data.description}</span>
+      <span className='service-text'>{`Contrata servicios de ${data.name} a domicilio`}</span>
       <Link to={`/services/details/${data._id}`}>
         <button className="more-details">
-          <span className="more-details-text">More Details</span>
+          <span className="more-details-text">Ver Detalles</span>
         </button>
       </Link>
     </div>

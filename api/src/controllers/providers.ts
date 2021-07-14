@@ -1,7 +1,7 @@
-import { RequestHandler } from 'express';
-import Providers from '../models/Providers';
-import path from 'path';
-import fs from 'fs-extra';
+import { RequestHandler } from "express";
+import Providers from "../models/Providers";
+import path from "path";
+import fs from "fs-extra";
 
 export const getAllProviders: RequestHandler = async (req, res) => {
   try {
@@ -77,7 +77,7 @@ export const createProvider: RequestHandler = async (req, res) => {
     });
   } catch (error: any) {
     res.status(501).send({
-      message: 'Algo salió mal. Por favor vuelve a intentarlo.',
+      message: "Algo salió mal. Por favor vuelve a intentarlo.",
     });
   }
   // <<< PASAR VALIDACION ORTOGRÁFICA Y DE DOMINIO AL FRONT >>>
@@ -105,11 +105,10 @@ export const deleteProvider: RequestHandler = async (req, res) => {
     if (!deleteProv) return res.status(202).send();
     if (deleteProv) await fs.unlink(path.resolve(deleteProv.image));
     return res.json({
-      message: 'provider deleted',
+      message: `provider ${deleteProv.firstName} deleted`,
       deleteProv,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Ups! Something went wrong 😅' });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
-
