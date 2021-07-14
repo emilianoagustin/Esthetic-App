@@ -1,5 +1,6 @@
 import axios from "axios";
 import actionsTypes from "../constants/constants";
+<<<<<<< HEAD
 import {getUserData} from "../../utils/constants"
 
 
@@ -16,6 +17,20 @@ export const getUser = (data) => {
           payload: {
             userActive: true,
           },
+=======
+
+// login
+export const loginUser = (data) => {
+  console.log(data);
+  return (dispatch) => {
+    return axios
+      .post(`http://localhost:3002/auth/signin`, data)
+      .then((response) => {
+        console.log(response.data);
+        dispatch({
+          type: actionsTypes.LOGIN_SUCCESSFUL,
+          payload: response.data
+>>>>>>> e8baf4adf0c1df0d8590f42b62b1c586c3afc9e9
         });
       })
       .catch((error) => {
@@ -37,6 +52,7 @@ export const logout = () => {
     });
   };
 };
+<<<<<<< HEAD
 
 //USER PROFILE
 
@@ -56,3 +72,5 @@ export const getUserProfile = (userId) => async (dispatch) => {
     });
   }
 };
+=======
+>>>>>>> e8baf4adf0c1df0d8590f42b62b1c586c3afc9e9

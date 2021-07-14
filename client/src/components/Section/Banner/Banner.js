@@ -14,6 +14,7 @@ export default function Banner() {
           left: 150,
           backgroundColor: "white",
           width: "31rem",
+          color: "rgb(121, 47, 111)",
         }}
       >
         <h1>Spa-tify </h1>

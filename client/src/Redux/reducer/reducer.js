@@ -1,12 +1,14 @@
 import actionsTypes from "../constants/constants";
 import { findService } from "../../utils/filter.js";
 
+
 const initialState = {
   services: {
     loading: true,
     data: [],
   },
   userActive: false,
+  loginData: {},
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
@@ -14,10 +16,13 @@ const initialState = {
     user: "",
     provider: "",
   },
+<<<<<<< HEAD
   userData: {
     loading: true,
     data: {},
   },
+=======
+>>>>>>> e8baf4adf0c1df0d8590f42b62b1c586c3afc9e9
 };
 
 const appReducer = (state = initialState, action) => {
@@ -38,23 +43,27 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
+
         services: { loading: false, error: action.payload },
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-      localStorage.setItem("token", action.payload.token);
+
+       /* ocalStorage.setItem("token", action.payload.token) */;
+
       return {
         ...state,
-        userActive: action.payload.userActive,
+        loginData: action.payload,
+        userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         userActive: action.payload.userActive,

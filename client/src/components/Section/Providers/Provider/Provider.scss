@@ -10,14 +10,14 @@
     transition: background-color 1s ease-out 50ms;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 0.5em;
-    border-top-left-radius: 5em;
-    border-bottom-left-radius: 5em;
+    border-top-left-radius: 8em;
+    border-bottom-left-radius: 8em;
     justify-content: space-between;
     align-items: center;
 }
 
 .provider-card:hover {
-    background-color: rgb(240, 171, 81);
+    background-color: rgb(250, 199, 152);
 }
 
 .card-img {
@@ -51,6 +51,7 @@
     font-weight: bold;
     border: 1px solid rgb(136, 136, 136);
     text-transform: uppercase;
+    align-items: center;
     margin: 0.2em;
     justify-content: center;
 }

@@ -9,7 +9,7 @@ const ServiceSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
+      // unique: true,
     },
     price: {
       type: Number,
