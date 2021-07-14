@@ -47,11 +47,4 @@ router.post("/creditCard", createCreditCard);
 router.put("/creditCard/:id", updateCreditCard);
 router.delete("/creditCard/:id", deleteCreditCard);
 
-// <<Routes to creditCards>>
-router.get("/creditCards", getAllCreditCards);
-router.get("/creditCard/:id", getOneCreditCard);
-router.post("/creditCard", createCreditCard);
-router.put("/creditCard/:id", updateCreditCard);
-router.delete("/creditCard/:id", deleteCreditCard);
-
 export default router;
