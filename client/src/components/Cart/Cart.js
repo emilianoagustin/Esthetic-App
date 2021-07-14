@@ -20,38 +20,41 @@ const useStyles = makeStyles((theme) => ({
 
 function Cart() {
     const classes = useStyles();
-    return(
-        <Container maxWidth="false" className={classes.root}>
-            <Grid container direction="row">
-                <Grid
-                    container
-                    item
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    xs={12} 
-                    sm={6}
-                    className={classes.gridContainer}
-                    
-                >
-                    <CartItem />
-                    <CartItem />
-                    <CartItem />
-                </Grid>
+    return (
+        <div className='container-main'>
+            <div className='container'>
+                <h1 className='title'>Bolsa de compras</h1>
+                <Grid container direction="row">
+                    <Grid
+                        container
+                        item
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        xs={12}
+                        sm={6}
+                        className={classes.gridContainer}
 
-                <Grid
-                    container
-                    item
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    xs={12} 
-                    sm={6} 
-                >
-                    <CartOrder />
+                    >
+                        <CartItem />
+                        <CartItem />
+                        <CartItem />
+                    </Grid>
+
+                    <Grid
+                        container
+                        item
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        xs={12}
+                        sm={6}
+                    >
+                        <CartOrder />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </div>
+        </div>
     )
 }
 
