@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import defaultImg from "../../../../img/wall-cart.jpg";
 
 function Service({ data }) {
-  console.log(data);
+ 
 
   return (
     <div className="service">

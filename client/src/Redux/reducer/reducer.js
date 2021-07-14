@@ -7,13 +7,14 @@ const initialState = {
     data: [],
   },
   userActive: false,
+  loginData: {},
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   session_id: {
-    user: '',
-    provider: ''
-  }
+    user: "",
+    provider: "",
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -38,10 +39,11 @@ const appReducer = (state = initialState, action) => {
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-      localStorage.setItem("token", action.payload.token);
+       /* ocalStorage.setItem("token", action.payload.token) */;
       return {
         ...state,
-        userActive: action.payload.userActive,
+        loginData: action.payload,
+        userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
       localStorage.setItem("token", action.payload.token);

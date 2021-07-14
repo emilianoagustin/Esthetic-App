@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { getUser } from "../../Redux/actions/user.actions";
+import { loginUser } from "../../Redux/actions/user.actions";
 import { useInput } from "../../hooks/customHooks";
 import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
@@ -95,7 +95,7 @@ export default function SignUp() {
       success(`register user ${data.email}`);
       // redirect home
       history.push('/home')
-      dispatch(getUser())
+      dispatch(loginUser())
     } catch ({ response }) {
       // algo no esta.
       error(response);
