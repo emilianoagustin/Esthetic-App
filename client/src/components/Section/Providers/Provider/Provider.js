@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import defaultImg from "../../../../img/wall-cart.jpg";
-import "./Provider.css";
+import "./Provider.scss";
 
 function Provider({ provider, service }) {
   return (
