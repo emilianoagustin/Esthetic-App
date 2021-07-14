@@ -9,6 +9,7 @@ const initialState = {
   userActive: false,
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
+  providerById: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   session_id: {
     user: '',
@@ -81,7 +82,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         providers: { loading: true },
       };
-    case actionsTypes.GET_PROVIDERS_SUCCES:
+    case actionsTypes.GET_PROVIDERS_SUCCESS:
       return {
         ...state,
         providers: { loading: false, data: action.payload },
@@ -92,8 +93,26 @@ const appReducer = (state = initialState, action) => {
         providers: { loading: false, error: action.payload },
       };
 
-    //GET PROVIDERS BY SERVICE
+    //GET PROVIDER BY ID
+    
+    case actionsTypes.GET_PROVIDERS_REQUEST:
+      return {
+        ...state,
+        providerById: { loading: true}
+      };
+    case actionsTypes.GET_PROVIDER_BY_ID:
+      return {
+        ...state,
+        providerById: { loading: false, data: action.payload}
+      };
+    case actionsTypes.GET_PROVIDERS_FAIL:
+      return {
+        ...state,
+        providerById: { loading: false, error: action.payload}
+      };
 
+    //GET PROVIDERS BY SERVICE
+    
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST:
       return {
         ...state,
