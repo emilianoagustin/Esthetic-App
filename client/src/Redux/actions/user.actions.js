@@ -10,7 +10,6 @@ import actionsTypes  from "../constants/constants";
         console.log(response.data.token)
         dispatch({type: actionsTypes.LOGIN_SUCCESSFUL,
           payload: {
-            token: response.data.token,
             userActive: true, 
           }})
       })
@@ -20,3 +19,13 @@ import actionsTypes  from "../constants/constants";
       });
     }
   }
+
+  //logout
+ export const  logout = ()  => {
+    return (dispatch ) => {
+        dispatch({type: actionsTypes.LOGOUT,
+          payload: {
+            userActive: false, 
+          }})
+        }
+      }

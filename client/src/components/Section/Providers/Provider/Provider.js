@@ -1,21 +1,27 @@
 import React from "react";
 
-function Provider({ data }) {
+import defaultImg from "../../../../img/wall-cart.jpg";
+import "./Provider.css";
+
+function Provider({ provider }) {
   return (
-    <div>
+    <div className="provider-card">
       <button>
         <div>
-          {data.img ? (
-            <img className="img" src={data.img} alt="Service Image"></img>
+          {provider.img ? (
+            <img className="img" src={provider.img} alt="Service Image"></img>
           ) : (
             <img className="img" src={defaultImg} alt="Default Image"></img>
           )}
         </div>
-        <span className="service-title">{data.firstName}</span>
+        <span className="service-title">{provider.firstName}</span>
       </button>
 
-      <span className="service-desciption">{data.lastName}</span>
-      <span className="service-desciption">{data.addresses}</span>
+      <span className="service-desciption">{provider.lastName}</span>
+      <span className="service-desciption">{provider.email}</span>
+      <span className="service-desciption">
+        {provider.services.map((s) => s.name)}
+      </span>
     </div>
   );
 }

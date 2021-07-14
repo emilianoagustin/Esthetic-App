@@ -19,12 +19,13 @@ import {
   updateAddress,
   deleteAddress,
 } from '../controllers/addresses';
-var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
 
+import upload from '../libs/multer';
+import passport from 'passport';
+//passport.authenticate('jwt')
 const router = Router();
 
-// <<PLAIN PROVIDERS' ROUTES>>
+// <<PLAIN PROVIDERS ROUTES>>
 router.get('/', getAllProviders);
 // router.get("/?name", getProviderByName);
 router.get('/:id', getProviderById);
@@ -37,7 +38,7 @@ router.post('/calendar', CreateCalendar);
 router.post('/services', addServiceToProvider);
 router.get('/services/:serviceName', getProvidersByService);
 
-// <<Routes to users' addresses>>
+// <<Routes to providers' addresses>>
 router.get('/addresses', getAllAddresses);
 router.get('/addresses/:id', getOneAddress);
 router.post('/addresses', createAddress);

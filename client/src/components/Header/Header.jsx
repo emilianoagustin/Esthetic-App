@@ -12,11 +12,13 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import loto from "../../img/loto.png";
 import { BiShoppingBag } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
 import SearchBar from '../Searchbar/Searchbar'
+import {logout} from '../../Redux/actions/user.actions'
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -92,15 +94,14 @@ const options = [
   "Zona Norte ",
   "Zona Sur",
   "Centro",
-  "Y. Buena Norte ",
-  "Y. Buena Sur",
-  "El Corte",
-  "La Banda",
+  "Zona Este",
+  "Zona Oeste"
 ];
 const ITEM_HEIGHT = 48;
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const logginState = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
@@ -125,15 +126,18 @@ export default function PrimarySearchAppBar() {
   const handleCloseZona = () => {
     setzona(null);
   };
+  const handleCloseLogin=() => {
+    dispatch(logout())
+  }
 
   const loginAndRegister = [
-    <Link to={"/login"} style={{ color: "white", textDecoration: "none" }}>
+    <Link to={"/login"} style={{ color: "black", textDecoration: "none" }}>
       <Button color="inherit">INGRESAR</Button>
     </Link>,
     "|",
     <Link
       to={"/userRegister"}
-      style={{ color: "white", textDecoration: "none" }}
+      style={{ color: "black", textDecoration: "none" }}
     >
       <Button color="inherit">REGISTRARSE </Button>
     </Link>,
@@ -162,14 +166,14 @@ export default function PrimarySearchAppBar() {
       >
         <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
       </Link>
-      <MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
     </Menu>,
   ];
 
   const zonas = [ <Button
     onClick={handleClickZona}
     color="inherit"
-    style={{ color: "white", textDecoration: "none" }}
+    style={{ color: "black", textDecoration: "none" }}
   >
     ZONAS{" "}
   </Button>,
@@ -196,14 +200,14 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: "#14224F" }}>
+      <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to={"/home"} style={{ textDecoration: "none" }}>
               <img
                 src={loto}
                 alt="img no founded"
-                style={{ width: "3rem", height: "2rem " }}
+                style={{ width: "4rem", height: "3rem ", marginBottom: "-1rem" }}
               />
             </Link>
           </Typography>
@@ -218,7 +222,7 @@ export default function PrimarySearchAppBar() {
               |
               <Link
                 to={"/provaiderRegister"}
-                style={{ color: "white", textDecoration: "none" }}
+                style={{ color: "black", textDecoration: "none", background:"grey" }}
               >
                 <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
               </Link>
@@ -230,9 +234,8 @@ export default function PrimarySearchAppBar() {
          
             to={"/cart"}
             style={{
-              color: "white",
+              color: "black",
               textDecoration: "none",
-              backgroundColor: "gray",
               borderRadius: 50,
               marginLeft: "1rem",
             }}

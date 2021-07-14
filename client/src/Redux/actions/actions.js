@@ -1,6 +1,9 @@
-import axios from "axios";
-import actionsTypes  from "../constants/constants";
-import { getProvidersByService, getServicesBack } from "../../utils/constants.js";
+import axios from 'axios';
+import actionsTypes from '../constants/constants';
+import {
+  getProvidersByService,
+  getServicesBack,
+} from '../../utils/constants.js';
 //GET SERVICES
 
 export const getServices = () => async (dispatch) => {
@@ -15,10 +18,6 @@ export const getServices = () => async (dispatch) => {
     dispatch({ type: actionsTypes.SET_SERVICES_FAIL, payload: error.message });
   }
 };
-
-
-
- 
 
 export const getServiceDetails = (serviceId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_SERVICES_DETAILS_REQUEST });
@@ -39,11 +38,18 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
 
   try {
     const { data } = await axios.get(`${getProvidersByService}/${serviceName}`);
-    dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_SUCCES, payload: data });
+    dispatch({
+      type: actionsTypes.GET_PROVIDERS_BY_SERVICE_SUCCES,
+      payload: data,
+    });
   } catch (error) {
     dispatch({
       type: actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL,
       payload: error.message,
     });
   }
+};
+
+export const serviceSearch = (payload) => (dispatch) => {
+  dispatch({ type: actionsTypes.SEARCH_SERVICE_BY_NAME, payload });
 };

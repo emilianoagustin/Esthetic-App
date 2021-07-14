@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
@@ -12,10 +12,11 @@ export interface IUser extends Document {
   password: string;
   event: any[];
   addresses: any[];
+  setImage(filename: any): void;
   comparePassword(password: string): Promise<boolean>;
 }
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<IUser>(
   {
     image: {
       type: String,
@@ -54,12 +55,11 @@ const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-    roles: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Role',
-      },
-    ],
+    roles: {
+      type: Schema.Types.ObjectId,
+      ref: 'Role',
+    },
+
     events: [
       {
         type: Schema.Types.ObjectId,
@@ -72,12 +72,28 @@ const UserSchema = new Schema(
         ref: 'Address',
       },
     ],
+    crediCards: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'CreditCards',
+      },
+    ],
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'Users',
+    },
   },
 
   { versionKey: false, timestamps: true }
   // versionKey para quitar el anuncio molesto de mongodb y timestamps para  saber cuando fue creado y cuando fue actualizado
 );
 
+//save image user as url
+// UserSchema.methods.setImage = function setImage(filename) {
+//   (this as IUser).image = `http://localhost:3002/uploads/${filename}`;
+// };
+
+// encrypted user password
 UserSchema.pre<IUser>('save', async function (next) {
   const user = this;
   if (!user.isNew || !user.isModified('password')) return next();
@@ -90,7 +106,7 @@ UserSchema.pre<IUser>('save', async function (next) {
 UserSchema.methods.comparePassword = async function (
   password: string
 ): Promise<boolean> {
-  return await bcrypt.compare(password, (this as IUser).password);
+  return await bcrypt.compare(password, this.password);
 };
 
 UserSchema.plugin(require('mongoose-autopopulate')); // codigo para usar mongoose autopopulate

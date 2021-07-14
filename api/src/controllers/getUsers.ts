@@ -24,36 +24,6 @@ export const getUser: RequestHandler = async (req, res) => {
   }
 };
 
-export const createUser: RequestHandler = async (req, res) => {
-  const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
-  if (userFound)
-    return res.status(301).json({ message: 'The user alredy exists' });
-  const {
-    firstName,
-    lastName,
-    username,
-    gender,
-    email,
-    phone,
-    password,
-    file,
-  } = req.body;
-
-  const dataUser = {
-    image: `uploads\\${file}`,
-    firstName,
-    lastName,
-    username,
-    gender,
-    email,
-    phone,
-    password,
-  };
-  const newUser = new Users(dataUser);
-  const savedUser = await newUser.save();
-  res.json(savedUser);
-};
-
 export const updateUser: RequestHandler = async (req, res) => {
   try {
     const userUpdate = await Users.findByIdAndUpdate(req.params.id, req.body, {
@@ -76,7 +46,7 @@ export const deleteUser: RequestHandler = async (req, res) => {
       userDelete,
     });
   } catch (error) {
-    res.status(500).json({ message: 'something bad things 😅' });
+    res.status(500).json({ message: 'Ups! something went bad 😅' });
   }
 };
 

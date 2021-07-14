@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../Redux/actions/user.actions';
 import { useInput } from '../../hooks/customHooks';
 import { UserContext } from '../../index';
 import { log, success, error } from '../../utils/logs';
+//materialUI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,6 +21,8 @@ import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+//google login
+import GoogleLogin from 'react-google-login';
 
 function Copyright() {
   return (
@@ -56,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const loggin = useSelector((state) => state.userActive);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -88,6 +89,7 @@ export default function SignIn() {
       });
       setUser(data);
       success(`logged user ${data.email}`);
+      dispatch(getUser());
       history.push('/home');
       // history.push("/home")};
     } catch ({ response }) {
@@ -106,6 +108,10 @@ export default function SignIn() {
     }
   }; */
 
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -113,6 +119,13 @@ export default function SignIn() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        <GoogleLogin
+          clientId='658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com'
+          buttonText='Login'
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant='outlined'

@@ -1,38 +1,34 @@
 import React, { useEffect } from "react";
-import "./Provider.css";
-import { useDispatch, connect } from "react-redux";
-import { getProviders } from "../../../../../Redux/actions/actions";
+import "./ProvidersByService.css";
+import { useDispatch, connect, useSelector } from "react-redux";
+import { getProvidersbyServiceName } from "../../../Redux/actions/actions";
 import { useParams } from "react-router-dom";
 import Provider from "./Provider/Provider.js";
-import defaultImg from "../../../../../img/wall-cart.jpg";
+import "./ProvidersByService.css";
 
-export function ProvidersByService({ providers }) {
+export function ProvidersByService() {
   const dispatch = useDispatch();
+  const providers = useSelector((state) => state.providersByService.data);
+
+  console.log(providers, "Esto es el  providers");
 
   const { serviceName } = useParams();
 
   useEffect(() => {
-    dispatch(getProviders(serviceName));
+    dispatch(getProvidersbyServiceName(serviceName));
     return () => {};
   }, []);
 
   return (
-    <div>
+    <div className="providers-container-main">
       <h3 className="title">PROVIDERS</h3>
+      <h4>{serviceName}</h4>
       <div className="providers-container">
-        {providers.data &&
-          providers.data.map((provider, index) => (
-            <Provider key={index} data={provider} />
+        {providers &&
+          providers.map((provider, index) => (
+            <Provider key={index} provider={provider} />
           ))}
       </div>
     </div>
   );
 }
-
-function mapStateToProps(state) {
-  return {
-    providers: state.providers,
-  };
-}
-
-export default connect(mapStateToProps)(ProvidersByService);
