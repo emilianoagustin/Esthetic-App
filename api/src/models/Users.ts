@@ -77,12 +77,9 @@ const UserSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "CreditCards",
+        autopopulate: true,
       },
     ],
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "Users",
-    },
   },
 
   { versionKey: false, timestamps: true }

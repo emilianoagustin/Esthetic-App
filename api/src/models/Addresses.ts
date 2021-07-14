@@ -38,7 +38,7 @@ const AddressSchema = new Schema(
     },
     is_main: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     provider: {
       type: Schema.Types.ObjectId,

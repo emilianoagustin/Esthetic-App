@@ -31,12 +31,11 @@ const CreditCardSchema = new Schema(
     },
     is_main: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     user: {
       type: Schema.Types.ObjectId,
       ref: "Users",
-      autopopulate: true,
     },
   },
   { versionKey: false, timestamps: true }
