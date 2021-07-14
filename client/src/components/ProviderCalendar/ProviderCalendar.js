@@ -12,7 +12,10 @@ export default function ProviderCalendar({ match }) {
     const [provider, setProvider] = useState();
     const [service, setService] = useState(match.params.service);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState({
+        page: true,
+        events: true
+    });
     const [events, setEvents] = useState([]);
     const [active, setActive] = useState(false);
     const [providerID, setProviderID] = useState(match.params.provider);
@@ -24,15 +27,15 @@ export default function ProviderCalendar({ match }) {
             .then(provider => {
                 if (!provider.data.hasCalendar) {
                     setError(true);
-                    setLoading(false);
+                    setLoading({ ...loading, page: false });
                 } else {
                     setProvider(provider.data);
-                    setLoading(false);
+                    setLoading({ ...loading, page: false });
                 }
             })
             .catch(err => {
                 setError(true);
-                setLoading(false);
+                setLoading({ ...loading, page: false });
             })
         axios.get(`${HOST}/services/name/${match.params.service}`)
             .then(service => {
@@ -50,12 +53,14 @@ export default function ProviderCalendar({ match }) {
     }, [])
 
     useEffect(() => {
+        setLoading({ ...loading, events: true });
         axios.post(`${HOST}/events/calendar`, {
             provider: providerID,
             date: date
         })
             .then(eventsList => {
                 setEvents(eventsList.data)
+                setLoading({ ...loading, events: false });
             })
             .catch(err => {
                 setError(true);
@@ -78,7 +83,7 @@ export default function ProviderCalendar({ match }) {
     return (
         <div className='container-main'>
             {
-                loading ? (<div>cargando...</div>) :
+                loading.page ? (<div>cargando...</div>) :
                     error ? (<div>error...</div>) :
                         (<div className='container'>
                             <h1 className='title'>{`Agenda de ${provider.firstName}`}</h1>
@@ -91,55 +96,60 @@ export default function ProviderCalendar({ match }) {
                                             dateClick={handleDateClick}
                                         />
                                     </div>
-                                    <div className='calendar-events'>
-                                        <h2>Turnos Disponibles</h2>
-                                        {
-                                            !events ? (<div>cargando...</div>) :
-                                                events.map(e => (
-                                                    <div className={
-                                                        e.isActive ?
-                                                            e.isAvailable ? 'event available'
-                                                                : 'event not-available'
-                                                            : 'event not-active'
-                                                    }>
-                                                        <div>
-                                                            <h4>{`${e.date} - ${e.hour}:00hs`}</h4>
-                                                            {`Disponibilidad: ${e.isActive ?
-                                                                e.isAvailable ? 'Disponible'
-                                                                    : 'Reservado'
-                                                                : 'No Disponible'
-                                                                }`}
-                                                        </div>
-                                                        {
-                                                            e.isActive ?
-                                                                e.isAvailable ? (
-                                                                    <button
-                                                                        className='card-button'
-                                                                        onClick={handleClick}
-                                                                    >
-                                                                        Reservar
-                                                                    </button>
-                                                                )
-                                                                    : null
-                                                                : null
-                                                        }
-                                                        {
-                                                            active
-                                                                ? (
-                                                                    <Reservation
-                                                                        handleClick={handleClick}
-                                                                        provider={`${provider.firstName} ${provider.lastName}`}
-                                                                        date={e.date}
-                                                                        hour={`${e.hour}:00hs`}
-                                                                        service={service.name}
-                                                                        price={service.price}
-                                                                    />
-                                                                ) : null
-                                                        }
-                                                    </div>
-                                                ))
-                                        }
-                                    </div>
+                                    {
+                                        loading.events ? (<div className='calendar-events'>cargando...</div>) : (
+                                            <div className='calendar-events'>
+                                                <h2>Turnos Disponibles</h2>
+                                                {
+                                                    !events ? (<div>cargando...</div>) : (
+                                                        events.map(e => (
+                                                            <div className={
+                                                                e.isActive ?
+                                                                    e.isAvailable ? 'event available'
+                                                                        : 'event not-available'
+                                                                    : 'event not-active'
+                                                            }>
+                                                                <div>
+                                                                    <h4>{`${e.date} - ${e.hour}:00hs`}</h4>
+                                                                    {`Disponibilidad: ${e.isActive ?
+                                                                        e.isAvailable ? 'Disponible'
+                                                                            : 'Reservado'
+                                                                        : 'No Disponible'
+                                                                        }`}
+                                                                </div>
+                                                                {
+                                                                    e.isActive ?
+                                                                        e.isAvailable ? (
+                                                                            <button
+                                                                                className='card-button'
+                                                                                onClick={handleClick}
+                                                                            >
+                                                                                Reservar
+                                                                            </button>
+                                                                        )
+                                                                            : null
+                                                                        : null
+                                                                }
+                                                                {
+                                                                    active
+                                                                        ? (
+                                                                            <Reservation
+                                                                                handleClick={handleClick}
+                                                                                provider={`${provider.firstName} ${provider.lastName}`}
+                                                                                date={e.date}
+                                                                                hour={`${e.hour}:00hs`}
+                                                                                service={service.name}
+                                                                                price={service.price}
+                                                                            />
+                                                                        ) : null
+                                                                }
+                                                            </div>
+                                                        ))
+                                                    )
+                                                }
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>)
