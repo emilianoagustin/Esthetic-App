@@ -16,8 +16,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
-import SearchBar from "../Searchbar/Searchbar";
-import { logout } from "../../Redux/actions/user.actions";
+import SearchBar from '../Searchbar/Searchbar'
+import {logout} from '../../Redux/actions/user.actions'
+import './Header.scss'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -203,7 +204,7 @@ export default function PrimarySearchAppBar() {
   ];
 
   return (
-    <div className={classes.grow}>
+    <div className={`${classes.grow} header`}>
       <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
