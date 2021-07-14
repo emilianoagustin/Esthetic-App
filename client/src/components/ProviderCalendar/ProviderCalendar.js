@@ -12,10 +12,8 @@ export default function ProviderCalendar({ match }) {
     const [provider, setProvider] = useState();
     const [service, setService] = useState(match.params.service);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState({
-        page: true,
-        events: true
-    });
+    const [loading, setLoading] = useState(true);
+    const [loadingEvents, setLoadingEvents] = useState(true);
     const [events, setEvents] = useState([]);
     const [active, setActive] = useState(false);
     const [providerID, setProviderID] = useState(match.params.provider);
@@ -27,15 +25,15 @@ export default function ProviderCalendar({ match }) {
             .then(provider => {
                 if (!provider.data.hasCalendar) {
                     setError(true);
-                    setLoading({ ...loading, page: false });
+                    setLoading(false);
                 } else {
                     setProvider(provider.data);
-                    setLoading({ ...loading, page: false });
+                    setLoading(false);
                 }
             })
             .catch(err => {
                 setError(true);
-                setLoading({ ...loading, page: false });
+                setLoading(false);
             })
         axios.get(`${HOST}/services/name/${match.params.service}`)
             .then(service => {
@@ -51,16 +49,20 @@ export default function ProviderCalendar({ match }) {
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
     }, [])
+    useEffect(() => {
+        console.log(loading)
+
+    }, [loading])
 
     useEffect(() => {
-        setLoading({ ...loading, events: true });
+        setLoadingEvents(true);
         axios.post(`${HOST}/events/calendar`, {
             provider: providerID,
             date: date
         })
             .then(eventsList => {
                 setEvents(eventsList.data)
-                setLoading({ ...loading, events: false });
+                setLoadingEvents(false);
             })
             .catch(err => {
                 setError(true);
@@ -83,7 +85,7 @@ export default function ProviderCalendar({ match }) {
     return (
         <div className='container-main'>
             {
-                loading.page ? (<div>cargando...</div>) :
+                loading ? (<div>cargando...</div>) :
                     error ? (<div>error...</div>) :
                         (<div className='container'>
                             <h1 className='title'>{`Agenda de ${provider.firstName}`}</h1>
@@ -97,7 +99,7 @@ export default function ProviderCalendar({ match }) {
                                         />
                                     </div>
                                     {
-                                        loading.events ? (<div className='calendar-events'>cargando...</div>) : (
+                                        loadingEvents ? (<div className='calendar-events'>cargando...</div>) : (
                                             <div className='calendar-events'>
                                                 <h2>Turnos Disponibles</h2>
                                                 {
