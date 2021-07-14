@@ -62,66 +62,66 @@ const SearchBar = () => {
   console.log(keyword);
   const handleChange = (e) => {
     setKeyword(e.target.value);
-    dispatch(serviceSearch(keyword))
-    console.log("prueba")
+    dispatch(serviceSearch(keyword));
+    console.log("prueba");
   };
-
 
   const reset = () => {
     setKeyword("");
-  }; 
+  };
 
-
-  const onFormSubmit =  (e) => {
+  const onFormSubmit = (e) => {
     e.preventDefault();
-      dispatch(getServiceDetails(keyword));
-      history.push(`/services/details/${keyword}`);
-      reset()
-  }; 
+    dispatch(getServiceDetails(keyword));
+    history.push(`/services/details/${keyword}`);
+    reset();
+  };
 
   useEffect(() => {
-    dispatch(getServices())
+    dispatch(getServices());
   }, [dispatch]);
 
   return (
-    <form type="submit" action="" >
+    <form type="submit" action="">
       <div className={classes.search}>
-         <div className={classes.searchIcon}>
-          <SearchIcon style={{color:"black"}}/>
-        </div> 
-          <Autocomplete
-      id="custom-input-demo"
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      classes={{
-        root: classes.inputRoot,
-        input: classes.inputInput,
-      }}
-      renderInput={(params) => (
-        <div ref={params.InputProps.ref}>
-          <input onChange={(e) => handleChange(e)} style={{ width: 200 }} placeholder="Buscar Tratamiento..." type="text" {...params.inputProps} />
+        <div className={classes.searchIcon}>
+          <SearchIcon style={{ color: "rgb(121, 47, 111)" }} />
         </div>
-      )}
-      
-      inputProps={{ "aria-label": "search" }}
-      onSubmit={onFormSubmit} 
-    />
-         
-        
+        <Autocomplete
+          id="custom-input-demo"
+          options={top100Films}
+          getOptionLabel={(option) => option.title}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          renderInput={(params) => (
+            <div ref={params.InputProps.ref}>
+              <input
+                onChange={(e) => handleChange(e)}
+                style={{ width: 200 }}
+                placeholder="Buscar un servicio..."
+                type="text"
+                {...params.inputProps}
+              />
+            </div>
+          )}
+          inputProps={{ "aria-label": "search" }}
+          onSubmit={onFormSubmit}
+        />
       </div>
     </form>
   );
 };
 
 const top100Films = [
-  { title: "Depilación definitiva", price: '$200' },
-  { title: "Corte de pelo para hombre ", price: '$100' },
-  { title: "Corte de pelo para mujeres", price: '$250' },
-  { title: "Masaje", price: '$100' },
-  { title: "Pedicura", price: '$100' },
-  { title: "Manicura", price: '$100' },
-  { title: "Tintura de pelo", price: '$200' },
-  { title: "Maquillaje", price: '$200' },
-  
+  { title: "Depilación definitiva", price: "$200" },
+  { title: "Corte de pelo para hombre ", price: "$100" },
+  { title: "Corte de pelo para mujeres", price: "$250" },
+  { title: "Masaje", price: "$100" },
+  { title: "Pedicura", price: "$100" },
+  { title: "Manicura", price: "$100" },
+  { title: "Tintura de pelo", price: "$200" },
+  { title: "Maquillaje", price: "$200" },
 ];
 export default SearchBar;
