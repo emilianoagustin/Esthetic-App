@@ -9,6 +9,7 @@ const initialState = {
   userActive: false,
   loginData: {},
   serviceDetails: { loading: true, data: {} },
+  providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   userData: {
@@ -59,7 +60,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET SERVICES --> DETAILS
-
     case actionsTypes.GET_SERVICES_DETAILS_REQUEST:
       return {
         ...state,
@@ -77,7 +77,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS
-
     case actionsTypes.GET_PROVIDERS_REQUEST:
       return {
         ...state,
@@ -95,7 +94,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS BY SERVICE
-
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST:
       return {
         ...state,
@@ -112,8 +110,24 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, error: action.payload },
       };
 
-    ///SEARCH SERVICE BY NAME
+    //GET PROVIDERS' DETAILS
+    case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+      return {
+        ...state,
+        providerDetails: { loading: true },
+      };
+    case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
+      return {
+        ...state,
+        providerDetails: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_PROVIDER_DETAILS_FAIL:
+      return {
+        ...state,
+        providerDetails: { loading: false, error: action.payload },
+      };
 
+    ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
       return {
         ...state,
@@ -121,7 +135,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     /// GET USER DATA (PROFILE)
-
     case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
       return {
         ...state,

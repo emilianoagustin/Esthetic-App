@@ -68,7 +68,7 @@ export const updateService: RequestHandler = async (req, res) => {
         .send({ message: "No encontramos el servicio solicitado" });
     return res.status(201).send({
       data: updateService,
-      message: "Servicio creado con éxito.",
+      message: "Servicio actualizado con éxito.",
     });
   } catch (error: any) {
     res.status(500).send({ message: "Ha habido un problema con tu pedido" });
