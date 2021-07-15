@@ -263,7 +263,6 @@ export default function SignUp() {
                 {...phone}
               />
             </Grid>
-
             <Grid item xs={12}>
               <InputLabel id='demo-simple-select-label'>Género</InputLabel>
               <Select

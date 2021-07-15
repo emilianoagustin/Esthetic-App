@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography, Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CartItem from './CartItem/CartItem';
 import CartOrder from './CartOrder/CartOrder';
 import Image from '../../img/wall-cart.jpg';
+import axios from 'axios';
+import { HOST } from '../../utils/constants'
+import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,6 +22,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Cart() {
+    const [views, setViews] = useState([]);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [page, setPage] = useState(0);
+
+    useEffect(() => {
+        axios.get(`${HOST}/reservations/60ef3125034f1a3a38225cb3`)
+            .then(reservations => {
+                setViews(setPaginationViews(reservations.data, 5));
+                setTotalPrice(getAllPrice(reservations.data));
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(true);
+                setLoading(false);
+            })
+    }, [])
+
+    const changePage = (change) => {
+        if (change === 'next' && page < views.length - 1) setPage(page + 1);
+        if (change === 'previous' && page > 0) setPage(page - 1);
+        console.log(totalPrice)
+    }
+
+
     const classes = useStyles();
     return (
         <div className='container-main'>
@@ -36,9 +65,28 @@ function Cart() {
                         className={classes.gridContainer}
 
                     >
-                        <CartItem />
-                        <CartItem />
-                        <CartItem />
+                        {
+                            loading ? (<div>Loading...</div>) :
+                                error ? (<div>Error...</div>) :
+                                    !views.length ? (<div>No hay reservaciones...</div>) :
+                                        (
+                                            <div>
+                                                <div>
+                                                    <button onClick={() => changePage('previous')}>{'<<<'}</button>
+                                                    <span>{`Página ${page + 1} de ${views.length}`}</span>
+                                                    <button onClick={() => changePage('next')}>{'>>>'}</button>
+                                                </div>
+                                                {
+                                                    views[page].map((reservation, index) => (
+                                                        <CartItem
+                                                            key={index}
+                                                            data={reservation}
+                                                        />
+                                                    ))
+                                                }
+                                            </div>
+                                        )
+                        }
                     </Grid>
 
                     <Grid

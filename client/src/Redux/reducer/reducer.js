@@ -12,6 +12,7 @@ const initialState = {
   providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
+  reservation_status: {}
   userData: {
     loading: true,
     data: {},
@@ -145,6 +146,19 @@ const appReducer = (state = initialState, action) => {
         services: { data: findService(state.allServices.data, action.payload) },
       };
 
+    //SET RESERVATIONS FOR USERS
+
+    case actionsTypes.SET_RESERVATION_STATUS:
+      return {
+        ...state,
+        reservation_status: {loading: false, message: action.payload}
+      };
+    case actionsTypes.SET_RESERVATION_STATUS_LOADING:
+      return {
+        ...state,
+        reservation_status: action.payload
+      };
+    
     /// GET USER DATA (PROFILE)
     case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
       return {

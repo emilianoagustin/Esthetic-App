@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function CartItem() {
+function CartItem({data}) {
     const classes = useStyles();
 
     return (
@@ -39,13 +39,19 @@ function CartItem() {
                             <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1">
-                                Corte de Pelo
+                                    {data.service}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                Corte de pelo en tu hogar
+                                {data.provider}
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                {data.date}
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                {data.hour}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                ID: 1030114
+                                {data.address}
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -55,7 +61,7 @@ function CartItem() {
                             </Grid>
                             </Grid>
                             <Grid item>
-                            <Typography variant="subtitle1">$500.00</Typography>
+                            <Typography variant="subtitle1">{data.price}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
