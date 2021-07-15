@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -102,6 +103,8 @@ const ITEM_HEIGHT = 48;
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
@@ -109,6 +112,7 @@ export default function PrimarySearchAppBar() {
 
   const open = Boolean(anchorEl);
   const abrir = Boolean(zona);
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSpatifyApp');
     if (loggedUserJSON) {
@@ -116,7 +120,8 @@ export default function PrimarySearchAppBar() {
       setRender(user.userFound.firstName);
       //(() => dispatch(userActiveSession()))();
     }
-  }, []);
+    if (userActive !== '') setRender(userActive);
+  }, [userActive]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -135,6 +140,8 @@ export default function PrimarySearchAppBar() {
   };
   const handleCloseLogin = () => {
     dispatch(logout());
+    setRender('');
+    history.push('/');
   };
 
   const loginAndRegister = [
