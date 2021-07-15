@@ -11,6 +11,7 @@ const initialState = {
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
+  providerById: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   reservation_status: {},
   userData: {
@@ -94,7 +95,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         providers: { loading: true },
       };
-    case actionsTypes.GET_PROVIDERS_SUCCES:
+    case actionsTypes.GET_PROVIDERS_SUCCESS:
       return {
         ...state,
         providers: { loading: false, data: action.payload },

@@ -96,10 +96,6 @@ export default function ProviderCalendar({ match }) {
         }
     }
 
-    useEffect(() => {
-        console.log(active, ReActive)
-    }, [active, ReActive])
-
     return (
         <div className='container-main'>
             {

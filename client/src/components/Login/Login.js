@@ -120,7 +120,7 @@ export default function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    log('intento de logeo');
+    log('intento de logueo');
     if (validate()) {
       const data = {
         email: email.value,
