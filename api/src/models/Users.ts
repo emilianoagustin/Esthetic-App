@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcrypt";
 
 export interface IUser extends Document {
   image: string;
@@ -12,6 +12,7 @@ export interface IUser extends Document {
   password: string;
   event: any[];
   addresses: any[];
+  creditCards: any[];
   setImage(filename: any): void;
   comparePassword(password: string): Promise<boolean>;
 }
@@ -38,7 +39,7 @@ const UserSchema = new Schema<IUser>(
     },
     gender: {
       type: String,
-      enum: ['Male', 'Female', 'Non-binary'],
+      enum: ["Male", "Female", "Non-binary"],
     },
     email: {
       type: String,
@@ -57,13 +58,13 @@ const UserSchema = new Schema<IUser>(
     },
     roles: {
       type: Schema.Types.ObjectId,
-      ref: 'Role',
+      ref: "Role",
     },
 
     events: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Events',
+        ref: "Events",
       },
     ],
     addresses: [
@@ -71,19 +72,15 @@ const UserSchema = new Schema<IUser>(
         type: Schema.Types.ObjectId,
         ref: "Addresses",
         autopopulate: true,
-
       },
     ],
-    crediCards: [
+    creditCards: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'CreditCards',
+        ref: "CreditCards",
+        autopopulate: true,
       },
     ],
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'Users',
-    },
   },
 
   { versionKey: false, timestamps: true }
@@ -96,9 +93,9 @@ const UserSchema = new Schema<IUser>(
 // };
 
 // encrypted user password
-UserSchema.pre<IUser>('save', async function (next) {
+UserSchema.pre<IUser>("save", async function (next) {
   const user = this;
-  if (!user.isNew || !user.isModified('password')) return next();
+  if (!user.isNew || !user.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(user.password, salt);
   user.password = hash;
@@ -111,6 +108,6 @@ UserSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.plugin(require('mongoose-autopopulate')); // codigo para usar mongoose autopopulate
+UserSchema.plugin(require("mongoose-autopopulate")); // codigo para usar mongoose autopopulate
 
-export default model<IUser>('Users', UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema
+export default model<IUser>("Users", UserSchema); // la funcion model recibe 2 parametros el primero en nombre del modelo y el segundo el schema

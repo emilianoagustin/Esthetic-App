@@ -1,7 +1,6 @@
 import actionsTypes from "../constants/constants";
 import { findService } from "../../utils/filter.js";
 
-
 const initialState = {
   services: {
     loading: true,
@@ -12,9 +11,9 @@ const initialState = {
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
-  session_id: {
-    user: "",
-    provider: "",
+  userData: {
+    loading: true,
+    data: {},
   },
 };
 
@@ -41,21 +40,17 @@ const appReducer = (state = initialState, action) => {
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-
-
       return {
         ...state,
         loginData: action.payload,
         userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
-      
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-     
       return {
         ...state,
         userActive: action.payload.userActive,
@@ -121,6 +116,24 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { data: findService(state.allServices.data, action.payload) },
+      };
+
+    /// GET USER DATA (PROFILE)
+
+    case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
+      return {
+        ...state,
+        userData: { loading: true },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userData: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_FAIL:
+      return {
+        ...state,
+        userData: { loading: false, error: action.payload },
       };
 
     default:

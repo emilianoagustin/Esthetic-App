@@ -71,11 +71,12 @@ export default function SignIn() {
     provider: false })
     console.log(state)
    
-   
+   ///Manejo del Swich
  const handleChange = (event) => {
       setState({[event.target.name]: event.target.checked });
     };
-    
+
+     ////////////////VALIDATE////////////
     const validate = () =>{
       let isValid = true
     console.log(password, email)
@@ -99,6 +100,9 @@ export default function SignIn() {
     return isValid;
    
     } 
+
+
+    
   const handleSubmit = (e) => {
     e.preventDefault();
     log("intento de logeo");
@@ -106,7 +110,7 @@ export default function SignIn() {
       const data = { email: email.value, password: password.value /* roles: roles.value */ };
       console.log(data);
       dispatch(loginUser(data));
-      history.push("/home");
+      history.push("/");
       // history.push("/home")};
      }
   };
@@ -115,7 +119,7 @@ export default function SignIn() {
     console.log(response);
   };
 
- ////////////////VALIDATE////////////
+
 
 
 

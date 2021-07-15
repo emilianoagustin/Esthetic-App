@@ -1,17 +1,18 @@
 import axios from "axios";
 import actionsTypes from "../constants/constants";
+import { HOST } from "../../utils/constants";
 
 // login
 export const loginUser = (data) => {
   console.log(data);
   return (dispatch) => {
     return axios
-      .post(`http://localhost:3002/auth/signin`, data)
+      .post(`${HOST}/auth/signin`, data)
       .then((response) => {
         console.log(response.data);
         dispatch({
           type: actionsTypes.LOGIN_SUCCESSFUL,
-          payload: response.data
+          payload: response.data,
         });
       })
       .catch((error) => {
@@ -32,4 +33,23 @@ export const logout = () => {
       },
     });
   };
+};
+
+//USER PROFILE
+
+export const getUserProfile = (userId) => async (dispatch) => {
+  dispatch({ type: actionsTypes.GET_USER_DATA_PROFILE_REQUEST });
+
+  try {
+    const { data } = await axios.get(`${HOST}/users/${userId}`);
+    dispatch({
+      type: actionsTypes.GET_USER_DATA_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_USER_DATA_PROFILE_FAIL,
+      payload: error.message,
+    });
+  }
 };
