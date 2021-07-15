@@ -61,61 +61,74 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  // const initialState = {
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   password: '',
-  //   phone: '',
-  //   gender: '',
-  //   file,
-  // };
-  // const initialState = {
-  //   image,
-  // };
-  const [post, setPost] = useState({});
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const { setUser } = useContext(UserContext);
   const history = useHistory();
-  const email = useInput("email");
-  const password = useInput("password");
-  const firstName = useInput("firstName");
-  const lastName = useInput("lastName");
-  const phone = useInput("phone");
-  const file = useInput("file");
-  const gender = useInput("gender");
+  const email = useInput('email');
+  const password = useInput('password');
+  const firstName = useInput('firstName');
+  const lastName = useInput('lastName');
+  const phone = useInput('phone');
+ 
+  const gender = useInput('gender');
 
-  const onChange = (e) => {
-    setPost({
-      ...post,
-      image: e.target.files[0],
-    });
-    // console.log('------->', e.target.files[0]);
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const $form = document.querySelector('#form');
     const formData = new FormData();
-    const fileField = document.querySelector("#file");
+    
 
-    log("intento de registro");
-    formData.append("firstName", firstName.value);
-    formData.append("lastName", lastName.value);
-    formData.append("email", email.value);
-    formData.append("phone", phone.value);
-    formData.append("image", fileField.files[0]);
-    formData.append("gender", gender.value);
+    log('intento de registro');
+    formData.append('firstName', firstName.value);
+    formData.append('lastName', lastName.value);
+    formData.append('email', email.value);
+    formData.append('phone', phone.value);
+    formData.append('gender', gender.value);
 
-    console.log(fileField.value);
-    console.log(file.value);
-    console.log(formData.get("image"));
-    console.log("formData---->", formData);
-    console.log("postttttttttt", post.image);
+   ///VALIDATE///
+  const validate = () => {
+    let isValid = true;
+    if (!firstName.value) {
+      isValid = false;
+      alert("Por favor, ingresa tu nombre.");
+    }
+    if (!lastName.value) {
+      isValid = false;
+      alert("Por favor, ingresa tu apellido");
+    }
+    if (!password.value) {
+      isValid = false;
+      alert("Por favor, ingresa una contraseña.");
+    }
+    if (typeof password !== "undefined") {
+      if (password.length < 8) {
+        isValid = false;
+        alert("Por favor, ingresa una contraseña de mas de 8 caracteres.");
+      }
+    }
+    if (!email.value) {
+      isValid = false;
+      alert("Por favor, ingresa un correo electronico.");
+    }
+
+    if (typeof email !== "undefined") {
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      if (!pattern.test(email.value)) {
+        isValid = false;
+        alert("Por favor, ingresa un correo electronico valido.");
+      }
+    }
+    return isValid;
+  };
     try {
       // posteo de user
-
+if(validate()){
       const { data } = await axios.post(
         "http://localhost:3002/auth/signup",
         {
@@ -126,7 +139,6 @@ export default function SignUp() {
           //   phone: formData.get('phone'),
           //   gender: formData.get('gender'),
           //   image: formData.get('file'),
-          image: post.image,
           email: email.value,
           password: password.value,
           firstName: firstName.value,
@@ -134,10 +146,6 @@ export default function SignUp() {
           phone: phone.value,
           gender: gender.value,
         },
-
-        {
-          headers: { "Content-Type": `${formData.getHeaders()}` },
-        }
       );
       //seteo de estado
       setUser(data);
@@ -145,10 +153,13 @@ export default function SignUp() {
       // redirect home
 
       history.push("/");
-      dispatch(loginUser());
-    } catch ({ response }) {
-      // algo no esta.
-      error(response);
+      /* dispatch(loginUser()); */
+}
+    } catch ( error ) {
+      console.log(error)
+      if (error.response?.status !== 404 || 422)
+      alert("Email ya exitente!");
+    
     }
   };
 
@@ -174,6 +185,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                autoFocus
                 id="firstName"
                 label="Nombre"
                 autoFocus
@@ -230,20 +242,6 @@ export default function SignUp() {
                 autoComplete="phone"
                 inputProps={{ maxLength: 10 }}
                 {...phone}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              Foto de perfil
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="file"
-                type="file"
-                id="file"
-                autoComplete="file"
-                onChange={onChange}
-                // {...file}
               />
             </Grid>
 
