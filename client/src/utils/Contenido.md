@@ -2,7 +2,7 @@
 
 SERVICIOS:
 
-<1> Corte de cabello/Peinado - dama:
+<1> Corte y peinado - dama:
 Corte de cabello y peinado profesional a elección. Variada selección de cortes populares para estar a la moda con las últimas tendencias:
 - Pixie
 - Tazón
@@ -13,10 +13,10 @@ Corte de cabello y peinado profesional a elección. Variada selección de cortes
 - Flequillo recto
 - Flequillo ‘baby bang’
 - Flequillo ‘waft’
--Melena XL con las puntas desfiladas
+- Melena XL con las puntas desfiladas
 Precio: $1000
 
-<2> Corte de cabello/Peinado - caballero:
+<2> Corte y peinado - caballero:
 Corte de cabello y peinado profesional a elección. Variada selección de cortes populares para estar a la moda con las últimas tendencias:
 - Degradado & Taper.
 - Undercut
@@ -30,11 +30,11 @@ Corte de cabello y peinado profesional a elección. Variada selección de cortes
 - Top knot
 Precio: $800
 
-<3> Corte de cabello - niño/niña
+<3> Corte y peinado - niñxs
 Corte de cabello y peinado profesional a elección. Variada selección de cortes populares para que los chicos y chicas también estén a la moda con las últimas tendencias.
 Precio: $550
 
-<4> Corte/Estilo barba - caballero:
+<4> CorteCorte y estilo barba - caballero:
 Asegurate de estar bien a la moda con los últimos estilos de corte y cuidados para tu barba.
 - Leñador
 - Vikingo
@@ -49,7 +49,7 @@ Asegurate de estar bien a la moda con los últimos estilos de corte y cuidados p
 - Barba con correa
 Precio: $450
 
-<5> Reflejos/Tintura/Coloración:
+<5> Reflejos, tintura, coloración:
 Baño de color exprés que trabaja sobre las capas más superficiales del cabello, así que no modifica la raíz, sino sólo la zona previamente tratada mediante decoloración.
 Precio: $4000
 

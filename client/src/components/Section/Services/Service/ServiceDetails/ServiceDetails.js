@@ -12,7 +12,6 @@ function ServiceDetails() {
   var data = {};
 
   if (service) {
-    console.log(service);
     data = service;
   }
   const { id } = useParams();
