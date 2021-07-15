@@ -17,7 +17,7 @@ export const loginUser = (data) => {
       .catch((error) => {
         if (error.response?.status !== 404 || 422)
           alert("El usuario ingresado no existe");
-        dispatch({ type: actionsTypes.LOGIN_FAIL, payload: null });
+        dispatch({ type: actionsTypes.LOGIN_FAIL, payload: false });
       });
   };
 };
