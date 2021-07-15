@@ -9,8 +9,10 @@ import Cart from "../components/Cart/Cart";
 import ServiceDetails from "../components/Section/Services/Service/ServiceDetails/ServiceDetails";
 import { ProvidersByService } from "../components/Section/Providers/ProvidersByService";
 import ProviderCalendar from "../components/ProviderCalendar/ProviderCalendar";
+import ProviderProfile from "../components/ProviderProfile/ProviderProfile";
 import UserProfile from "../components/UserProfile/UserProfile";
 import ProviderDetails from "../components/ProviderDetails/ProviderDetails";
+
 
 const App = () => {
   return (
@@ -26,6 +28,7 @@ const App = () => {
       />
       <Route path="/services/details/:id" component={ServiceDetails} />
       <Route exact path="/cart" component={Cart} />
+      <Route path="/providers/:id/profile" component={ProviderProfile} />
       <Route
         exact
         path="/services/providers/:service/:provider/calendar"
