@@ -12,13 +12,13 @@ export const addReservation: RequestHandler = async (req, res) => {
         } else {
             let check = false;
             bag.reservations.forEach((r: any) => {
-                if (r.provider == req.body.provider &&
-                    r.date == req.body.date &&
-                    r.hour == req.body.hour) {
+                if (r.provider === req.body.provider &&
+                    r.date === req.body.date &&
+                    r.hour === req.body.hour) {
                     check = true
                 }
             })
-            if(check) return res.status(301).send('this reservation already exists')
+            if (check) return res.status(301).send('this reservation already exists')
         }
         bag = await Bags.findOne({ user: user })
         bag.reservations.push(
@@ -35,6 +35,20 @@ export const addReservation: RequestHandler = async (req, res) => {
             .then((saved: any) => {
                 res.status(200).send('reservation added successfully')
             })
+    } catch (error) {
+        return res.send(error);
+    }
+};
+
+export const getUserReservations: RequestHandler = async (req, res) => {
+    try {
+        const user = await Users.findById(req.params.id)
+        const bag = await Bags.findOne({ user: user })
+        if (!bag) {
+            return res.status(200).send([]);
+        } else {
+            return res.status(200).send(bag.reservations);
+        }
     } catch (error) {
         return res.send(error);
     }

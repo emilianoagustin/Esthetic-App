@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './LoadingReservation.scss';
 import loadingGiff from '../../../giff/loading.gif'
 
-function LoadingReservation({ status, handleActive }) {
+function LoadingReservation({ status, handleClickModal, key }) {
 
     return (
         <div className='modal'>
@@ -17,7 +17,7 @@ function LoadingReservation({ status, handleActive }) {
                                 <h4>{status.message}</h4>
                                 <button
                                     className='modal-button right'
-                                    onClick={(e) => { handleActive(false) }}
+                                    onClick={(e) => { handleClickModal(key) }}
                                 >ACEPTAR</button>
                             </div>
                         )
