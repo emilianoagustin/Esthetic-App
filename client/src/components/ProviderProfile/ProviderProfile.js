@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { getProviderDetails } from '../../Redux/actions/actions'
 import ProviderProfileData from './ProviderProfileData.js/ProviderProfileData';
 import NoCalendarModal from './NoCalendarModal/NoCalendarModal';
 
@@ -30,14 +31,14 @@ const useStyles = makeStyles(() => ({
 
 function ProviderProfile() {
     const dispatch = useDispatch();
-    const provider = useSelector(state => state.providerById);
+    const provider = useSelector(state => state.providerDetails);
     const { id } = useParams();
     const classes = useStyles();
     const [isActive, setIsActive] = useState(true)
     console.log('providerDetail----------------', provider);
     console.log('handleActive---------', isActive);
     useEffect(() => {
-        dispatch(getProviderById(id))
+        dispatch(getProviderDetails(id))
     }, [dispatch, id]);
 
     const handleActive = () =>{
