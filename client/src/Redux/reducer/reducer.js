@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import actionsTypes from '../constants/constants';
 import { findService } from '../../utils/filter.js';
-=======
-import actionsTypes from "../constants/constants";
-import { findService } from "../../utils/filter.js";
->>>>>>> 3343230c1d6c62f023a46de7f0282cb1d4ebe5d5
 
 const initialState = {
   services: {
@@ -16,15 +11,9 @@ const initialState = {
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
-<<<<<<< HEAD
-  session_id: {
-    user: '',
-    provider: '',
-=======
   userData: {
     loading: true,
     data: {},
->>>>>>> 3343230c1d6c62f023a46de7f0282cb1d4ebe5d5
   },
 };
 
@@ -51,29 +40,22 @@ const appReducer = (state = initialState, action) => {
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-<<<<<<< HEAD
       window.localStorage.setItem(
         'loggedSpatifyApp',
         JSON.stringify(action.payload)
       );
-=======
->>>>>>> 3343230c1d6c62f023a46de7f0282cb1d4ebe5d5
       return {
         ...state,
         loginData: action.payload,
         userActive: action.payload.userFound.firstName,
       };
     case actionsTypes.LOGIN_FAIL:
-<<<<<<< HEAD
       window.localStorage.setItem('token', action.payload.token);
-=======
->>>>>>> 3343230c1d6c62f023a46de7f0282cb1d4ebe5d5
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-<<<<<<< HEAD
       window.localStorage.setItem('loggedSpatifyApp', '');
       // window.localStorage.setItem('token', action.payload.token);
       return {
@@ -82,8 +64,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     case actionsTypes.LOGGIN_IN_SESSION:
-=======
->>>>>>> 3343230c1d6c62f023a46de7f0282cb1d4ebe5d5
       return {
         ...state,
         userActive: action.payload,
