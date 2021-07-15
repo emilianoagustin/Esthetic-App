@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUser } from '../../Redux/actions/user.actions';
+import { loginUser } from '../../Redux/actions/user.actions';
 import { useInput } from '../../hooks/customHooks';
 import { UserContext } from '../../index';
 import { log, success, error } from '../../utils/logs';
@@ -58,12 +58,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const loginData = useSelector((state) => state.loginData);
+  console.log(loginData);
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const email = useInput('email');
   const password = useInput('password');
-  const data = { email: email.value, password: password.value };
   const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
@@ -72,7 +74,6 @@ export default function SignIn() {
     // dispatch(getUser(data));
     // console.log(data)
     // try{ if(loggin){
-
     //   setUser(data);
     //   success(`logged user ${data.email}`);
     //   // redirect home
@@ -83,13 +84,10 @@ export default function SignIn() {
     // }
     try {
       // posteo de user
-      const { data } = await axios.post('http://localhost:3002/auth/signin  ', {
-        email: email.value,
-        password: password.value,
-      });
-      setUser(data);
-      success(`logged user ${data.email}`);
-      dispatch(getUser());
+      const data = { email: email.value, password: password.value };
+
+      dispatch(loginUser(data));
+
       history.push('/home');
       // history.push("/home")};
     } catch ({ response }) {

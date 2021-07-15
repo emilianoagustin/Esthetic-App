@@ -9,4 +9,5 @@ const roleSchema = new Schema(
   { versionKey: false }
 );
 
+roleSchema.plugin(require('mongoose-autopopulate'));
 export default model('Role', roleSchema);

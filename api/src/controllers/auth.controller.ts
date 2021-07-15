@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
+import Role from '../models/Roles';
 import Users from '../models/Users';
-
 import createToken from '../utils/functionToken';
 
 export const signUp: RequestHandler = async (req, res) => {
@@ -12,6 +12,8 @@ export const signUp: RequestHandler = async (req, res) => {
     email,
     phone,
     password,
+    roles,
+
     // file,
   } = req.body;
   if (!email || !password)
@@ -24,6 +26,7 @@ export const signUp: RequestHandler = async (req, res) => {
     return res.status(301).json({ message: 'The user alredy exists' });
   // console.log(req);
   // image: `uploads\\${file}`,
+
   const dataUser = {
     // image: `http://localhost:3002/uploads/${req.file?.filename}`,
     image: req.file?.path,
@@ -42,12 +45,24 @@ export const signUp: RequestHandler = async (req, res) => {
   //   dataUser.setImage(filename);
   // }
   const newUser = new Users(dataUser);
+
+  if (roles) {
+    const foundRoles = await Role.find({ name: { $in: roles } });
+    newUser.roles = foundRoles.map((role: any) => role._id);
+  } else {
+    const role = await Role.find({ name: 'user' });
+    newUser.roles = [role._id];
+  }
+
   const savedUser = await newUser.save();
+
   res.json(savedUser);
 };
 
 export const signIn: RequestHandler = async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
+
   if (!email || !password)
     return res
       .status(400)
@@ -58,7 +73,9 @@ export const signIn: RequestHandler = async (req, res) => {
     return res.status(400).json({ message: 'The user does not exist' });
 
   const isMatch = await userFound.comparePassword(password);
+
   if (isMatch) return res.json({ userFound, token: createToken(userFound) });
+
   return res
     .status(400)
     .json({ message: 'The email or password are incorrect' });

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { getUser } from '../../Redux/actions/user.actions';
+import { loginUser } from '../../Redux/actions/user.actions';
 import { useInput } from '../../hooks/customHooks';
 import { UserContext } from '../../index';
 import { log, success, error } from '../../utils/logs';
@@ -12,6 +12,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+
 /* import Link from '@material-ui/core/Link'; */
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -25,6 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { saveUser } from '../../utils/functionPost';
 
 function Copyright() {
   return (
@@ -84,6 +86,7 @@ export default function SignUp() {
   const phone = useInput('phone');
   const file = useInput('file');
   const gender = useInput('gender');
+  const roles = useInput('roles');
 
   const onChange = (e) => {
     setPost({
@@ -96,54 +99,30 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const $form = document.querySelector('#form');
-    const formData = new FormData();
-    const fileField = document.querySelector('#file');
 
-    log('intento de registro');
-    formData.append('firstName', firstName.value);
-    formData.append('lastName', lastName.value);
-    formData.append('email', email.value);
-    formData.append('phone', phone.value);
-    formData.append('image', fileField.files[0]);
-    formData.append('gender', gender.value);
-
-    console.log(fileField.value);
-    console.log(file.value);
-    console.log(formData.get('image'));
-    console.log('formData---->', formData);
     console.log('postttttttttt', post.image);
+    const data = {
+      image: post.image,
+      email: email.value,
+      password: password.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      phone: phone.value,
+      gender: gender.value,
+      roles: roles.value,
+    };
     try {
       // posteo de user
+      saveUser(data);
 
-      const { data } = await axios.post(
-        'http://localhost:3002/auth/signup',
-        {
-          //   email: formData.get('email'),
-          //   password: formData.get('password'),
-          //   firstName: formData.get('firstName'),
-          //   lastName: formData.get('lastName'),
-          //   phone: formData.get('phone'),
-          //   gender: formData.get('gender'),
-          //   image: formData.get('file'),
-          image: post.image,
-          email: email.value,
-          password: password.value,
-          firstName: firstName.value,
-          lastName: lastName.value,
-          phone: phone.value,
-          gender: gender.value,
-        },
-
-        {
-          headers: { 'Content-Type': `${formData.getHeaders()}` },
-        }
-      );
       //seteo de estado
       setUser(data);
       success(`register user ${data.email}`);
-      // redirect home
+
+      //redirect home
+
       history.push('/home');
-      dispatch(getUser());
+      // dispatch(loginUser());
     } catch ({ response }) {
       // algo no esta.
       error(response);
@@ -256,6 +235,20 @@ export default function SignUp() {
                 <MenuItem value={'Male'}>Hombre</MenuItem>
                 <MenuItem value={'Female'}>Mujer </MenuItem>
                 <MenuItem value={'Non-binary'}>No Binario</MenuItem>
+              </Select>
+            </Grid>
+
+            <Grid item xs={12}>
+              <InputLabel id='demo-simple-select-label'>Rol</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={roles}
+                {...roles}
+              >
+                <MenuItem value={'user'}>Usuario</MenuItem>
+                <MenuItem value={'provider'}>Proveedor </MenuItem>
+                <MenuItem value={'admin'}>admin</MenuItem>
               </Select>
             </Grid>
 

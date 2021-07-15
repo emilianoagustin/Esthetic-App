@@ -10,6 +10,7 @@ export interface IUser extends Document {
   email: string;
   phone: number;
   password: string;
+  roles: any[];
   event: any[];
   addresses: any[];
   setImage(filename: any): void;
@@ -55,10 +56,13 @@ const UserSchema = new Schema<IUser>(
       required: true,
       trim: true,
     },
-    roles: {
-      type: Schema.Types.ObjectId,
-      ref: 'Role',
-    },
+    roles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        autopopulate: true,
+      },
+    ],
 
     events: [
       {
