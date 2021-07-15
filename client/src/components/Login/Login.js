@@ -21,6 +21,8 @@ import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import Switch from '@material-ui/core/Switch';
 //google login
 import GoogleLogin from 'react-google-login';
 
@@ -58,54 +60,80 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-
-  const loginData = useSelector((state) => state.loginData)
-  console.log(loginData)
+  const loginData = useSelector((state) => state.loginData);
 
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
+
+  // const email = useInput('email');
+  // const password = useInput('password');
+  // const { setUser } = useContext(UserContext);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   log('intento de logeo');
+
+  //   try {
+  //     // posteo de user
+  //     const data = { email: email.value, password: password.value };
+
+  //     dispatch(loginUser(data));
+
   const email = useInput('email');
   const password = useInput('password');
-  const { setUser } = useContext(UserContext);
-  
-  const handleSubmit = async (e) => {
+  const [state, setState] = React.useState({
+    provider: false,
+  });
+
+  console.log(state);
+  const data = { email: email.value, password: password.value };
+
+  dispatch(loginUser(data));
+  ///Manejo del Swich
+  const handleChange = (event) => {
+    setState({ [event.target.name]: event.target.checked });
+  };
+
+  const validate = () => {
+    let isValid = true;
+    console.log(password, email);
+    if (!password.value) {
+      isValid = false;
+      alert('Por favor, ingresa una contraseña.');
+    }
+    if (!email.value) {
+      isValid = false;
+      alert('Por favor, ingresa un correo electronico.');
+    }
+
+    if (typeof email !== 'undefined') {
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      console.log(pattern.test(email.value));
+      if (!pattern.test(email.value)) {
+        isValid = false;
+        alert('Por favor, ingresa un correo electronico valido.');
+      }
+    }
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     log('intento de logeo');
-    // dispatch(getUser(data));
-    // console.log(data)
-    // try{ if(loggin){
-      //   setUser(data);
-      //   success(`logged user ${data.email}`);
-      //   // redirect home
-      //   history.push("/home")};
-      // } catch ({ response }) {
-        //   // algo no esta.
-        //   error(response);
-        // }
-        try {
-          // posteo de user
-          const data = { email: email.value, password: password.value };
-     
-      dispatch(loginUser(data)) 
-
+    if (validate()) {
+      const data = {
+        email: email.value,
+        password: password.value /* roles: roles.value */,
+      };
+      console.log(data);
+      dispatch(loginUser(data));
       history.push('/');
       // history.push("/home")};
-    } catch ({ response }) {
-      error(response);
     }
   };
-  /*   console.log(data)
-      // seteo de estado
-      setUser(data);
-      success(`logged user ${data.email}`);
-      // redirect home
-      history.push("/home");
-    } catch ({ response }) {
-      // algo no esta.
-      error(response);
-    }
-  }; */
 
   const responseGoogle = (response) => {
     console.log(response);
@@ -149,6 +177,17 @@ export default function SignIn() {
             id='password'
             autoComplete='current-password'
             {...password}
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={state.provider}
+                onChange={handleChange}
+                name='provider'
+                defaultChecked={false}
+              />
+            }
+            label='Proveedor'
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}

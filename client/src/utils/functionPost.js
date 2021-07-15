@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function saveUser(userData) {
+export async function saveUser(userData, { token }) {
   try {
     const formData = new FormData();
     formData.append('firstName', userData.firstName);
@@ -12,10 +12,14 @@ export async function saveUser(userData) {
     const response = await axios({
       url: `http://localhost:3002/auth/signup`,
       method: 'POST',
-      data: formData,
+      data: userData,
     });
     return response;
   } catch (error) {
     console.log(error);
   }
 }
+//este header es para poder autorizar a un usuario a hacer algo
+// headers: {
+//   Authorization: `Bearer ${token}`,
+// },
