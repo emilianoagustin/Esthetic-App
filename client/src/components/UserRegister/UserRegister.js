@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { loginUser } from "../../Redux/actions/user.actions";
-import { useInput } from "../../hooks/customHooks";
-import { UserContext } from "../../index";
-import { log, success, error } from "../../utils/logs";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { loginUser } from '../../Redux/actions/user.actions';
+import { useInput } from '../../hooks/customHooks';
+import { UserContext } from '../../index';
+import { log, success, error } from '../../utils/logs';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 /* import Link from '@material-ui/core/Link'; */
 import Grid from '@material-ui/core/Grid';
@@ -61,19 +61,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  // const initialState = {
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   password: '',
-  //   phone: '',
-  //   gender: '',
-  //   file,
-  // };
-  // const initialState = {
-  //   image,
-  // };
-  const [post, setPost] = useState({});
   const classes = useStyles();
   const dispatch = useDispatch();
   const { setUser } = useContext(UserContext);
@@ -83,42 +70,90 @@ export default function SignUp() {
   const firstName = useInput('firstName');
   const lastName = useInput('lastName');
   const phone = useInput('phone');
-  const file = useInput('file');
   const gender = useInput('gender');
-
-  const onChange = (e) => {
-    setPost({
-      ...post,
-      image: e.target.files[0],
-    });
-    // console.log('------->', e.target.files[0]);
-  };
+  const roles = useInput('roles');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const $form = document.querySelector('#form');
+
+    // console.log('postttttttttt', post.image);
+    // const data = {
+    //   image: post.image,
+    //   email: email.value,
+    //   password: password.value,
+    //   firstName: firstName.value,
+    //   lastName: lastName.value,
+    //   phone: phone.value,
+    //   gender: gender.value,
+    //   roles: roles.value,
+    // };
+    // try {
+    //   // posteo de user
+    //   saveUser(data);
+
+    //   //seteo de estado
+    //   setUser(data);
+    //   success(`register user ${data.email}`);
+
+    //   //redirect home
+
+    //   history.push('/home');
+    //   // dispatch(loginUser());
+    // } catch ({ response }) {
+    //   // algo no esta.
+    //   error(response);
+
     const formData = new FormData();
-    const fileField = document.querySelector('#file');
 
     log('intento de registro');
     formData.append('firstName', firstName.value);
     formData.append('lastName', lastName.value);
     formData.append('email', email.value);
     formData.append('phone', phone.value);
-    formData.append('image', fileField.files[0]);
     formData.append('gender', gender.value);
 
-    console.log(fileField.value);
-    console.log(file.value);
-    console.log(formData.get('image'));
-    console.log('formData---->', formData);
-    console.log('postttttttttt', post.image);
+    ///VALIDATE///
+    const validate = () => {
+      let isValid = true;
+      if (!firstName.value) {
+        isValid = false;
+        alert('Por favor, ingresa tu nombre.');
+      }
+      if (!lastName.value) {
+        isValid = false;
+        alert('Por favor, ingresa tu apellido');
+      }
+      if (!password.value) {
+        isValid = false;
+        alert('Por favor, ingresa una contraseña.');
+      }
+      if (typeof password !== 'undefined') {
+        if (password.length < 8) {
+          isValid = false;
+          alert('Por favor, ingresa una contraseña de mas de 8 caracteres.');
+        }
+      }
+      if (!email.value) {
+        isValid = false;
+        alert('Por favor, ingresa un correo electronico.');
+      }
+
+      if (typeof email !== 'undefined') {
+        var pattern = new RegExp(
+          /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+        );
+        if (!pattern.test(email.value)) {
+          isValid = false;
+          alert('Por favor, ingresa un correo electronico valido.');
+        }
+      }
+      return isValid;
+    };
     try {
       // posteo de user
-
-      const { data } = await axios.post(
-        'http://localhost:3002/auth/signup',
-        {
+      if (validate()) {
+        const { data } = await axios.post('http://localhost:3002/auth/signup', {
           //   email: formData.get('email'),
           //   password: formData.get('password'),
           //   firstName: formData.get('firstName'),
@@ -126,31 +161,25 @@ export default function SignUp() {
           //   phone: formData.get('phone'),
           //   gender: formData.get('gender'),
           //   image: formData.get('file'),
-          image: post.image,
           email: email.value,
           password: password.value,
           firstName: firstName.value,
           lastName: lastName.value,
           phone: phone.value,
           gender: gender.value,
-        },
-        // {
-        //   headers: { 'Content-Type': `${formData.getHeaders()}` },
-        // }
-      );
-      //seteo de estado
-      setUser(data);
-      success(`register user ${data.email}`);
-      // redirect home
+          roles: roles.value,
+        });
+        //seteo de estado
+        setUser(data);
+        success(`register user ${data.email}`);
+        // redirect home
 
-      history.push('/home')
-        .then(() => {
-          dispatch(loginUser())
-        })
-
-    } catch ({ response }) {
-      // algo no esta.
-      error(response);
+        history.push('/');
+        /* dispatch(loginUser()); */
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status !== 404 || 422) alert('Email ya exitente!');
     }
   };
 
@@ -176,9 +205,9 @@ export default function SignUp() {
                 variant='outlined'
                 required
                 fullWidth
+                autoFocus
                 id='firstName'
                 label='Nombre'
-                autoFocus
                 {...firstName}
               />
             </Grid>
@@ -235,21 +264,6 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              Foto de perfil
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                name='file'
-                type='file'
-                id='file'
-                autoComplete='file'
-                onChange={onChange}
-              // {...file}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
               <InputLabel id='demo-simple-select-label'>Género</InputLabel>
               <Select
                 labelId='demo-simple-select-label'
@@ -260,6 +274,20 @@ export default function SignUp() {
                 <MenuItem value={'Male'}>Hombre</MenuItem>
                 <MenuItem value={'Female'}>Mujer </MenuItem>
                 <MenuItem value={'Non-binary'}>No Binario</MenuItem>
+              </Select>
+            </Grid>
+
+            <Grid item xs={12}>
+              <InputLabel id='demo-simple-select-label'>Rol</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={roles}
+                {...roles}
+              >
+                <MenuItem value={'user'}>Usuario</MenuItem>
+                <MenuItem value={'provider'}>Proveedor </MenuItem>
+                <MenuItem value={'admin'}>admin</MenuItem>
               </Select>
             </Grid>
 

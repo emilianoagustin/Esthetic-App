@@ -10,8 +10,10 @@ export interface IUser extends Document {
   email: string;
   phone: number;
   password: string;
+  roles: any[];
   event: any[];
   addresses: any[];
+  creditCards: any[];
   setImage(filename: any): void;
   comparePassword(password: string): Promise<boolean>;
 }
@@ -55,10 +57,13 @@ const UserSchema = new Schema<IUser>(
       required: true,
       trim: true,
     },
-    roles: {
-      type: Schema.Types.ObjectId,
-      ref: 'Role',
-    },
+    roles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        autopopulate: true,
+      },
+    ],
 
     events: [
       {
@@ -69,21 +74,17 @@ const UserSchema = new Schema<IUser>(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Addresses",
+        ref: 'Addresses',
         autopopulate: true,
-
       },
     ],
-    crediCards: [
+    creditCards: [
       {
         type: Schema.Types.ObjectId,
         ref: 'CreditCards',
+        autopopulate: true,
       },
     ],
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'Users',
-    },
   },
 
   { versionKey: false, timestamps: true }

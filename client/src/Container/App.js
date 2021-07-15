@@ -9,6 +9,7 @@ import Cart from "../components/Cart/Cart";
 import ServiceDetails from "../components/Section/Services/Service/ServiceDetails/ServiceDetails";
 import { ProvidersByService } from "../components/Section/Providers/ProvidersByService";
 import ProviderCalendar from "../components/ProviderCalendar/ProviderCalendar";
+import UserProfile from "../components/UserProfile/UserProfile";
 
 
 
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/services/details/:id" component={ServiceDetails} />
       <Route exact path="/cart" component={Cart} />
       <Route exact path="/services/providers/:service/:provider/calendar" component={ProviderCalendar} />
+      <Route path="/perfil/:id" component={UserProfile}/>
 
     </React.Fragment>
   );
