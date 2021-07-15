@@ -55,7 +55,7 @@ const SearchBar = () => {
   const history = useHistory();
   const classes = useStyles();
   const services = useSelector((state) => state.services.data);
-  console.log(services);
+  
 
   const [keyword, setKeyword] = useState("");
 

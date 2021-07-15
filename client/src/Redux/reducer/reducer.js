@@ -7,13 +7,14 @@ const initialState = {
     data: [],
   },
   userActive: false,
+  loginData: {},
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
-  session_id: {
-    user: '',
-    provider: ''
-  }
+  userData: {
+    loading: true,
+    data: {},
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -34,14 +35,15 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
+
         services: { loading: false, error: action.payload },
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-      localStorage.setItem("token", action.payload.token);
-      return {
+      /* ocalStorage.setItem("token", action.payload.token) */ return {
         ...state,
-        userActive: action.payload.userActive,
+        loginData: action.payload,
+        userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
       localStorage.setItem("token", action.payload.token);
@@ -116,6 +118,24 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { data: findService(state.allServices.data, action.payload) },
+      };
+
+    /// GET USER DATA (PROFILE)
+
+    case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
+      return {
+        ...state,
+        userData: { loading: true },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userData: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_FAIL:
+      return {
+        ...state,
+        userData: { loading: false, error: action.payload },
       };
 
     default:

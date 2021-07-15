@@ -5,7 +5,7 @@ import fs from "fs-extra";
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {
-    const users = await Users.find(); // me devuelve un array con todos los usuarios que se encuentran en mi db
+    const users = await Users.find();
     return res.json(users);
   } catch (error) {
     res.json(error);
@@ -27,7 +27,7 @@ export const getUser: RequestHandler = async (req, res) => {
 };
 
 export const createUser: RequestHandler = async (req, res) => {
-  const userFound = await Users.findOne({ email: req.body.email }); // busco en la db
+  const userFound = await Users.findOne({ email: req.body.email });
   if (userFound)
     return res
       .status(300)
