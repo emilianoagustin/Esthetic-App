@@ -44,9 +44,7 @@ function Cart() {
     const changePage = (change) => {
         if (change === 'next' && page < views.length - 1) setPage(page + 1);
         if (change === 'previous' && page > 0) setPage(page - 1);
-        console.log(totalPrice)
     }
-
 
     const classes = useStyles();
     return (

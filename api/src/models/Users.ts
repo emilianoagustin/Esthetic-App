@@ -64,7 +64,6 @@ const UserSchema = new Schema<IUser>(
         autopopulate: true,
       },
     ],
-
     events: [
       {
         type: Schema.Types.ObjectId,
