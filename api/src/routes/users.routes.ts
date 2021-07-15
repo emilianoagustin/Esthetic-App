@@ -27,17 +27,17 @@ router.put('/:id', usersCtrl.updateUser);
 // router.put('/removeService/:id', usersCtrl.removeService);
 
 // <<Routes to users' addresses>>
-router.get('/addresses', getAllAddresses);
-router.get('/addresses/:id', getOneAddress);
-router.post('/addresses', createAddress);
-router.put('/addresses/:id', updateAddress);
-router.delete('/addresses/:id', deleteAddress);
+router.get('/:id/addresses', getAllAddresses);
+router.get('/:id/addresses/:idAd', getOneAddress);
+router.post('/:id/addresses', createAddress);
+router.put('/:id/addresses/:idAd', updateAddress);
+router.delete('/:id/addresses/:idAd', deleteAddress);
 
 // <<Routes to creditCards>>
-router.get('/creditCards', getAllCreditCards);
-router.get('/creditCard/:id', getOneCreditCard);
-router.post('/creditCard', createCreditCard);
-router.put('/creditCard/:id', updateCreditCard);
-router.delete('/creditCard/:id', deleteCreditCard);
+router.get('/:id/creditCards', getAllCreditCards);
+router.get('/:id/creditCard/:idCC', getOneCreditCard);
+router.post('/:id/creditCard', createCreditCard);
+router.put('/:id/creditCard/:idCC', updateCreditCard);
+router.delete('/:id/creditCard/:idCC', deleteCreditCard);
 
 export default router;
