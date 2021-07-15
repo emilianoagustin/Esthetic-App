@@ -13,8 +13,8 @@ function Service({ data }) {
           </button>
         </div>
         <div>
-          {data.img ? (
-            <img className='img' src={data.img} alt='Service Image'></img>
+          {data.image ? (
+            <img className='img' src={data.image} alt='Service Image'></img>
           ) : (
             <img className='img' src={defaultImg} alt='Default Image'></img>
           )}
