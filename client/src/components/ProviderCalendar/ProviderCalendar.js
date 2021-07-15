@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import './ProviderCalendar.scss';
 import Reservation from './Reservation/Reservation.js';
+import LoadingReservation from './LoadingReservation/LoadingReservation.js';
 import { NavLink } from 'react-router-dom';
 
 export default function ProviderCalendar({ match }) {
@@ -15,7 +16,9 @@ export default function ProviderCalendar({ match }) {
     const [loading, setLoading] = useState(true);
     const [loadingEvents, setLoadingEvents] = useState(true);
     const [events, setEvents] = useState([]);
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState({});
+    const [ReActive, setReActive] = useState({});
+    const [ReStatus, setReStatus] = useState('Cargando...');
     const [providerID, setProviderID] = useState(match.params.provider);
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
@@ -31,16 +34,15 @@ export default function ProviderCalendar({ match }) {
                     setLoading(false);
                 }
             })
+            .then(() => {
+                axios.get(`${HOST}/services/name/${match.params.service}`)
+                    .then(service => {
+                        setService(service.data);
+                    })
+            })
             .catch(err => {
                 setError(true);
                 setLoading(false);
-            })
-        axios.get(`${HOST}/services/name/${match.params.service}`)
-            .then(service => {
-                setService(service.data);
-            })
-            .catch(err => {
-                setError(true);
             })
     }, [])
 
@@ -49,10 +51,6 @@ export default function ProviderCalendar({ match }) {
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
     }, [])
-    useEffect(() => {
-        console.log(loading)
-
-    }, [loading])
 
     useEffect(() => {
         setLoadingEvents(true);
@@ -79,8 +77,28 @@ export default function ProviderCalendar({ match }) {
     }
 
     const handleClick = (e) => {
-        setActive(!active)
+        if (active[e]) {
+            setActive({ [e]: false })
+        } else {
+            setActive({ [e]: true })
+        }
     }
+
+    const handleClickModal = (e) => {
+        if (ReActive[e]) {
+            setReActive({
+                [e]: false
+            })
+        } else {
+            setReActive({
+                [e]: true
+            })
+        }
+    }
+
+    useEffect(() => {
+        console.log(active, ReActive)
+    }, [active, ReActive])
 
     return (
         <div className='container-main'>
@@ -104,13 +122,29 @@ export default function ProviderCalendar({ match }) {
                                                 <h2>Turnos Disponibles</h2>
                                                 {
                                                     !events ? (<div>cargando...</div>) : (
-                                                        events.map(e => (
-                                                            <div className={
-                                                                e.isActive ?
-                                                                    e.isAvailable ? 'event available'
-                                                                        : 'event not-available'
-                                                                    : 'event not-active'
-                                                            }>
+                                                        events.map((e, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className={
+                                                                    e.isActive ?
+                                                                        e.isAvailable ? 'event available'
+                                                                            : 'event not-available'
+                                                                        : 'event not-active'
+                                                                }>
+                                                                {
+                                                                    active[index]
+                                                                        ? (
+                                                                            <Reservation
+                                                                                handleActive={() => handleClick(index)}
+                                                                                provider={`${provider.firstName} ${provider.lastName}`}
+                                                                                date={e.date}
+                                                                                hour={`${e.hour}:00hs`}
+                                                                                service={service.name}
+                                                                                price={service.price}
+                                                                                handleClickModal={() => handleClickModal(index)}
+                                                                            />
+                                                                        ) : null
+                                                                }
                                                                 <div>
                                                                     <h4>{`${e.date} - ${e.hour}:00hs`}</h4>
                                                                     {`Disponibilidad: ${e.isActive ?
@@ -124,7 +158,7 @@ export default function ProviderCalendar({ match }) {
                                                                         e.isAvailable ? (
                                                                             <button
                                                                                 className='card-button'
-                                                                                onClick={handleClick}
+                                                                                onClick={() => handleClick(index)}
                                                                             >
                                                                                 Reservar
                                                                             </button>
@@ -133,16 +167,13 @@ export default function ProviderCalendar({ match }) {
                                                                         : null
                                                                 }
                                                                 {
-                                                                    active
+                                                                    ReActive[index]
                                                                         ? (
-                                                                            <Reservation
-                                                                                handleClick={handleClick}
-                                                                                provider={`${provider.firstName} ${provider.lastName}`}
-                                                                                date={e.date}
-                                                                                hour={`${e.hour}:00hs`}
-                                                                                service={service.name}
-                                                                                price={service.price}
+                                                                            <LoadingReservation
+                                                                                handleClickModal={() => handleClickModal(index)}
+                                                                                status={ReStatus}
                                                                             />
+
                                                                         ) : null
                                                                 }
                                                             </div>
