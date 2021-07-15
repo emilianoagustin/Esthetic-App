@@ -3,6 +3,7 @@ import actionsTypes from '../constants/constants';
 import {
   getProvidersByService,
   getServicesBack,
+  HOST,
 } from '../../utils/constants.js';
 //GET SERVICES
 
@@ -53,3 +54,19 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
 export const serviceSearch = (payload) => (dispatch) => {
   dispatch({ type: actionsTypes.SEARCH_SERVICE_BY_NAME, payload });
 };
+
+export const reservationStatus = (data) => async (dispatch) => {
+  const default_data = {
+    loading: true,
+    message: 'Loading...'
+  }
+  dispatch({ type: actionsTypes.SET_RESERVATION_STATUS_LOADING, payload: default_data })
+  try {
+    const { message } = await axios.post(`${HOST}/reservations`, data)
+    const success = 'Turno agregado con éxito';
+    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: success })
+  } catch (error) {
+    const err = 'Error al agregar el turno';
+    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: err })
+  }
+}

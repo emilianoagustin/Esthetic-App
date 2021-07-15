@@ -9,18 +9,18 @@ export const addReservation: RequestHandler = async (req, res) => {
         if (!bag) {
             const newBag = new Bags({ user: user });
             newBag.save()
-                .then((savedBag: any) => {
-                    bag = savedBag;
-                })
         } else {
+            let check = false;
             bag.reservations.forEach((r: any) => {
                 if (r.provider == req.body.provider &&
                     r.date == req.body.date &&
                     r.hour == req.body.hour) {
-                    return res.status(301).send('this reservation already exists')
+                    check = true
                 }
             })
+            if(check) return res.status(301).send('this reservation already exists')
         }
+        bag = await Bags.findOne({ user: user })
         bag.reservations.push(
             {
                 provider: req.body.provider,

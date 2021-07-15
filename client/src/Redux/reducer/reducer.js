@@ -11,7 +11,8 @@ const initialState = {
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
-  providersByService: { loading: true, data: [] }
+  providersByService: { loading: true, data: [] },
+  reservation_status: {}
 };
 
 const appReducer = (state = initialState, action) => {
@@ -112,7 +113,7 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, error: action.payload },
       };
 
-    ///SEARCH SERVICE BY NAME
+    //SEARCH SERVICE BY NAME
 
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
       return {
@@ -120,6 +121,19 @@ const appReducer = (state = initialState, action) => {
         services: { data: findService(state.allServices.data, action.payload) },
       };
 
+    //SET RESERVATIONS FOR USERS
+
+    case actionsTypes.SET_RESERVATION_STATUS:
+      return {
+        ...state,
+        reservation_status: {loading: false, message: action.payload}
+      };
+    case actionsTypes.SET_RESERVATION_STATUS_LOADING:
+      return {
+        ...state,
+        reservation_status: action.payload
+      };
+    
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import './ProviderCalendar.scss';
 import Reservation from './Reservation/Reservation.js';
+import LoadingReservation from './LoadingReservation/LoadingReservation.js';
 import { NavLink } from 'react-router-dom';
 
 export default function ProviderCalendar({ match }) {
@@ -16,6 +17,8 @@ export default function ProviderCalendar({ match }) {
     const [loadingEvents, setLoadingEvents] = useState(true);
     const [events, setEvents] = useState([]);
     const [active, setActive] = useState(false);
+    const [ReActive, setReActive] = useState(false);
+    const [ReStatus, setReStatus] = useState('Cargando...');
     const [providerID, setProviderID] = useState(match.params.provider);
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
@@ -31,16 +34,15 @@ export default function ProviderCalendar({ match }) {
                     setLoading(false);
                 }
             })
+            .then(() => {
+                axios.get(`${HOST}/services/name/${match.params.service}`)
+                    .then(service => {
+                        setService(service.data);
+                    })
+            })
             .catch(err => {
                 setError(true);
                 setLoading(false);
-            })
-        axios.get(`${HOST}/services/name/${match.params.service}`)
-            .then(service => {
-                setService(service.data);
-            })
-            .catch(err => {
-                setError(true);
             })
     }, [])
 
@@ -49,10 +51,6 @@ export default function ProviderCalendar({ match }) {
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
     }, [])
-    useEffect(() => {
-        console.log(loading)
-
-    }, [loading])
 
     useEffect(() => {
         setLoadingEvents(true);
@@ -142,7 +140,18 @@ export default function ProviderCalendar({ match }) {
                                                                                 hour={`${e.hour}:00hs`}
                                                                                 service={service.name}
                                                                                 price={service.price}
+                                                                                handleActive={setReActive}
                                                                             />
+                                                                        ) : null
+                                                                }
+                                                                {
+                                                                    ReActive
+                                                                        ? (
+                                                                            <LoadingReservation
+                                                                                handleActive={setReActive}
+                                                                                status={ReStatus}
+                                                                            />
+
                                                                         ) : null
                                                                 }
                                                             </div>

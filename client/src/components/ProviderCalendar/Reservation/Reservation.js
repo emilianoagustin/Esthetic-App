@@ -1,24 +1,24 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
+import { reservationStatus } from '../../../Redux/actions/actions';
 import './Reservation.scss';
-import axios from 'axios'
-import { HOST } from '../../../utils/constants';
 
-export default function Reservation({ handleClick, date, hour, provider, service, price }) {
-    const handleReservation = async () => {
-        try {
-            axios.post(`${HOST}/reservations`,
-                {
-                    user: '',
-                    provider: provider,
-                    date: date,
-                    hour: hour,
-                    service: service,
-                    price: price,
-                    address: 'address'
-                })
-        } catch (error) {
+export default function Reservation({ handleClick, date, hour, provider, service, price, handleActive }) {
 
-        }
+    const dispatch = useDispatch();
+
+    const handleAccept = async () => {
+        handleActive(true)
+        dispatch(reservationStatus({
+            user: '60ef3125034f1a3a38225cb3',
+            provider: provider,
+            date: date,
+            hour: hour,
+            service: service,
+            price: price,
+            address: 'address'
+        }));
+        handleClick()
     }
 
     return (
@@ -61,7 +61,7 @@ export default function Reservation({ handleClick, date, hour, provider, service
                 >CANCELAR</button>
                 <button
                     className='modal-button right'
-                    onClick={handleClick}
+                    onClick={handleAccept}
                 >ACEPTAR</button>
             </div>
         </div>
