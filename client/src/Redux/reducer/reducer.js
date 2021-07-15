@@ -42,7 +42,6 @@ const appReducer = (state = initialState, action) => {
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
 
-       /* ocalStorage.setItem("token", action.payload.token) */;
 
       return {
         ...state,
@@ -50,13 +49,13 @@ const appReducer = (state = initialState, action) => {
         userActive: true,
       };
     case actionsTypes.LOGIN_FAIL:
-      localStorage.setItem('token', action.payload.token);
+      
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      localStorage.setItem('token', action.payload.token);
+     
       return {
         ...state,
         userActive: action.payload.userActive,
