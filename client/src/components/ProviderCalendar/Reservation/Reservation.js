@@ -10,7 +10,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
     const handleAccept = async () => {
         handleClickModal()
         dispatch(reservationStatus({
-            user: '60ef3125034f1a3a38225cb3',
+            user: 'ID',
             provider: provider,
             date: date,
             hour: hour,

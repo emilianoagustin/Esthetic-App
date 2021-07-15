@@ -5,7 +5,7 @@ import CartItem from './CartItem/CartItem';
 import CartOrder from './CartOrder/CartOrder';
 import Image from '../../img/wall-cart.jpg';
 import axios from 'axios';
-import { HOST } from '../../utils/constants'
+import { HOST, ID } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ function Cart() {
     const [page, setPage] = useState(0);
 
     useEffect(() => {
-        axios.get(`${HOST}/reservations/60ef3125034f1a3a38225cb3`)
+        axios.get(`${HOST}/reservations/${ID}`)
             .then(reservations => {
                 setViews(setPaginationViews(reservations.data, 5));
                 setTotalPrice(getAllPrice(reservations.data));

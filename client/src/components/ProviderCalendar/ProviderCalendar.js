@@ -10,7 +10,7 @@ import LoadingReservation from './LoadingReservation/LoadingReservation.js';
 import { NavLink } from 'react-router-dom';
 
 export default function ProviderCalendar({ match }) {
-    const [provider, setProvider] = useState();
+    const [provider, setProvider] = useState({});
     const [service, setService] = useState(match.params.service);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -22,22 +22,22 @@ export default function ProviderCalendar({ match }) {
     const [providerID, setProviderID] = useState(match.params.provider);
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
+    const [invalid, setInvalid] = useState(false);
+    // const ID =  JSON.parse(localStorage.getItem('loggedSpatifyApp'));
 
     useEffect(() => {
         axios.get(`${HOST}/providers/${providerID}`)
-            .then(provider => {
-                if (!provider.data.hasCalendar) {
-                    setError(true);
-                    setLoading(false);
-                } else {
-                    setProvider(provider.data);
-                    setLoading(false);
-                }
+            .then(prov => {
+                const ProviderData = prov.data;
+                if (!ProviderData.hasCalendar) setError(true)
+                setProvider(ProviderData);
+                setLoading(false);
             })
             .then(() => {
                 axios.get(`${HOST}/services/name/${match.params.service}`)
-                    .then(service => {
-                        setService(service.data);
+                    .then(serv => {
+                        const serviceData = serv.data
+                        setService(serviceData);
                     })
             })
             .catch(err => {
@@ -53,18 +53,20 @@ export default function ProviderCalendar({ match }) {
     }, [])
 
     useEffect(() => {
-        setLoadingEvents(true);
-        axios.post(`${HOST}/events/calendar`, {
-            provider: providerID,
-            date: date
-        })
-            .then(eventsList => {
-                setEvents(eventsList.data)
-                setLoadingEvents(false);
+        if (!error) {
+            setLoadingEvents(true);
+            axios.post(`${HOST}/events/calendar`, {
+                provider: providerID,
+                date: date
             })
-            .catch(err => {
-                setError(true);
-            })
+                .then(eventsList => {
+                    setEvents(eventsList.data)
+                    setLoadingEvents(false);
+                })
+                .catch(err => {
+                    setError(true);
+                })
+        }
     }, [provider, date])
 
     const handleDateClick = (e) => {
@@ -77,10 +79,15 @@ export default function ProviderCalendar({ match }) {
     }
 
     const handleClick = (e) => {
-        if (active[e]) {
-            setActive({ [e]: false })
+        if (localStorage.getItem('loggedSpatifyApp')) {
+            if (active[e]) {
+                setActive({ [e]: false })
+            } else {
+                setActive({ [e]: true })
+            }
         } else {
-            setActive({ [e]: true })
+            console.log('invalido')
+            setInvalid(true)
         }
     }
 
@@ -178,6 +185,25 @@ export default function ProviderCalendar({ match }) {
                                                 }
                                             </div>
                                         )
+                                    }
+                                    {
+                                        invalid ? (
+                                            <div className='modal'>
+                                                <div className='modal-content'>
+                                                    <h2>Usuario no registrado</h2>
+                                                    <p>Debe estar registrado y logeado para poder añadir reservaciones a la bolsa de compras</p>
+                                                    <button
+                                                        className='modal-button left'
+                                                        onClick={() => setInvalid(false)}
+                                                    >CANCELAR</button>
+                                                    <NavLink exact to="/userRegister" className='navlink'>
+                                                        <button
+                                                            className='modal-button right'
+                                                        >REGISTRO</button>
+                                                    </NavLink>
+                                                </div>
+                                            </div>
+                                        ) : null
                                     }
                                 </div>
                             </div>
