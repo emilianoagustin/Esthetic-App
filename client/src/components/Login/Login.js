@@ -128,7 +128,7 @@ export default function SignIn() {
       };
       console.log(data);
       dispatch(loginUser(data));
-      history.push('/home');
+      history.push('/');
       // history.push("/home")};
     }
   };
