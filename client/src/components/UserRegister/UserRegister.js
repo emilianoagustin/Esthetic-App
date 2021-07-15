@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -62,19 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  // const initialState = {
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   password: '',
-  //   phone: '',
-  //   gender: '',
-  //   file,
-  // };
-  // const initialState = {
-  //   image,
-  // };
-  const [post, setPost] = useState({});
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const { setUser } = useContext(UserContext);
@@ -84,36 +72,26 @@ export default function SignUp() {
   const firstName = useInput('firstName');
   const lastName = useInput('lastName');
   const phone = useInput('phone');
-  const file = useInput('file');
+ 
   const gender = useInput('gender');
 
-  const onChange = (e) => {
-    setPost({
-      ...post,
-      image: e.target.files[0],
-    });
-    // console.log('------->', e.target.files[0]);
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const $form = document.querySelector('#form');
     const formData = new FormData();
-    const fileField = document.querySelector('#file');
+    
 
     log('intento de registro');
     formData.append('firstName', firstName.value);
     formData.append('lastName', lastName.value);
     formData.append('email', email.value);
     formData.append('phone', phone.value);
-    formData.append('image', fileField.files[0]);
+   
     formData.append('gender', gender.value);
 
-    console.log(fileField.value);
-    console.log(file.value);
-    console.log(formData.get('image'));
-    console.log('formData---->', formData);
-    console.log('postttttttttt', post.image);
+   
     try {
       // posteo de user
 
@@ -127,7 +105,6 @@ export default function SignUp() {
           //   phone: formData.get('phone'),
           //   gender: formData.get('gender'),
           //   image: formData.get('file'),
-          image: post.image,
           email: email.value,
           password: password.value,
           firstName: firstName.value,
@@ -135,10 +112,6 @@ export default function SignUp() {
           phone: phone.value,
           gender: gender.value,
         },
-
-        {
-          headers: { 'Content-Type': `${formData.getHeaders()}` },
-        }
       );
       //seteo de estado
       setUser(data);
@@ -232,20 +205,6 @@ export default function SignUp() {
                 autoComplete='phone'
                 inputProps={{ maxLength: 10 }}
                 {...phone}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              Foto de perfil
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                name='file'
-                type='file'
-                id='file'
-                autoComplete='file'
-                onChange={onChange}
-                // {...file}
               />
             </Grid>
 
