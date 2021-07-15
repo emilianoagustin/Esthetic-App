@@ -16,8 +16,9 @@ export const setPaginationViews = (list, amount) => {
 }
 
 export const getAllPrice = (list) => {
-    const total = list.reduce((acc, cur) => {
-        return acc + parseInt(cur.price);
+    let total = 0;
+    list.forEach((cur) => {
+        total += parseInt(cur.price)
     })
 
     return total;
