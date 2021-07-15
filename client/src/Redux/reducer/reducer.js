@@ -1,20 +1,23 @@
-import actionsTypes from "../constants/constants";
-import { findService } from "../../utils/filter.js";
+import actionsTypes from '../constants/constants';
+import { findService } from '../../utils/filter.js';
 
 const initialState = {
   services: {
     loading: true,
     data: [],
   },
-  userActive: false,
+  userActive: '',
+  loginData: {},
   serviceDetails: { loading: true, data: {} },
+  providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providerById: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
-  session_id: {
-    user: '',
-    provider: ''
-  }
+  reservation_status: {},
+  userData: {
+    loading: true,
+    data: {},
+  },
 };
 
 const appReducer = (state = initialState, action) => {
@@ -35,30 +38,41 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.SET_SERVICES_FAIL:
       return {
         ...state,
+
         services: { loading: false, error: action.payload },
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
-      localStorage.setItem("token", action.payload.token);
+      window.localStorage.setItem(
+        'loggedSpatifyApp',
+        JSON.stringify(action.payload)
+      );
       return {
         ...state,
-        userActive: action.payload.userActive,
+        loginData: action.payload,
+        userActive: action.payload.userFound.firstName,
       };
     case actionsTypes.LOGIN_FAIL:
-      localStorage.setItem("token", action.payload.token);
+      // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        error: action.payload.userActive,
+        //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      localStorage.setItem("token", action.payload.token);
+      window.localStorage.setItem('loggedSpatifyApp', '');
+      // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        userActive: action.payload.userActive,
+        userActive: action.payload,
+      };
+
+    case actionsTypes.LOGGIN_IN_SESSION:
+      return {
+        ...state,
+        userActive: action.payload,
       };
 
     //GET SERVICES --> DETAILS
-
     case actionsTypes.GET_SERVICES_DETAILS_REQUEST:
       return {
         ...state,
@@ -76,7 +90,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS
-
     case actionsTypes.GET_PROVIDERS_REQUEST:
       return {
         ...state,
@@ -93,26 +106,7 @@ const appReducer = (state = initialState, action) => {
         providers: { loading: false, error: action.payload },
       };
 
-    //GET PROVIDER BY ID
-    
-    case actionsTypes.GET_PROVIDERS_REQUEST:
-      return {
-        ...state,
-        providerById: { loading: true}
-      };
-    case actionsTypes.GET_PROVIDER_BY_ID:
-      return {
-        ...state,
-        providerById: { loading: false, data: action.payload}
-      };
-    case actionsTypes.GET_PROVIDERS_FAIL:
-      return {
-        ...state,
-        providerById: { loading: false, error: action.payload}
-      };
-
     //GET PROVIDERS BY SERVICE
-    
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST:
       return {
         ...state,
@@ -129,12 +123,58 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, error: action.payload },
       };
 
-    ///SEARCH SERVICE BY NAME
+    //GET PROVIDERS' DETAILS
+    case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+      return {
+        ...state,
+        providerDetails: { loading: true },
+      };
+    case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
+      return {
+        ...state,
+        providerDetails: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_PROVIDER_DETAILS_FAIL:
+      return {
+        ...state,
+        providerDetails: { loading: false, error: action.payload },
+      };
 
+    ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
       return {
         ...state,
         services: { data: findService(state.allServices.data, action.payload) },
+      };
+
+    //SET RESERVATIONS FOR USERS
+
+    case actionsTypes.SET_RESERVATION_STATUS:
+      return {
+        ...state,
+        reservation_status: { loading: false, message: action.payload },
+      };
+    case actionsTypes.SET_RESERVATION_STATUS_LOADING:
+      return {
+        ...state,
+        reservation_status: action.payload,
+      };
+
+    /// GET USER DATA (PROFILE)
+    case actionsTypes.GET_USER_DATA_PROFILE_REQUEST:
+      return {
+        ...state,
+        userData: { loading: true },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userData: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_DATA_PROFILE_FAIL:
+      return {
+        ...state,
+        userData: { loading: false, error: action.payload },
       };
 
     default:

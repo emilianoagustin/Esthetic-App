@@ -1,4 +1,4 @@
-import * as react from "react";
+import * as react from 'react';
 
 /******************************************
  * Simple input manager.
@@ -9,8 +9,11 @@ import * as react from "react";
  *   {name} name
  */
 export const useInput = (name) => {
-  const [value, setValue] = react.useState("");
-
+  const [value, setValue] = react.useState('');
+  if (name === 'files') {
+    const onChange = (e) => setValue(e.target.files[0]);
+    return { value, onChange, name };
+  }
   const onChange = ({ target: { value } }) => setValue(value);
 
   return { value, onChange, name };
