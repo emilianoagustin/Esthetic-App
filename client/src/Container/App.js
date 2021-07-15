@@ -10,8 +10,7 @@ import ServiceDetails from "../components/Section/Services/Service/ServiceDetail
 import { ProvidersByService } from "../components/Section/Providers/ProvidersByService";
 import ProviderCalendar from "../components/ProviderCalendar/ProviderCalendar";
 import UserProfile from "../components/UserProfile/UserProfile";
-
-
+import ProviderDetails from "../components/ProviderDetails/ProviderDetails";
 
 const App = () => {
   return (
@@ -20,12 +19,20 @@ const App = () => {
       <Route exact path={["/"]} component={(Home, Section)} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/userRegister" component={UserRegister} />
-      <Route exact path="/services/providers/:serviceName" component={ProvidersByService} />
+      <Route
+        exact
+        path="/services/providers/:serviceName"
+        component={ProvidersByService}
+      />
       <Route path="/services/details/:id" component={ServiceDetails} />
       <Route exact path="/cart" component={Cart} />
-      <Route exact path="/services/providers/:service/:provider/calendar" component={ProviderCalendar} />
-      <Route path="/perfil/:id" component={UserProfile}/>
-
+      <Route
+        exact
+        path="/services/providers/:service/:provider/calendar"
+        component={ProviderCalendar}
+      />
+      <Route exact path="/providers/:id" component={ProviderDetails} />
+      <Route path="/perfil/:id" component={UserProfile} />
     </React.Fragment>
   );
 };
