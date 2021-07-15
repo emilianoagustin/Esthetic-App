@@ -1,7 +1,26 @@
 import React from 'react';
-import './Reservation.scss'
+import { useDispatch } from "react-redux";
+import { reservationStatus } from '../../../Redux/actions/actions';
+import './Reservation.scss';
 
-export default function Reservation({ handleClick, date, hour, provider, service, price }) {
+export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal }) {
+
+    const dispatch = useDispatch();
+
+    const handleAccept = async () => {
+        handleClickModal()
+        dispatch(reservationStatus({
+            user: '60ef3125034f1a3a38225cb3',
+            provider: provider,
+            date: date,
+            hour: hour,
+            service: service,
+            price: price,
+            address: 'address'
+        }));
+        handleActive()
+    }
+
     return (
         <div className='modal'>
             <div className='modal-content'>
@@ -38,11 +57,11 @@ export default function Reservation({ handleClick, date, hour, provider, service
                 </div>
                 <button
                     className='modal-button left'
-                    onClick={handleClick}
+                    onClick={() => handleActive()}
                 >CANCELAR</button>
                 <button
                     className='modal-button right'
-                    onClick={handleClick}
+                    onClick={handleAccept}
                 >ACEPTAR</button>
             </div>
         </div>

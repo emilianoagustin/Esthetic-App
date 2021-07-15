@@ -12,6 +12,7 @@ const initialState = {
   providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
+  reservation_status: {},
   userData: {
     loading: true,
     data: {},
@@ -51,10 +52,10 @@ const appReducer = (state = initialState, action) => {
         userActive: action.payload.userFound.firstName,
       };
     case actionsTypes.LOGIN_FAIL:
-      window.localStorage.setItem('token', action.payload.token);
+      // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        error: action.payload.userActive,
+        //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
       window.localStorage.setItem('loggedSpatifyApp', '');
@@ -143,6 +144,19 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         services: { data: findService(state.allServices.data, action.payload) },
+      };
+
+    //SET RESERVATIONS FOR USERS
+
+    case actionsTypes.SET_RESERVATION_STATUS:
+      return {
+        ...state,
+        reservation_status: { loading: false, message: action.payload },
+      };
+    case actionsTypes.SET_RESERVATION_STATUS_LOADING:
+      return {
+        ...state,
+        reservation_status: action.payload,
       };
 
     /// GET USER DATA (PROFILE)

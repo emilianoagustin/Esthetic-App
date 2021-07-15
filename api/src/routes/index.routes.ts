@@ -3,7 +3,7 @@ import users from './users.routes';
 import providers from './providers.routes';
 import services from './services.routes';
 import events from './events.routes';
-//
+import reservations from './reservations.routes';
 import auth from './auth.routes';
 
 const router = Router();
@@ -13,5 +13,6 @@ router.use('/services', services);
 router.use('/providers', providers);
 router.use('/events', events);
 router.use('/auth', auth);
+router.use('/reservations', reservations);
 
 export default router;
