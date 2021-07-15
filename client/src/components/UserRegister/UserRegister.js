@@ -1,5 +1,4 @@
-
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -135,18 +134,19 @@ export default function SignUp() {
           phone: phone.value,
           gender: gender.value,
         },
-
-        {
-          headers: { 'Content-Type': `${formData.getHeaders()}` },
-        }
+        // {
+        //   headers: { 'Content-Type': `${formData.getHeaders()}` },
+        // }
       );
       //seteo de estado
       setUser(data);
       success(`register user ${data.email}`);
       // redirect home
-      
+
       history.push('/home')
-      dispatch(loginUser())
+        .then(() => {
+          dispatch(loginUser())
+        })
 
     } catch ({ response }) {
       // algo no esta.
@@ -245,7 +245,7 @@ export default function SignUp() {
                 id='file'
                 autoComplete='file'
                 onChange={onChange}
-                // {...file}
+              // {...file}
               />
             </Grid>
 

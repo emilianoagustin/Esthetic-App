@@ -1,7 +1,26 @@
 import React from 'react';
-import './Reservation.scss'
+import './Reservation.scss';
+import axios from 'axios'
+import { HOST } from '../../../utils/constants';
 
 export default function Reservation({ handleClick, date, hour, provider, service, price }) {
+    const handleReservation = async () => {
+        try {
+            axios.post(`${HOST}/reservations`,
+                {
+                    user: '',
+                    provider: provider,
+                    date: date,
+                    hour: hour,
+                    service: service,
+                    price: price,
+                    address: 'address'
+                })
+        } catch (error) {
+
+        }
+    }
+
     return (
         <div className='modal'>
             <div className='modal-content'>
