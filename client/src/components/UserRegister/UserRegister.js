@@ -144,7 +144,7 @@ export default function SignUp() {
       success(`register user ${data.email}`);
       // redirect home
 
-      history.push("/home");
+      history.push("/");
       dispatch(loginUser());
     } catch ({ response }) {
       // algo no esta.

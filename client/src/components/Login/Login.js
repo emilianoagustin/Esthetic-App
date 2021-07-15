@@ -89,7 +89,7 @@ export default function SignIn() {
      
       dispatch(loginUser(data)) 
 
-      history.push('/home');
+      history.push('/');
       // history.push("/home")};
     } catch ({ response }) {
       error(response);
