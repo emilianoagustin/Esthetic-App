@@ -22,7 +22,7 @@ import {
 
 import upload from '../libs/multer';
 import passport from 'passport';
-//passport.authenticate('jwt')
+//passport.authenticate('jwt');
 const router = Router();
 
 // <<PLAIN PROVIDERS ROUTES>>

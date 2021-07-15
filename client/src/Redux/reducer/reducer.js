@@ -1,12 +1,12 @@
-import actionsTypes from "../constants/constants";
-import { findService } from "../../utils/filter.js";
+import actionsTypes from '../constants/constants';
+import { findService } from '../../utils/filter.js';
 
 const initialState = {
   services: {
     loading: true,
     data: [],
   },
-  userActive: false,
+  userActive: '',
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
@@ -40,20 +40,33 @@ const appReducer = (state = initialState, action) => {
         allServices: { loading: false, error: action.payload },
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
+      window.localStorage.setItem(
+        'loggedSpatifyApp',
+        JSON.stringify(action.payload)
+      );
       return {
         ...state,
         loginData: action.payload,
-        userActive: true,
+        userActive: action.payload.userFound.firstName,
       };
     case actionsTypes.LOGIN_FAIL:
+      window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
+      window.localStorage.setItem('loggedSpatifyApp', '');
+      // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        userActive: action.payload.userActive,
+        userActive: action.payload,
+      };
+
+    case actionsTypes.LOGGIN_IN_SESSION:
+      return {
+        ...state,
+        userActive: action.payload,
       };
 
     //GET SERVICES --> DETAILS

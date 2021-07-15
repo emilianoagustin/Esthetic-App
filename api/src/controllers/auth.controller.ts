@@ -1,8 +1,7 @@
-
 import { RequestHandler } from 'express';
+import Role from '../models/Roles';
 import Users from '../models/Users';
 import createToken from '../utils/functionToken';
-
 
 export const signUp: RequestHandler = async (req, res) => {
   const {
@@ -13,16 +12,17 @@ export const signUp: RequestHandler = async (req, res) => {
     email,
     phone,
     password,
+    roles,
+
     // file,
   } = req.body;
   if (!email || !password)
     return res
       .status(400)
-      .json({ message: "Please, send your email and password" });
+      .json({ message: 'Please, send your email and password' });
 
   const userFound = await Users.findOne({ email: email }); // busco en la db
   if (userFound)
-
     return res.status(301).json({ message: 'The user alredy exists' });
   // console.log(req);
   // image: `uploads\\${file}`,
@@ -45,7 +45,17 @@ export const signUp: RequestHandler = async (req, res) => {
   //   dataUser.setImage(filename);
   // }
   const newUser = new Users(dataUser);
+
+  if (roles) {
+    const foundRoles = await Role.find({ name: { $in: roles } });
+    newUser.roles = foundRoles.map((role: any) => role._id);
+  } else {
+    const role = await Role.find({ name: 'user' });
+    newUser.roles = [role._id];
+  }
+
   const savedUser = await newUser.save();
+
   res.json(savedUser);
 };
 
@@ -56,17 +66,17 @@ export const signIn: RequestHandler = async (req, res) => {
   if (!email || !password)
     return res
       .status(400)
-      .json({ message: "Please, send your email and password" });
+      .json({ message: 'Please, send your email and password' });
 
   const userFound = await Users.findOne({ email: email });
   if (!userFound)
-    return res.status(400).json({ message: "The user does not exist" });
+    return res.status(400).json({ message: 'The user does not exist' });
 
   const isMatch = await userFound.comparePassword(password);
 
-  if (isMatch) return res.json({userFound, token: createToken(userFound) });
+  if (isMatch) return res.json({ userFound, token: createToken(userFound) });
 
   return res
     .status(400)
-    .json({ message: "The email or password are incorrect" });
+    .json({ message: 'The email or password are incorrect' });
 };
