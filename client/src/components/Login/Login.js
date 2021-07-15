@@ -87,9 +87,7 @@ export default function SignIn() {
   });
 
   console.log(state);
-  const data = { email: email.value, password: password.value };
 
-  dispatch(loginUser(data));
   ///Manejo del Swich
   const handleChange = (event) => {
     setState({ [event.target.name]: event.target.checked });
@@ -130,7 +128,7 @@ export default function SignIn() {
       };
       console.log(data);
       dispatch(loginUser(data));
-      history.push('/');
+      history.push('/home');
       // history.push("/home")};
     }
   };
