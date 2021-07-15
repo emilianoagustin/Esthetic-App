@@ -89,10 +89,46 @@ export default function SignUp() {
     formData.append('phone', phone.value);
     formData.append('gender', gender.value);
 
-   
+   ///VALIDATE///
+  const validate = () => {
+    let isValid = true;
+    if (!firstName.value) {
+      isValid = false;
+      alert("Por favor, ingresa tu nombre.");
+    }
+    if (!lastName.value) {
+      isValid = false;
+      alert("Por favor, ingresa tu apellido");
+    }
+    if (!password.value) {
+      isValid = false;
+      alert("Por favor, ingresa una contraseña.");
+    }
+    if (typeof password !== "undefined") {
+      if (password.length < 8) {
+        isValid = false;
+        alert("Por favor, ingresa una contraseña de mas de 8 caracteres.");
+      }
+    }
+    if (!email.value) {
+      isValid = false;
+      alert("Por favor, ingresa un correo electronico.");
+    }
+
+    if (typeof email !== "undefined") {
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      if (!pattern.test(email.value)) {
+        isValid = false;
+        alert("Por favor, ingresa un correo electronico valido.");
+      }
+    }
+    return isValid;
+  };
     try {
       // posteo de user
-
+if(validate()){
       const { data } = await axios.post(
         "http://localhost:3002/auth/signup",
         {
@@ -117,10 +153,13 @@ export default function SignUp() {
       // redirect home
 
       history.push("/");
-      dispatch(loginUser());
-    } catch ({ response }) {
-      // algo no esta.
-      error(response);
+      /* dispatch(loginUser()); */
+}
+    } catch ( error ) {
+      console.log(error)
+      if (error.response?.status !== 404 || 422)
+      alert("Email ya exitente!");
+    
     }
   };
 
@@ -146,6 +185,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                autoFocus
                 id="firstName"
                 label="Nombre"
                 autoFocus
