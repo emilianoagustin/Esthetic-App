@@ -63,7 +63,6 @@ const SearchBar = () => {
   const handleChange = (e) => {
     setKeyword(e.target.value);
     dispatch(serviceSearch(keyword));
-    console.log("prueba");
   };
 
   const reset = () => {
@@ -89,8 +88,8 @@ const SearchBar = () => {
         </div>
         <Autocomplete
           id="custom-input-demo"
-          options={top100Films}
-          getOptionLabel={(option) => option.title}
+          options={services}
+          getOptionLabel={(option) => option.name}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -114,14 +113,4 @@ const SearchBar = () => {
   );
 };
 
-const top100Films = [
-  { title: "Depilación definitiva", price: "$200" },
-  { title: "Corte de pelo para hombre ", price: "$100" },
-  { title: "Corte de pelo para mujeres", price: "$250" },
-  { title: "Masaje", price: "$100" },
-  { title: "Pedicura", price: "$100" },
-  { title: "Manicura", price: "$100" },
-  { title: "Tintura de pelo", price: "$200" },
-  { title: "Maquillaje", price: "$200" },
-];
 export default SearchBar;
