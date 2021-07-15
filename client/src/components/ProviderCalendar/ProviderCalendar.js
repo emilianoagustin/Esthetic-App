@@ -86,7 +86,6 @@ export default function ProviderCalendar({ match }) {
                 setActive({ [e]: true })
             }
         } else {
-            console.log('invalido')
             setInvalid(true)
         }
     }

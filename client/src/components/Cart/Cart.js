@@ -5,7 +5,7 @@ import CartItem from './CartItem/CartItem';
 import CartOrder from './CartOrder/CartOrder';
 import Image from '../../img/wall-cart.jpg';
 import axios from 'axios';
-import { HOST, ID } from '../../utils/constants'
+import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,18 +27,26 @@ function Cart() {
     const [loading, setLoading] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
     const [page, setPage] = useState(0);
+    const [invalid, setInvalid] = useState(false);
 
     useEffect(() => {
-        axios.get(`${HOST}/reservations/${ID}`)
-            .then(reservations => {
-                setViews(setPaginationViews(reservations.data, 5));
-                setTotalPrice(getAllPrice(reservations.data));
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(true);
-                setLoading(false);
-            })
+        if (localStorage.getItem('loggedSpatifyApp')) {
+            const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
+            if (storageData.userFound.roles[0].name === "user") {
+                axios.get(`${HOST}/reservations/${storageData.userFound._id}`)
+                    .then(reservations => {
+                        setViews(setPaginationViews(reservations.data, 5));
+                        setTotalPrice(getAllPrice(reservations.data));
+                        setLoading(false);
+                    })
+                    .catch(err => {
+                        setError(true);
+                        setLoading(false);
+                    })
+            }
+        } else {
+            setInvalid(true)
+        }
     }, [])
 
     const changePage = (change) => {
