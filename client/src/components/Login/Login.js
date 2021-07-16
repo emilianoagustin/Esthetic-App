@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LoginUser } from "../../Redux/actions/user.actions";
 import { useInput } from "../../hooks/customHooks";
-import { UserContext } from "../../index";
 import { log, success, error } from "../../utils/logs";
 //materialUI
 import Avatar from "@material-ui/core/Avatar";
@@ -18,10 +17,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import axios from "axios";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 
 //google login
 import GoogleLogin from "react-google-login";
@@ -60,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const loginData = useSelector((state) => state.loginData);
-console.log(loginData)
+ /*  const loginData = useSelector((state) => state.loginData);
+  const userActive = useSelector((state) => state.userActive); */
+
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -70,18 +67,18 @@ console.log(loginData)
 
   const email = useInput("email");
   const password = useInput("password");
-  
+
   const validate = () => {
     let isValid = true;
-    if (!password.value ) {
+    if (!password.value) {
       setValid(false);
-       isValid = false
-      setError({...error, passwordError: "Por favor ingrese contraseña" });
+      isValid = false;
+      setError({ ...error, passwordError: "Por favor ingrese contraseña" });
     }
     if (!email.value) {
       setValid(false);
-      isValid = false
-      setError({...error, emailError: "Por favor ingrese email" });
+      isValid = false;
+      setError({ ...error, emailError: "Por favor ingrese email" });
     }
 
     if (typeof email !== "undefined") {
@@ -90,8 +87,8 @@ console.log(loginData)
       );
       if (!pattern.test(email.value)) {
         setValid(false);
-        isValid = false
-        setError({...error, emailError: "Ingrese un email valido" });
+        isValid = false;
+        setError({ ...error, emailError: "Ingrese un email valido" });
       }
     }
     return isValid;
@@ -101,21 +98,33 @@ console.log(loginData)
     setValid(true);
   }, [email.value, password.value]);
 
-
+  useEffect(()=>{
+    if(error.emailError.slice(0, 7 ) === "Usuario") {setValid(false)}
+},[error.emailError])
+console.log(error.emailError.slice(0,7))
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     log("intento de logueo");
     if (validate()) {
       const data = {
         email: email.value,
-        password: password.value 
+        password: password.value,
       };
-      console.log(data);
-      dispatch(LoginUser(data));
-      history.push("/") 
-     
+      dispatch(LoginUser(data)).then((a) => {
+        if (a) {
+          history.push("/");
+        } else {
+          setError({
+            ...error,
+            emailError: `Usuario: ${email.value} o constraseña  no existente `,
+          });
+         
+        }
+      });
     }
   };
+
 
   const responseGoogle = (response) => {
     console.log(response);
