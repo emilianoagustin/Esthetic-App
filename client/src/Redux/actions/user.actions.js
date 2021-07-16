@@ -2,9 +2,11 @@ import axios from 'axios';
 import actionsTypes from '../constants/constants';
 import { HOST } from '../../utils/constants';
 
+
 // login
-export const loginUser = (data) => {
+export const LoginUser = (data) => {
   console.log(data);
+ 
   return (dispatch) => {
     return axios
       .post(`${HOST}/auth/signin`, data)
