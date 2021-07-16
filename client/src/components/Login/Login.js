@@ -125,10 +125,7 @@ export default function SignIn() {
     }
   };
 
-  if (
-    loginData.userFound?.roles[0].name === 'provider' &&
-    state.provider === true
-  ) {
+  if (loginData.providerFound && state.provider === true) {
     history.push('/user/provider');
   }
   if (loginData.userFound?.roles[0].name === 'user') {

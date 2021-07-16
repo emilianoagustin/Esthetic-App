@@ -117,7 +117,9 @@ export default function PrimarySearchAppBar() {
     const loggedUserJSON = window.localStorage.getItem('loggedSpatifyApp');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setRender(user.userFound.firstName);
+      user.userFound
+        ? setRender(user.userFound?.firstName)
+        : setRender(user.providerFound?.firstName);
       //(() => dispatch(userActiveSession()))();
     }
     if (userActive !== '') setRender(userActive);
