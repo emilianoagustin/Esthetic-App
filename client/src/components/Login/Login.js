@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../Redux/actions/user.actions';
 import { useInput } from '../../hooks/customHooks';
-import { UserContext } from '../../index';
 import { log, success, error } from '../../utils/logs';
 //materialUI
 import Avatar from '@material-ui/core/Avatar';
@@ -18,7 +17,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -60,12 +58,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const loginData = useSelector((state) => state.loginData);
-
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
-
+  const loginData = useSelector((state) => state.loginData);
+  console.log('---x---', loginData);
   // const email = useInput('email');
   // const password = useInput('password');
   // const { setUser } = useContext(UserContext);
@@ -86,8 +83,6 @@ export default function SignIn() {
     provider: false,
   });
 
-  console.log(state);
-
   ///Manejo del Swich
   const handleChange = (event) => {
     setState({ [event.target.name]: event.target.checked });
@@ -95,7 +90,7 @@ export default function SignIn() {
 
   const validate = () => {
     let isValid = true;
-    console.log(password, email);
+    // console.log(password, email);
     if (!password.value) {
       isValid = false;
       alert('Por favor, ingresa una contraseña.');
@@ -109,7 +104,7 @@ export default function SignIn() {
       var pattern = new RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
       );
-      console.log(pattern.test(email.value));
+      // console.log(pattern.test(email.value));
       if (!pattern.test(email.value)) {
         isValid = false;
         alert('Por favor, ingresa un correo electronico valido.');
@@ -126,13 +121,18 @@ export default function SignIn() {
         email: email.value,
         password: password.value /* roles: roles.value */,
       };
-      console.log(data);
       dispatch(loginUser(data));
-      history.push('/');
-      // history.push("/home")};
     }
   };
 
+  if (loginData.providerFound && state.provider === true) {
+    history.push('/user/provider');
+  }
+  if (loginData.userFound?.roles[0].name === 'user') {
+    history.push('/'); // pendiente colocar path user
+  }
+
+  // console.log('---->', loginData?.userFound.roles[0]?.name);
   const responseGoogle = (response) => {
     console.log(response);
   };

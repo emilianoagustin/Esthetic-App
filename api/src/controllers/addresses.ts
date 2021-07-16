@@ -1,7 +1,7 @@
-import { RequestHandler } from "express";
-import Addresses from "../models/Addresses";
-import Providers from "../models/Providers";
-import Users from "../models/Users";
+import { RequestHandler } from 'express';
+import Addresses from '../models/Addresses';
+import Providers from '../models/Providers';
+import Users from '../models/Users';
 
 export const getAllAddresses: RequestHandler = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ export const getAllAddresses: RequestHandler = async (req, res) => {
       return res.send(foundAddress);
     }
     return res.status(404).send({
-      message: "El usuario no registra ningún domicilio al momento.",
+      message: 'El usuario no registra ningún domicilio al momento.',
     });
   } catch (error: any) {
     res.send(error);
@@ -27,7 +27,7 @@ export const getOneAddress: RequestHandler = async (req, res) => {
       if (foundAddress) return res.send(foundAddress);
       return res
         .status(404)
-        .send({ message: "Domicilio de usuario no encontrado" });
+        .send({ message: 'Domicilio de usuario no encontrado' });
     }
   } catch (error: any) {
     res.send(error);
@@ -59,7 +59,7 @@ export const createAddress: RequestHandler = async (req, res) => {
       }
     } else {
       let check = false;
-      provider.addresses.forEach((address: any) => {
+      provider?.addresses.forEach((address: any) => {
         if (address.name === req.body.name) check = true;
       });
       if (check) {
@@ -69,8 +69,8 @@ export const createAddress: RequestHandler = async (req, res) => {
       } else {
         const newAddress = new Addresses(req.body);
         newAddress.save();
-        provider.addresses.push(newAddress);
-        provider.save();
+        provider?.addresses.push(newAddress);
+        provider?.save();
         return res.status(201).send({
           data: newAddress,
           message: `Nuevo domicilio ${newAddress.name} guardado con éxito.`,
@@ -79,7 +79,7 @@ export const createAddress: RequestHandler = async (req, res) => {
     }
   } catch (error: any) {
     res.status(500).send({
-      message: "Ha habido un problema con tu pedido.",
+      message: 'Ha habido un problema con tu pedido.',
     });
   }
 };
@@ -95,14 +95,14 @@ export const updateAddress: RequestHandler = async (req, res) => {
       if (!updateAddress)
         return res
           .status(404)
-          .send({ message: "No encontramos el usuario solicitado" });
+          .send({ message: 'No encontramos el usuario solicitado' });
       return res.status(201).send({
         data: updateAddress,
-        message: "Domicilio actualizado con éxito.",
+        message: 'Domicilio actualizado con éxito.',
       });
     }
   } catch (error: any) {
-    res.status(500).send({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).send({ message: 'Ha habido un problema con tu pedido' });
   }
 };
 
@@ -115,13 +115,13 @@ export const deleteAddress: RequestHandler = async (req, res) => {
       if (!deleteAddress)
         return res
           .status(404)
-          .send({ message: "No encontramos el usuario solicitado" });
+          .send({ message: 'No encontramos el usuario solicitado' });
       return res.send({
         data: deleteAddress,
-        message: "Domicilio eliminado con éxito.",
+        message: 'Domicilio eliminado con éxito.',
       });
     }
   } catch (error: any) {
-    res.status(500).send({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).send({ message: 'Ha habido un problema con tu pedido' });
   }
 };
