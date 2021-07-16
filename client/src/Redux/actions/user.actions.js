@@ -4,12 +4,12 @@ import { HOST } from '../../utils/constants';
 
 // login
 export const loginUser = (data) => {
-  console.log(data);
+  // console.log(data);
   return (dispatch) => {
     return axios
       .post(`${HOST}/auth/signin`, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch({
           type: actionsTypes.LOGIN_SUCCESSFUL,
           payload: response.data,
