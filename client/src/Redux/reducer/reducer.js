@@ -63,6 +63,7 @@ const appReducer = (state = initialState, action) => {
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
+        loginData: action.payload,
         userActive: action.payload,
       };
 
