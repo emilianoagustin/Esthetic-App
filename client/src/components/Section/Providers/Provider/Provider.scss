@@ -43,6 +43,7 @@
 
 .card-button {
     display: flex;
+    color: #3800a0;
     background: #f1d0d5;
     transition: background-color 2s ease-out 100ms;
     padding: 5px 15px 5px 15px;
@@ -64,4 +65,14 @@
 .card-options {
     display: flex;
     flex-direction: column;
+}
+
+.inactive {
+    background-color: rgb(97, 97, 97);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+
+}
+.inactive:hover {
+    background-color: red;
 }
