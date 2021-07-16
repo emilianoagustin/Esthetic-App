@@ -5,19 +5,20 @@ import { LoginUser } from "../../Redux/actions/user.actions";
 import { useInput } from "../../hooks/customHooks";
 import { log, success, error } from "../../utils/logs";
 //materialUI
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 //google login
 import GoogleLogin from "react-google-login";
@@ -56,20 +57,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
- /*  const loginData = useSelector((state) => state.loginData);
-  const userActive = useSelector((state) => state.userActive); */
+
 
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
+
+  //manejo de error
   const [valid, setValid] = useState(true);
   const [error, setError] = useState({ emailError: "", passwordError: "" });
+  const loginData = useSelector((state) => state.LoginData);
+  console.log('---x---', loginData);
 
   const email = useInput("email");
   const password = useInput("password");
 
+ //Estado de Swich
+  const [state, setState] = useState({
+    provider: false,
+  });
+
+  ///Manejo del Swich
+  const handleChange = (event) => {
+    setState({ [event.target.name]: event.target.checked });
+  };
+
   const validate = () => {
     let isValid = true;
+    // console.log(password, email);
     if (!password.value) {
       setValid(false);
       isValid = false;
@@ -85,6 +100,7 @@ export default function SignIn() {
       var pattern = new RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
       );
+      
       if (!pattern.test(email.value)) {
         setValid(false);
         isValid = false;
@@ -101,7 +117,7 @@ export default function SignIn() {
   useEffect(()=>{
     if(error.emailError.slice(0, 7 ) === "Usuario") {setValid(false)}
 },[error.emailError])
-console.log(error.emailError.slice(0,7))
+
  
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -112,8 +128,11 @@ console.log(error.emailError.slice(0,7))
         password: password.value,
       };
       dispatch(LoginUser(data)).then((a) => {
-        if (a) {
-          history.push("/");
+        if (a.providerFound?.roles[0].name === "provider"/* && state.provider === true */) {
+          history.push('/user/provider');
+        }
+        if (a.userFound?.roles[0].name === 'user') {
+          history.push('/'); // pendiente colocar path user
         } else {
           setError({
             ...error,
@@ -126,6 +145,13 @@ console.log(error.emailError.slice(0,7))
   };
 
 
+  
+    
+
+
+  
+
+  // console.log('---->', loginData?.userFound.roles[0]?.name);
   const responseGoogle = (response) => {
     console.log(response);
   };

@@ -50,8 +50,11 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         loginData: action.payload,
-        userActive: action.payload.userFound.firstName,
+        userActive: action.payload.userFound
+          ? action.payload.userFound.firstName
+          : action.payload.providerFound.firstName,
       };
+
     case actionsTypes.LOGIN_FAIL:
       // window.localStorage.setItem('token', action.payload.token);
       return {
@@ -63,7 +66,7 @@ const appReducer = (state = initialState, action) => {
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        loginData: action.payload,
+        loginData: {},
         userActive: action.payload,
       };
 
