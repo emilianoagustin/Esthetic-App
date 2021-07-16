@@ -8,6 +8,7 @@ export const LoginUser = (data) => {
   console.log(data);
  
   return (dispatch) => {
+
     return axios
       .post(`${HOST}/auth/signin`, data)
       .then((response) => {
@@ -16,11 +17,13 @@ export const LoginUser = (data) => {
           type: actionsTypes.LOGIN_SUCCESSFUL,
           payload: response.data,
         });
+        return response.data
       })
       .catch((error) => {
         if (error.response?.status !== 404 || 422)
-          alert('El usuario ingresado no existe');
+          /* alert('El usuario ingresado no existe'); */
         dispatch({ type: actionsTypes.LOGIN_FAIL, payload: null });
+        
       });
   };
 };
