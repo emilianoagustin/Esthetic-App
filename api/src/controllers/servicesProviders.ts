@@ -35,3 +35,24 @@ export const getProvidersByService: RequestHandler = async (req, res) => {
         res.status(400).send(error);
     }
 }
+
+export const addAllServicesToProvider: RequestHandler = async (req, res) => {
+    try {
+        const { services, provider } = req.body
+        const prov = await Providers.findById(provider)
+
+        const allServices = await Services.find({ name: { $in: services } });
+
+        await allServices.forEach(async (serv: any) => {
+            serv.providers.push(prov)
+            await serv.save()
+        })
+
+        prov.services = allServices.map((serv: any) => serv._id);
+        await prov.save();
+
+        return res.status(200).send('all services added');
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}

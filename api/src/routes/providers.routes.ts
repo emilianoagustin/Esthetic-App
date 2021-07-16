@@ -3,6 +3,7 @@ import { CreateCalendar } from '../controllers/calendar';
 import {
   addServiceToProvider,
   getProvidersByService,
+  addAllServicesToProvider
 } from '../controllers/servicesProviders';
 import {
   getAllProviders,
@@ -36,6 +37,7 @@ router.put('/:id', updateProvider);
 //Calendar Routes, ADD service to provider Route
 router.post('/calendar', CreateCalendar);
 router.post('/services', addServiceToProvider);
+router.post('/allServices', addAllServicesToProvider);
 router.get('/services/:serviceName', getProvidersByService);
 
 // <<Routes to providers' addresses>>
