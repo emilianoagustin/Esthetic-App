@@ -37,7 +37,9 @@ function ProviderProfile() {
     console.log('providerDetail----------------', provider);
     console.log('handleActive---------', isActive);
     useEffect(() => {
-        /* dispatch(getProviderById(id)) */
+
+        // dispatch(getProviderById(id))
+
     }, [dispatch, id]);
 
     const handleActive = () =>{

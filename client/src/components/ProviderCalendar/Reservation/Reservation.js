@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { reservationStatus } from '../../../Redux/actions/actions';
 import './Reservation.scss';
 
+
 export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal }) {
+    const [userID, setUserID] = useState('');
+
+    useEffect(() => {
+        if (localStorage.getItem('loggedSpatifyApp')) {
+            const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
+            if (storageData.userFound.roles[0].name === "user") {
+                setUserID(storageData.userFound._id);
+            }
+        }
+    }, [])
 
     const dispatch = useDispatch();
 
     const handleAccept = async () => {
         handleClickModal()
         dispatch(reservationStatus({
-            user: '60ef3125034f1a3a38225cb3',
+            user: userID,
             provider: provider,
             date: date,
             hour: hour,

@@ -6,11 +6,12 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import JWTStrategy from './libs/passport-jwt';
-import { createRoles } from './libs/initialSetupRoles';
+import { createRoles, createService } from './libs/initialSetupRoles';
 // const fileUpload = require('express-fileupload');
 
 const app: Application = express();
 createRoles();
+createService();
 app.set('port', process.env.PORT || 3002);
 app.use(express.json());
 app.use(bodyParser.json());
