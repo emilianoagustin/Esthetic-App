@@ -1,6 +1,23 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+import bcrypt from 'bcrypt';
 
-const ProvidersSchema = new Schema(
+export interface IProvider extends Document {
+  image: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  phone: number;
+  password: string;
+  roles: any[];
+  hasCalendar: any;
+  addresses: any[];
+  services: any[];
+  setImage(filename: any): void;
+  comparePassword(password: string): Promise<boolean>;
+}
+
+const ProvidersSchema = new Schema<IProvider>(
   {
     image: {
       type: String,
@@ -31,7 +48,17 @@ const ProvidersSchema = new Schema(
     password: {
       type: String,
       required: true,
+      trim: true,
     },
+
+    roles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        autopopulate: true,
+      },
+    ],
+
     hasCalendar: {
       type: Boolean,
       default: false,
@@ -48,11 +75,27 @@ const ProvidersSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Services',
       },
-    ]
+    ],
   },
   { versionKey: false, timestamps: true }
 );
 
+// encrypted user password
+ProvidersSchema.pre<IProvider>('save', async function (next) {
+  const provider = this;
+  if (!provider.isNew || !provider.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(provider.password, salt);
+  provider.password = hash;
+  next();
+});
+
+ProvidersSchema.methods.comparePassword = async function (
+  password: string
+): Promise<boolean> {
+  return await bcrypt.compare(password, this.password);
+};
+
 ProvidersSchema.plugin(require('mongoose-autopopulate'));
 
-export default model('Providers', ProvidersSchema);
+export default model<IProvider>('Providers', ProvidersSchema);

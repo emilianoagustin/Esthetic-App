@@ -23,15 +23,12 @@ export default function ProviderCalendar({ match }) {
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
     const [invalid, setInvalid] = useState(false);
-    // const ID =  JSON.parse(localStorage.getItem('loggedSpatifyApp'));
 
     useEffect(() => {
         axios.get(`${HOST}/providers/${providerID}`)
             .then(prov => {
                 const ProviderData = prov.data;
-                if (!ProviderData.hasCalendar) setError(true)
                 setProvider(ProviderData);
-                setLoading(false);
             })
             .then(() => {
                 axios.get(`${HOST}/services/name/${match.params.service}`)
@@ -39,6 +36,7 @@ export default function ProviderCalendar({ match }) {
                         const serviceData = serv.data
                         setService(serviceData);
                     })
+                setLoading(false);
             })
             .catch(err => {
                 setError(true);

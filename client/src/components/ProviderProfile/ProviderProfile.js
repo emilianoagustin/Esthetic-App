@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -73,7 +73,7 @@ const useStyles = makeStyles(() => ({
         width: 200
     }
 }));
-
+//getP;
 function ProviderProfile() {
     const dispatch = useDispatch();
     const provider = useSelector(state => state.providerDetails);
@@ -86,9 +86,9 @@ function ProviderProfile() {
         dispatch(getProviderDetails(id))
     }, [dispatch, id]);
 
-    const handleActive = () =>{
-        setIsActive(false)
-    }
+  const handleActive = () => {
+    setIsActive(false);
+  };
 
     return (
         <>
