@@ -73,7 +73,7 @@ const useStyles = makeStyles(() => ({
         width: 200
     }
 }));
-//getP;
+
 function ProviderProfile() {
     const dispatch = useDispatch();
     const provider = useSelector(state => state.providerDetails);
@@ -117,8 +117,8 @@ function ProviderProfile() {
                                 <Grid item>
                                     <ProviderProfileData provider={provider.data} classes={classes}/>
                                 </Grid>
-                                <Grid item container direction='column'>
-                                    <ProviderProfileBanner classes={classes}/>
+                                <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
+                                    <ProviderProfileBanner provider={provider.data} classes={classes}/>
                                     <ProviderProfileUpdate classes={classes}/>
                                 </Grid>
                             </div>

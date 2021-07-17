@@ -1,23 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Grid, Box, Paper, Typography, Divider, Avatar } from '@material-ui/core';
 import ShareIcon from '@material-ui/icons/Share';
-// import { getServiceDetails } from '../../../Redux/actions/actions';
 import Image from '../../../img/Barberia.jpg';
 
 function ProviderProfileData({ provider, classes }) {
-    const dispatch = useDispatch();
-    const service = useSelector(state => state.serviceDetails.data);
-    const servicesIDs = provider.services;
-    // const [obj, setObj] = useState([]);
-    // console.log('obj--------------------------',obj);
-    // useEffect(() => {
-    //     servicesIDs.forEach(s => {
-    //         dispatch(getServiceDetails(s))
-    //         setObj(obj => obj.concat(service))
-    //     })
-    //     return () => {}
-    // }, [dispatch]);
 
     return (
         <Grid item className={classes.gridProfile}>
