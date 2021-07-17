@@ -18,6 +18,8 @@ const initialState = {
     loading: true,
     data: {},
   },
+  userReservations:{loading: true,
+    data: []}
 };
 
 const appReducer = (state = initialState, action) => {
@@ -176,6 +178,28 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userData: { loading: false, error: action.payload },
       };
+
+
+      //GET USER RESERVATIONS
+
+      case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
+      return {
+        ...state,
+        userReservations: { loading: true },
+      };
+    case actionsTypes.GET_USER_RESERVATIONS_SUCCESS:
+      return {
+        ...state,
+        userReservations: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_RESERVATIONS_FAIL:
+      return {
+        ...state,
+        userReservations: { loading: false, error: action.payload },
+      };
+
+
+
 
     default:
       return state;

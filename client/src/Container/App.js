@@ -13,7 +13,6 @@ import ProviderProfile from "../components/ProviderProfile/ProviderProfile";
 import UserProfile from "../components/UserProfile/UserProfile";
 import ProviderDetails from "../components/ProviderDetails/ProviderDetails";
 
-
 const App = () => {
   return (
     <React.Fragment>
@@ -35,7 +34,7 @@ const App = () => {
         component={ProviderCalendar}
       />
       <Route exact path="/providers/:id" component={ProviderDetails} />
-      <Route path="/perfil/:id" component={UserProfile} />
+      <Route path="/perfil" component={UserProfile} />
     </React.Fragment>
   );
 };
