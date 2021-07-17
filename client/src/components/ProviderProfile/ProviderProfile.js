@@ -29,16 +29,18 @@ const useStyles = makeStyles(() => ({
 }));
 //getP;
 function ProviderProfile() {
-  const dispatch = useDispatch();
-  const provider = useSelector((state) => state.providerById);
-  const { id } = useParams();
-  const classes = useStyles();
-  const [isActive, setIsActive] = useState(true);
-  console.log('providerDetail----------------', provider);
-  console.log('handleActive---------', isActive);
-  useEffect(() => {
-    // dispatch(getProviderById(id))
-  }, [dispatch, id]);
+    const dispatch = useDispatch();
+    const provider = useSelector(state => state.providerById);
+    const { id } = useParams();
+    const classes = useStyles();
+    const [isActive, setIsActive] = useState(true)
+    console.log('providerDetail----------------', provider);
+    console.log('handleActive---------', isActive);
+    useEffect(() => {
+
+        // dispatch(getProviderById(id))
+
+    }, [dispatch, id]);
 
   const handleActive = () => {
     setIsActive(false);
