@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,8 +6,6 @@ import { Grid } from '@material-ui/core';
 import { getProviderDetails } from '../../Redux/actions/actions'
 import ProviderProfileData from './ProviderProfileData.js/ProviderProfileData';
 import ProviderProfileUpdate from './ProviderProfileUpdate/ProviderProfileUpdate';
-import NoCalendarModal from './NoCalendarModal/NoCalendarModal';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import ProviderProfileBanner from './ProviderProfileBanner/ProviderProfileBanner';
 
 const useStyles = makeStyles(() => ({
@@ -49,6 +47,11 @@ const useStyles = makeStyles(() => ({
         top: '20%',
         left: 16,
     },
+    bannerTextSubt: {
+        position: 'absolute',
+        top: '40%',
+        left: 16,
+    },
     image: {
         display: 'flex',
         justifyContent: 'center'
@@ -79,52 +82,28 @@ function ProviderProfile() {
     const provider = useSelector(state => state.providerDetails);
     const { id } = useParams();
     const classes = useStyles();
-    const [isActive, setIsActive] = useState(true)
+
     console.log('providerDetail----------------', provider);
 
     useEffect(() => {
         dispatch(getProviderDetails(id))
     }, [dispatch, id]);
 
-  const handleActive = () => {
-    setIsActive(false);
-  };
-
     return (
         <>
-            {provider.data.hasCalendar === true ?
-                    <NoCalendarModal name={provider.data.firstName} handleActive={handleActive}/> 
-                : 
-                    <div className='container-main'>
-                        <div className='container'>
-                            <div className={classes.providerProfile}>
-                                <Grid item>
-                                    <ProviderProfileData provider={provider.data} classes={classes}/>
-                                </Grid>
-                                <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
-                                    <ProviderProfileBanner provider={provider.data} classes={classes}/>
-                                    <ProviderProfileUpdate classes={classes}/>
-                                </Grid>
-                            </div>
-                        </div>
+            <div className='container-main'>
+                <div className='container'>
+                    <div className={classes.providerProfile}>
+                        <Grid item>
+                            <ProviderProfileData provider={provider.data} classes={classes}/>
+                        </Grid>
+                        <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
+                            <ProviderProfileBanner provider={provider.data} classes={classes}/>
+                            <ProviderProfileUpdate classes={classes}/>
+                        </Grid>
                     </div>
-                
-            }
-            {/* {isActive ? null
-                :   <div className='container-main'>
-                        <div className='container'>
-                            <div className={classes.providerProfile}>
-                                <Grid item>
-                                    <ProviderProfileData provider={provider.data} classes={classes}/>
-                                </Grid>
-                                <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
-                                    <ProviderProfileBanner provider={provider.data} classes={classes}/>
-                                    <ProviderProfileUpdate classes={classes}/>
-                                </Grid>
-                            </div>
-                        </div>
-                    </div>
-            } */}
+                </div>
+            </div>
         </>
     )
 }

@@ -8,6 +8,7 @@ function ProviderProfileBanner({ classes, provider }) {
             <Box className={classes.containerBanner}>
                 <img className={classes.bannerImg} src={Image}/>
                 <Typography variant='h4' className={classes.bannerText}>¡Hola {provider.firstName}!</Typography>
+                <Typography variant='subtitle1' className={classes.bannerTextSubt}>En este espacio vas a poder ver y editar tu perfil.</Typography>
             </Box>
         </Grid>
     )
