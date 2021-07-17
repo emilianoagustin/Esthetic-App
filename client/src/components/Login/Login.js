@@ -57,31 +57,18 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
 toast.configure()
+
 export default function SignIn() {
-  const notify = () => toast("Wow so easy !");
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
 
-  //manejo de error
-  const [valid, setValid] = useState(true);
-  const [error, setError] = useState({ emailError: "", passwordError: "" });
-  const loginData = useSelector((state) => state.LoginData);
-  console.log("---x---", loginData);
 
   const email = useInput("email");
   const password = useInput("password");
 
-  //Estado de Swich
-  const [state, setState] = useState({
-    provider: false,
-  });
-
-  ///Manejo del Swich
-  const handleChange = (event) => {
-    setState({ [event.target.name]: event.target.checked });
-  };
 ///Validaciones
   const validate = () => {
     let isValid = true;
