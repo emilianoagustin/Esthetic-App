@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 /* import Link from '@material-ui/core/Link'; */
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -37,7 +37,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -72,7 +71,7 @@ export default function SignUp() {
   const gender = useInput("gender");
   const roles = useInput("roles");
   const passwordCheck = useInput("passwordCheck");
- 
+
   const [valid, setValid] = useState(true);
   const [error, setError] = useState({
     emailError: "",
@@ -80,6 +79,8 @@ export default function SignUp() {
     firstNameError: "",
     lastNameError: "",
     phoneError: "",
+    genderError: "",
+    rolesError: "",
   });
 
   const validateName = () => {
@@ -114,6 +115,7 @@ export default function SignUp() {
     }
     return isValid;
   };
+
   const validatePassword = () => {
     let isValid = true;
     if (!password.value) {
@@ -143,6 +145,7 @@ export default function SignUp() {
     }
     return isValid;
   };
+
   const validatePhone = () => {
     let isValid = true;
     if (!phone.value) {
@@ -180,11 +183,21 @@ export default function SignUp() {
         setError({ ...error, emailError: "Ingrese un email valido" });
       }
     }
+    return isValid;
+  };
+
+  const validateGender = () => {
+    let isValid = true;
     if (!gender.value) {
       setValid(false);
       isValid = false;
       setError({ ...error, genderError: "Por favor seleccione un genero" });
     }
+    return isValid;
+  };
+
+  const validateRol = () => {
+    let isValid = true;
     if (!roles.value) {
       setValid(false);
       isValid = false;
@@ -197,7 +210,14 @@ export default function SignUp() {
     e.preventDefault();
 
     // posteo de user
-    if (validateName() && validatePassword() && validatePhone() && validateEmail() ) {
+    if (
+      validateName() &&
+      validatePassword() &&
+      validatePhone() &&
+      validateEmail() &&
+      validateGender() &&
+      validateRol()
+    ) {
       /* const { data } =  */
       axios
         .post("http://localhost:3002/auth/signup", {
@@ -215,15 +235,15 @@ export default function SignUp() {
           success(`register user ${a.data.email}`);
           history.push("/");
           toast.success(`🎉 Felicidades,cuenta creada con exito`, {
-            position: toast.POSITION.TOP_CENTER
-          })
+            position: toast.POSITION.TOP_CENTER,
+          });
         })
         .catch((error) => {
           console.log(error);
           if (error.response?.status !== 404 || 422)
-          toast.error(`Lo siento, este email ya tiene una cuenta vinculada`, {
-            position: toast.POSITION.TOP_CENTER
-          })
+            toast.error(`Lo siento, este email ya tiene una cuenta vinculada`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
         });
     }
   };
@@ -247,7 +267,7 @@ export default function SignUp() {
     passwordCheck.value,
     phone.value,
     gender.value,
-    roles.value
+    roles.value,
   ]);
 
   return (
