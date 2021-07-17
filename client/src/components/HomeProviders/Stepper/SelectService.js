@@ -25,21 +25,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  return [
+    'Selecciona los servicios a prestar',
+    'Ingresa tus horarios de trabajo',
+    'Agrega tu número de cuenta para recibir tus pagos',
+  ];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return `Antes que nada, es necesario que selecciones los servicios que vas a prestar:`;
+      return <div></div>;
 
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.';
+      return;
     case 2:
-      return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
+      return;
     default:
       return 'Unknown step';
   }
@@ -77,7 +78,7 @@ export default function VerticalLinearStepper() {
                     onClick={handleBack}
                     className={classes.button}
                   >
-                    Back
+                    Volver
                   </Button>
                   <Button
                     variant='contained'
@@ -85,7 +86,7 @@ export default function VerticalLinearStepper() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Siguiente'}
                   </Button>
                 </div>
               </div>
@@ -95,9 +96,12 @@ export default function VerticalLinearStepper() {
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
+          <Typography>
+            ¡Haz completado todos los pasos!
+            <br /> 🎉Felicitaciones🎉
+          </Typography>
           <Button onClick={handleReset} className={classes.button}>
-            Reset
+            Reiniciar
           </Button>
         </Paper>
       )}
