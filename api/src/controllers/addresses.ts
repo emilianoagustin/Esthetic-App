@@ -88,6 +88,7 @@ export const updateAddress: RequestHandler = async (req, res) => {
   try {
     const { id, idAd } = req.params;
     const user = await Users.findById(id);
+    const provider = await Providers.findById(id);
     if (user) {
       const updateAddress = await Addresses.findByIdAndUpdate(idAd, req.body, {
         new: true,
@@ -96,6 +97,19 @@ export const updateAddress: RequestHandler = async (req, res) => {
         return res
           .status(404)
           .send({ message: 'No encontramos el usuario solicitado' });
+      return res.status(201).send({
+        data: updateAddress,
+        message: 'Domicilio actualizado con éxito.',
+      });
+    }
+    if (provider) {
+      const updateAddress = await Addresses.findByIdAndUpdate(idAd, req.body, {
+        new: true,
+      });
+      if (!updateAddress)
+        return res
+          .status(404)
+          .send({ message: 'No encontramos el domicilio solicitado' });
       return res.status(201).send({
         data: updateAddress,
         message: 'Domicilio actualizado con éxito.',
