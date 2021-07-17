@@ -36,6 +36,10 @@ const EventSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Calendar',
         },
+        address: {
+            type: Schema.Types.ObjectId,
+            ref: 'Addresses',
+        },
     },
     { versionKey: false, timestamps: true }
 );
