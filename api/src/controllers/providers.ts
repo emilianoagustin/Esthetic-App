@@ -1,7 +1,8 @@
-import { RequestHandler } from "express";
-import Providers from "../models/Providers";
-import path from "path";
-import fs from "fs-extra";
+import { RequestHandler } from 'express';
+import Providers from '../models/Providers';
+import Role from '../models/Roles';
+import path from 'path';
+import fs from 'fs-extra';
 
 export const getAllProviders: RequestHandler = async (req, res) => {
   try {
@@ -38,55 +39,6 @@ export const getProviderById: RequestHandler = async (req, res) => {
   }
 };
 
-export const createProvider: RequestHandler = async (req, res) => {
-  try {
-    const foundProv = await Providers.findOne({ email: req.body.email });
-    if (foundProv)
-      return res.status(301).send({
-        message:
-          "Lo sentimos. Ese email ya ha sido registrado. Puedes intentar dirigirte a la sección de 'Login' e ingresar con tu contraseña o crear un nuevo usuario con un email distinto",
-      });
-
-    const {
-      firstName,
-      lastName,
-      gender,
-      email,
-      phone,
-      password,
-      hasCalendar,
-      file,
-    } = req.body;
-
-    const provider = {
-      image: `uploads\\${file}`,
-      firstName,
-      lastName,
-      gender,
-      email,
-      phone,
-      password,
-      hasCalendar,
-    };
-
-    const newProvider = new Providers(provider);
-    newProvider.save();
-    return res.status(202).send({
-      data: newProvider,
-      message: `Felicitaciones, ${newProvider.firstName}! Ya eres parte del equipo de Estetic-Aap.`,
-    });
-  } catch (error: any) {
-    res.status(501).send({
-      message: "Algo salió mal. Por favor vuelve a intentarlo.",
-    });
-  }
-  // <<< PASAR VALIDACION ORTOGRÁFICA Y DE DOMINIO AL FRONT >>>
-  // validator: function (v: string) {
-  //   return /\S@\S.\mail.\S/.test(v);
-  // },
-  // message: "Por favor ingresar un email válido",
-};
-
 export const updateProvider: RequestHandler = async (req, res) => {
   const updateProv = await Providers.findByIdAndUpdate(
     req.params.id,
@@ -109,6 +61,6 @@ export const deleteProvider: RequestHandler = async (req, res) => {
       deleteProv,
     });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
