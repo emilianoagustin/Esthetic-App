@@ -3,26 +3,26 @@ import Providers from '../models/Providers';
 import Services from '../models/Services';
 
 export const addServiceToProvider: RequestHandler = async (req, res) => {
-  try {
-    const service = await Services.findById(req.body.service);
-    const provider = await Providers.findById(req.body.provider);
+    try {
+        const service = await Services.findById(req.body.service);
+        const provider = await Providers.findById(req.body.provider);
 
-    let check = false;
-    service.providers.forEach((provider: any) => {
-      if (provider._id == req.body.provider) check = true;
-    });
-    if (check) {
-      return res.status(301).send('The service has already been registered');
-    } else {
-      provider?.services.push(service);
-      provider?.save();
-      service.providers.push(provider);
-      service.save();
-      return res.status(200).send('Service added successfully');
+        let check = false;
+        service.providers.forEach((provider: any) => {
+            if (provider._id == req.body.provider) check = true;
+        });
+        if (check) {
+            return res.status(301).send('The service has already been registered');
+        } else {
+            provider?.services.push(service);
+            provider?.save();
+            service.providers.push(provider);
+            service.save();
+            return res.status(200).send('Service added successfully');
+        }
+    } catch (error) {
+        res.status(400).send(error);
     }
-  } catch (error) {
-    res.status(400).send(error);
-  }
 };
 
 export const getProvidersByService: RequestHandler = async (req, res) => {
@@ -38,19 +38,36 @@ export const getProvidersByService: RequestHandler = async (req, res) => {
 export const addAllServicesToProvider: RequestHandler = async (req, res) => {
     try {
         const { services, provider } = req.body
-        const prov = await Providers.findById(provider)
 
-        const allServices = await Services.find({ name: { $in: services } });
+        const prov = await Providers.findById(provider);
 
-        await allServices.forEach(async (serv: any) => {
-            serv.providers.push(prov)
-            await serv.save()
-        })
+        if (prov) {
+            prov.services.forEach(async (service_id: any) => {
+                const prevService = await Services.findByIdAndUpdate(service_id,
+                    { $pull: { providers: provider } },
+                    { multi: true }
+                )
+                await prevService.save()
+            })
 
-        prov.services = allServices.map((serv: any) => serv._id);
-        await prov.save();
+            services.forEach(async (service_name: any) => {
+                const newService = await Services.findOneAndUpdate({ name: service_name },
+                    { $push: { providers: prov } },
+                    { multi: true }
+                )
+                await newService.save()
+            })
 
-        return res.status(200).send('all services added');
+            const allServices = await Services.find({ name: { $in: services } });
+
+            prov.services = allServices.map((serv: any) => serv._id);
+            await prov.save()
+
+            return res.status(200).send(prov);
+        } else {
+            return res.status(404).send('Provider not found');
+        }
+
     } catch (error) {
         res.status(400).send(error);
     }
