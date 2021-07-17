@@ -36,7 +36,7 @@ const App = () => {
         component={ProviderCalendar}
       />
       <Route exact path='/providers/:id' component={ProviderDetails} />
-      <Route path='/perfil/:id' component={UserProfile} />
+      <Route path='/profile/:id' component={UserProfile} />
     </React.Fragment>
   );
 };

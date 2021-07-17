@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useParams } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,6 +20,7 @@ import Fade from '@material-ui/core/Fade';
 import SearchBar from '../Searchbar/Searchbar';
 import { logout, userActiveSession } from '../../Redux/actions/user.actions';
 import './Header.scss';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -104,12 +105,19 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
+  const loginData = useSelector((state) => state.loginData) 
+/* 
+  if(loginData){
+    const id = loginData.userFound._id} */
+    
+  const { _id } = useParams()
+  console.log(_id)
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
   const [render, setRender] = React.useState('');
-
+  
   const open = Boolean(anchorEl);
   const abrir = Boolean(zona);
 
@@ -130,8 +138,17 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
   };
+
+
+const handleRedirect= (e) => {
+  console.log("entrea aca")
+  if (userActive) {
+    let id = loginData.userFound._id
+    history.push(`/profile/${id}`)} 
+    setAnchorEl(null)
+}
 
   const handleClickZona = (event) => {
     setzona(event.currentTarget);
@@ -176,12 +193,12 @@ export default function PrimarySearchAppBar() {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
-      <Link
-        to={'/perfil'}
+      {/* <Link
+        to={`/user/profile/`}
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
-      >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
-      </Link>
+      >  */}
+        <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>
+    {/*   </Link> */}
       <Link
         to={'/perfil/historial'}
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
