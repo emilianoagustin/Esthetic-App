@@ -1,40 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Box, Paper, Typography } from '@material-ui/core';
+import { Grid, Box, Paper, Typography, Divider, Avatar } from '@material-ui/core';
+import ShareIcon from '@material-ui/icons/Share';
+// import { getServiceDetails } from '../../../Redux/actions/actions';
 import Image from '../../../img/Barberia.jpg';
 
 function ProviderProfileData({ provider, classes }) {
     const dispatch = useDispatch();
     const service = useSelector(state => state.serviceDetails.data);
     const servicesIDs = provider.services;
-    const [obj, setObj] = useState([]);
-
+    // const [obj, setObj] = useState([]);
+    // console.log('obj--------------------------',obj);
     // useEffect(() => {
     //     servicesIDs.forEach(s => {
     //         dispatch(getServiceDetails(s))
-    //         return setObj(obj => obj.concat(service))
+    //         setObj(obj => obj.concat(service))
     //     })
+    //     return () => {}
     // }, [dispatch]);
 
     return (
-        <Grid item className={classes.gridItem}>
+        <Grid item className={classes.gridProfile}>
             <Paper className={classes.paper} elevation={3}>
                 <Box className={classes.image}>
-                    <img className={classes.img} src={Image}/>
-                    {/* provider.image.includes('undefined') ? Image : provider.image */}
+                    <img className={classes.profileImg} src={Image}/>
                 </Box>
+                <Divider className={classes.divider}/>
                 <Box className={classes.data}>
-                    <Grid container justifyContent='space-around'>
+                    <Grid container justifyContent='center' alignItems='center' direction='column'>
                         <Grid item>
-                            <Typography variant='h6'>Nombre :</Typography>
-                            <Typography variant='h6'>Telefono :</Typography>
-                            <Typography variant='h6'>Mail :</Typography>
+                            <Typography variant='h5'>{provider.firstName+ ' ' +provider.lastName}</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant='h6'>{provider.firstName+ ' ' +provider.lastName}</Typography>
-                            <Typography variant='h6'>{provider.phone}</Typography>
-                            <Typography variant='h6'>{provider.email}</Typography>
-                            {obj.map(el => <p>{el.name}</p>)}
+                            <Avatar>
+                                <ShareIcon />
+                            </Avatar>
+                        </Grid>
+
+                        <Grid item container direction='row'>
+                                <Typography variant='body1'>Datos personales </Typography>
+                        </Grid>
+
+                        <Divider variant='inset'/>
+
+                        <Grid item container justifyContent='space-between' direction='column'>
+                            <Grid item container justifyContent='space-between'>
+                                <Typography variant='h7'>email</Typography>
+                                <Typography variant='h7'>{provider.email}</Typography>
+                            </Grid>
+                            <Grid item container justifyContent='space-between'>
+                                <Typography variant='h7'>teléfono</Typography>
+                                <Typography variant='h7'>{provider.phone}</Typography>
+                            </Grid>
+                            <Grid item container justifyContent='space-between'>
+                                <Typography variant='h7'>género</Typography>
+                                <Typography variant='h7'>{provider.gender}</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Box>
