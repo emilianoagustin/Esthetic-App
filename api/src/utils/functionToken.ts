@@ -1,8 +1,9 @@
 import { IUser } from '../models/Users';
+import { IProvider } from '../models/Providers';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 
-function createToken(user: IUser) {
+function createToken(user: IUser | IProvider) {
   return jwt.sign(
     {
       id: user.id,

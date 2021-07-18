@@ -5,7 +5,6 @@ export interface IUser extends Document {
   image: string;
   firstName: string;
   lastName: string;
-  username: string;
   gender: string;
   email: string;
   phone: number;
@@ -32,11 +31,6 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
       trim: true,
-    },
-    username: {
-      type: String,
-      min: 4,
-      lowercase: true,
     },
     gender: {
       type: String,
