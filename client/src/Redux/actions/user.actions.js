@@ -2,13 +2,9 @@ import axios from 'axios';
 import actionsTypes from '../constants/constants';
 import { HOST } from '../../utils/constants';
 
-
 // login
 export const LoginUser = (data) => {
-  console.log(data);
-  // console.log(data);
   return (dispatch) => {
-
     return axios
       .post(`${HOST}/auth/signin`, data)
       .then((response) => {
@@ -17,13 +13,12 @@ export const LoginUser = (data) => {
           type: actionsTypes.LOGIN_SUCCESSFUL,
           payload: response.data,
         });
-        return response.data
+        return response.data;
       })
       .catch((error) => {
         if (error.response?.status !== 404 || 422)
           /* alert('El usuario ingresado no existe'); */
-        dispatch({ type: actionsTypes.LOGIN_FAIL, payload: null });
-        
+          dispatch({ type: actionsTypes.LOGIN_FAIL, payload: null });
       });
   };
 };

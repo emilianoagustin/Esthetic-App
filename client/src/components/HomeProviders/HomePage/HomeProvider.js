@@ -29,10 +29,12 @@ const HomeProvider = () => {
       {user.providerFound?.services.length < 1 ? (
         <VerticalLinearStepper />
       ) : (
-        <h1>muestros los servicios</h1>
+        <VerticalLinearStepper />
       )}
     </div>
   );
 };
 
 export default HomeProvider;
+
+// <h1>muestros los servicios</h1>
