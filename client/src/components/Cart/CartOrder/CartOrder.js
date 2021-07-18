@@ -3,6 +3,7 @@ import { Grid, Paper, Typography, Button, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { HOST } from '../../../utils/constants';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function CartOrder({ total }) {
+function CartOrder({ total, itemLoading }) {
     const [userID, setUserID] = useState('');
     const [available, setAvailable] = useState(false);
 
@@ -58,11 +59,26 @@ function CartOrder({ total }) {
     const handleCheck = async () => {
         try {
             const res = await axios.get(`${HOST}/reservations/events/${userID}`)
-            setAvailable(true)
-            setTimeout(function () { setAvailable(false); }, 3000);
+            if (res.data.error) {
+                res.data.notAvailable.forEach((reservationDeleted) => {
+                    toast.error(`El turno para 
+                    ${reservationDeleted.service} del día 
+                    ${reservationDeleted.date} a las 
+                    ${reservationDeleted.hour}:00hs ya no se encuentra disponible`, {
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                })
+            } else {
+                toast.success(`Todos los turnos se encuentras disponibles`, {
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                setAvailable(true)
+                setTimeout(function () { setAvailable(false); }, 5000);
+            }
         } catch (error) {
-
+            console.log(error)
         }
+        itemLoading()
     }
 
     const classes = useStyles();

@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
 function Cart() {
     const [views, setViews] = useState([]);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [loadingItems, setLoadingItems] = useState(false);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
@@ -48,7 +49,7 @@ function Cart() {
             setError('Debe estar registrado para acceder a su bolsa de compras');
             setLoading(false);
         }
-    }, [])
+    }, [loadingItems])
 
     const changePage = (change) => {
         if (change === 'next' && page < views.length - 1) setPage(page + 1);
@@ -107,6 +108,7 @@ function Cart() {
                                         >
                                             <CartOrder
                                                 total={totalPrice}
+                                                itemLoading={() => setLoadingItems(!loadingItems)}
                                             />
                                         </Grid>
                                     </Grid>
