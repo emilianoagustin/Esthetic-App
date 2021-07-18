@@ -7,6 +7,7 @@ import Image from '../../img/wall-cart.jpg';
 import axios from 'axios';
 import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
+import Error from '../Error/Error';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,16 +30,24 @@ function Cart() {
     const [page, setPage] = useState(0);
 
     useEffect(() => {
-        axios.get(`${HOST}/reservations/60ef3125034f1a3a38225cb3`)
-            .then(reservations => {
-                setViews(setPaginationViews(reservations.data, 5));
-                setTotalPrice(getAllPrice(reservations.data));
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(true);
-                setLoading(false);
-            })
+        if (localStorage.getItem('loggedSpatifyApp')) {
+            const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
+            if (storageData.userFound.roles[0].name === "user") {
+                axios.get(`${HOST}/reservations/${storageData.userFound._id}`)
+                    .then(reservations => {
+                        setViews(setPaginationViews(reservations.data, 5));
+                        setTotalPrice(getAllPrice(reservations.data));
+                        setLoading(false);
+                    })
+                    .catch(err => {
+                        setError('Error al cargar los servicios');
+                        setLoading(false);
+                    })
+            }
+        } else {
+            setError('Debe estar registrado para acceder a su bolsa de compras');
+            setLoading(false);
+        }
     }, [])
 
     const changePage = (change) => {
@@ -51,23 +60,26 @@ function Cart() {
         <div className='container-main'>
             <div className='container'>
                 <h1 className='title'>Bolsa de compras</h1>
-                <Grid container direction="row">
-                    <Grid
-                        container
-                        item
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        xs={12}
-                        sm={6}
-                        className={classes.gridContainer}
+                {
+                    loading ? (<div>Loading...</div>) :
+                        error ? (<div>{error}</div>) :
+                            !views.length ? (
+                                <Error
+                                    message='No dispone de ninguna reservación de servicio en este momento'
+                                />) :
+                                (
+                                    <Grid container direction="row">
+                                        <Grid
+                                            container
+                                            item
+                                            direction="column"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            xs={12}
+                                            sm={6}
+                                            className={classes.gridContainer}
 
-                    >
-                        {
-                            loading ? (<div>Loading...</div>) :
-                                error ? (<div>Error...</div>) :
-                                    !views.length ? (<div>No hay reservaciones...</div>) :
-                                        (
+                                        >
                                             <div>
                                                 <div>
                                                     <button onClick={() => changePage('previous')}>{'<<<'}</button>
@@ -83,22 +95,21 @@ function Cart() {
                                                     ))
                                                 }
                                             </div>
-                                        )
-                        }
-                    </Grid>
-
-                    <Grid
-                        container
-                        item
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        xs={12}
-                        sm={6}
-                    >
-                        <CartOrder />
-                    </Grid>
-                </Grid>
+                                        </Grid>
+                                        <Grid
+                                            container
+                                            item
+                                            direction="column"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            xs={12}
+                                            sm={6}
+                                        >
+                                            <CartOrder />
+                                        </Grid>
+                                    </Grid>
+                                )
+                }
             </div>
         </div>
     )

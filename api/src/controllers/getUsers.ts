@@ -1,7 +1,7 @@
-import { RequestHandler } from "express";
-import Users from "../models/Users";
-import path from "path";
-import fs from "fs-extra";
+import { RequestHandler } from 'express';
+import Users from '../models/Users';
+import path from 'path';
+import fs from 'fs-extra';
 
 export const getUsers: RequestHandler = async (req, res) => {
   try {
@@ -19,43 +19,11 @@ export const getUser: RequestHandler = async (req, res) => {
     if (!userFound)
       return res
         .json(404)
-        .json({ message: "No encontramos el usuario solicitado" });
+        .json({ message: 'No encontramos el usuario solicitado' });
     return res.json(userFound);
   } catch (error) {
     res.json(error);
   }
-};
-
-export const createUser: RequestHandler = async (req, res) => {
-  const userFound = await Users.findOne({ email: req.body.email });
-  if (userFound)
-    return res
-      .status(300)
-      .json({ message: "Ya existe un usuario con ese email." });
-  const {
-    firstName,
-    lastName,
-    username,
-    gender,
-    email,
-    phone,
-    password,
-    file,
-  } = req.body;
-
-  const dataUser = {
-    image: `uploads\\${file}`,
-    firstName,
-    lastName,
-    username,
-    gender,
-    email,
-    phone,
-    password,
-  };
-  const newUser = new Users(dataUser);
-  const savedUser = await newUser.save();
-  res.status(201).json(savedUser);
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
@@ -66,10 +34,10 @@ export const updateUser: RequestHandler = async (req, res) => {
     if (!userUpdate)
       return res
         .status(404)
-        .json({ message: "No encontramos el usuario solicitado" });
+        .json({ message: 'No encontramos el usuario solicitado' });
     return res.status(201).json(userUpdate);
   } catch (error) {
-    res.status(500).json({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).json({ message: 'Ha habido un problema con tu pedido' });
   }
 };
 
@@ -79,16 +47,16 @@ export const deleteUser: RequestHandler = async (req, res) => {
     if (!userDelete)
       return res
         .status(404)
-        .json({ message: "No encontramos el usuario solicitado" });
+        .json({ message: 'No encontramos el usuario solicitado' });
     else {
       await fs.unlink(path.resolve(userDelete.image));
       return res.json({
-        message: "Usuario eliminado con éxito.",
+        message: 'Usuario eliminado con éxito.',
         userDelete,
       });
     }
   } catch (error) {
-    res.status(500).json({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).json({ message: 'Ha habido un problema con tu pedido' });
   }
 };
 

@@ -3,12 +3,12 @@ import { CreateCalendar } from '../controllers/calendar';
 import {
   addServiceToProvider,
   getProvidersByService,
+  addAllServicesToProvider
 } from '../controllers/servicesProviders';
 import {
   getAllProviders,
   // getProviderByName,
   getProviderById,
-  createProvider,
   deleteProvider,
   updateProvider,
 } from '../controllers/providers';
@@ -21,7 +21,7 @@ import {
 } from '../controllers/addresses';
 
 import upload from '../libs/multer';
-import passport from 'passport';
+//import passport from 'passport';
 //passport.authenticate('jwt');
 const router = Router();
 
@@ -29,20 +29,20 @@ const router = Router();
 router.get('/', getAllProviders);
 // router.get("/?name", getProviderByName);
 router.get('/:id', getProviderById);
-router.post('/', upload.single('image'), createProvider);
 router.delete('/:id', deleteProvider);
 router.put('/:id', updateProvider);
 
 //Calendar Routes, ADD service to provider Route
 router.post('/calendar', CreateCalendar);
 router.post('/services', addServiceToProvider);
+router.post('/allServices', addAllServicesToProvider);
 router.get('/services/:serviceName', getProvidersByService);
 
 // <<Routes to providers' addresses>>
-router.get('/addresses', getAllAddresses);
-router.get('/addresses/:id', getOneAddress);
-router.post('/addresses', createAddress);
-router.put('/addresses/:id', updateAddress);
-router.delete('/addresses/:id', deleteAddress);
+router.get('/:id/addresses', getAllAddresses);
+router.get('/:id/addresses/:idAd', getOneAddress);
+router.post('/:id/addresses', createAddress);
+router.put('/:id/addresses/:idAd', updateAddress);
+router.delete('/:id/addresses/:idAd', deleteAddress);
 
 export default router;
