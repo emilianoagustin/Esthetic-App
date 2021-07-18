@@ -99,7 +99,7 @@ function ProviderProfile() {
                         </Grid>
                         <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
                             <ProviderProfileBanner provider={provider.data} classes={classes}/>
-                            <ProviderProfileUpdate classes={classes}/>
+                            <ProviderProfileUpdate classes={classes} provider={provider.data}/>
                         </Grid>
                     </div>
                 </div>
