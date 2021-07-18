@@ -26,7 +26,11 @@ const HomeProvider = () => {
       <div className='banner'>
         <img className='banner-img' src={banner} alt='banner-img'></img>
       </div>
-      <VerticalLinearStepper />
+      {user.providerFound?.services.length < 1 ? (
+        <VerticalLinearStepper />
+      ) : (
+        <h1>muestros los servicios</h1>
+      )}
     </div>
   );
 };
