@@ -39,10 +39,10 @@ router.post('/services', addServiceToProvider);
 router.get('/services/:serviceName', getProvidersByService);
 
 // <<Routes to providers' addresses>>
-router.get('/addresses', getAllAddresses);
-router.get('/addresses/:id', getOneAddress);
-router.post('/addresses', createAddress);
-router.put('/addresses/:id', updateAddress);
-router.delete('/addresses/:id', deleteAddress);
+router.get('/:id/addresses', getAllAddresses);
+router.get('/:id/addresses/:idAd', getOneAddress);
+router.post('/:id/addresses', createAddress);
+router.put('/:id/addresses/:idAd', updateAddress);
+router.delete('/:id/addresses/:idAd', deleteAddress);
 
 export default router;
