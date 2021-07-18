@@ -30,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
             color: '#FFF'
         }
     },
+    notAvailable: {
+        backgroundColor: '#959595',
+        color: '#FFFFFF',
+        '&:hover': {
+            backgroundColor: '#959595',
+        }
+    },
     submitContent: {
         height: '40%'
     }
@@ -37,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CartOrder({ total }) {
     const [userID, setUserID] = useState('');
+    const [available, setAvailable] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
@@ -50,7 +58,8 @@ function CartOrder({ total }) {
     const handleCheck = async () => {
         try {
             const res = await axios.get(`${HOST}/reservations/events/${userID}`)
-            console.log(res.data)
+            setAvailable(true)
+            setTimeout(function () { setAvailable(false); }, 3000);
         } catch (error) {
 
         }
@@ -97,7 +106,7 @@ function CartOrder({ total }) {
                             <Button onClick={handleCheck} fullWidth='true' className={classes.check}>
                                 REVISAR DISPONIBILIDAD
                             </Button>
-                            <Button fullWidth='true' className={classes.submit}>
+                            <Button fullWidth='true' className={available ? classes.submit : classes.notAvailable}>
                                 PAGAR
                             </Button>
                         </Grid>

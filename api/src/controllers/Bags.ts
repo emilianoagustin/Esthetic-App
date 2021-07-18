@@ -64,7 +64,7 @@ export const getReservationsAvailability: RequestHandler = async (req, res) => {
         if (notAvailable.length) {
             bag.reservations = available;
             await bag.save();
-            res.status(302).send(available);
+            res.status(400).send(available);
         } else {
             res.status(200).json('All events are available')
         }
