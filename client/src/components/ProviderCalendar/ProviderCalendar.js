@@ -36,8 +36,8 @@ export default function ProviderCalendar({ match }) {
                         const serviceData = serv.data
                         setService(serviceData);
                     })
-                setLoading(false);
-            })
+                    setLoading(false);
+            })    
             .catch(err => {
                 setError(true);
                 setLoading(false);
@@ -160,7 +160,7 @@ export default function ProviderCalendar({ match }) {
                                                                                 className='card-button'
                                                                                 onClick={() => handleClick(index)}
                                                                             >
-                                                                                Reservar
+                                                                                Añadir al bolso
                                                                             </button>
                                                                         )
                                                                             : null
