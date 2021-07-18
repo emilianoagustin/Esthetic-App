@@ -105,20 +105,13 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  
   const loginData = useSelector((state) => state.loginData) 
-/* 
-  if(loginData){
-    const id = loginData.userFound._id} */
-    
-  const { _id } = useParams()
-  console.log(_id)
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
   const [render, setRender] = React.useState('');
   
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl); 
   const abrir = Boolean(zona);
 
   useEffect(() => {
@@ -143,7 +136,6 @@ export default function PrimarySearchAppBar() {
 
 
 const handleRedirect= (e) => {
-  console.log("entrea aca")
   if (userActive) {
     let id = loginData.userFound._id
     history.push(`/profile/${id}`)} 
@@ -161,6 +153,7 @@ const handleRedirect= (e) => {
     dispatch(logout());
     setRender('');
     history.push('/');
+    handleClose()
   };
 
   const loginAndRegister = [
