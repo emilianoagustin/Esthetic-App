@@ -20,25 +20,31 @@ function UserProfile() {
   return (
     <div className="container">
       <div className="profile-container">
-        <div className="profile-img">
-          {ID.img ? (
-            <img className="img" src={ID.img} alt="Service Image"></img>
-          ) : (
-            <img className="img" src={defaultImg} alt="Default Image"></img>
-          )}
+        <div className="profile-data">
+          <div className="profile-img">
+            {ID.img ? (
+              <img className="img" src={ID.img} alt="Service Image"></img>
+            ) : (
+              <img className="img" src={defaultImg} alt="Default Image"></img>
+            )}
+          </div>
         </div>
-        <div className="data-top">
+        <div className="profile-info">
           <h1>MIS DATOS</h1>
           <hr />
           <hr />
-          <p>Nombre: {ID && ID.firstName}</p>
-          <p>Apellido: {ID && ID.lastName}</p>
-          <p>Correo Electronico: {ID.email}</p>
-          <br></br>
+          <p className="p">Nombre: {ID && ID.firstName}</p>
+          <p className="p">Apellido: {ID && ID.lastName}</p>
+          <p className="p">Correo Electronico: {ID.email}</p>
+          <p className="p">Telefono: {ID.phone}</p>
+          <p className="p">Direccion: {ID.addresses}</p>
         </div>
-        <div className="data-bottom">
-          <h1>MIS RESERVAS</h1>
-          {/*  <p>Correo Electronico: {userData && userData}</p> */}
+        <br></br>
+      </div>
+      <div className="booking-container">
+        <div className="booking-data">
+          <h1 className="h1"> MIS TURNOS</h1>
+          <p className="p">Proximos Turnos: {userData && userData._id}</p>
         </div>
       </div>
     </div>

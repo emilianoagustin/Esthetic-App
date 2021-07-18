@@ -69,7 +69,7 @@ export const getUserReservations = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_RESERVATIONS_REQUEST });
 
   try {
-    const { data } = await axios.get(`${HOST}${RESERVATIONS}${userId}`);
+    const { data } = await axios.get(`${HOST}${RESERVATIONS}/${userId}`);
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
       payload: data,

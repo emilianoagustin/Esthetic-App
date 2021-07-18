@@ -1,16 +1,62 @@
-.container{
-    display: flex;
-    flex-direction: row;
-    
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  padding: 25px;
+  margin: 25px;
+  box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 6.7px 5.3px rgb(0 0 0 / 5%),
+    0 12.5px 10px rgb(0 0 0 / 6%);
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-container {
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  width: 550px;
+  margin: 25px;
+  width: 500px;
   height: 550px;
   padding: 25px;
+  box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 6.7px 5.3px rgb(0 0 0 / 5%),
+    0 12.5px 10px rgb(0 0 0 / 6%);
+}
+/* .profile-container:hover{
+  width: 550px;
+  height: 600px;
+  transition: all 0.25s;
+} */
+
+.img{
+border-radius: 100px;
+}
+
+.profile-info {
+  margin: 35px;
+  width: 350px;
+}
+.h1 {
+  margin: 10px;
+}
+.profile-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p {
+  margin: 5px;
+  padding: 5px;
+}
+
+
+
+.booking-container {
+  background-color: #ffffff;
+  width: 500px;
+  height: 550px;
+  padding: 25px;
+  margin: 25px;
   box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 6.7px 5.3px rgb(0 0 0 / 5%),
     0 12.5px 10px rgb(0 0 0 / 6%);
 }
