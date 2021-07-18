@@ -4,7 +4,6 @@ import { reservationStatus } from '../../../Redux/actions/actions';
 import { HOST } from '../../../utils/constants';
 import './Reservation.scss';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 
 export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal }) {
@@ -65,11 +64,8 @@ export default function Reservation({ handleActive, date, hour, provider, servic
     const dispatch = useDispatch();
 
     const handleAccept = async () => {
-        // handleClickModal()
+        handleClickModal()
         dispatch(reservationStatus(data));
-        toast.success(`El turno se agrego exitosamente`, {
-            position: toast.POSITION.TOP_CENTER
-        })
         handleActive()
     }
 
