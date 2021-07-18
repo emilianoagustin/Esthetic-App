@@ -14,6 +14,7 @@ import UserProfile from '../components/UserProfile/UserProfile';
 import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
 import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
 
+
 const App = () => {
   return (
     <React.Fragment>
@@ -35,6 +36,7 @@ const App = () => {
         path='/services/providers/:service/:provider/calendar'
         component={ProviderCalendar}
       />
+
       <Route exact path='/providers/:id' component={ProviderDetails} />
       <Route path='/perfil/:id' component={UserProfile} />
     </React.Fragment>
