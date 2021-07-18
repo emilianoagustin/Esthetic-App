@@ -105,7 +105,9 @@ function Cart() {
                                             xs={12}
                                             sm={6}
                                         >
-                                            <CartOrder />
+                                            <CartOrder
+                                                total={totalPrice}
+                                            />
                                         </Grid>
                                     </Grid>
                                 )

@@ -6,16 +6,18 @@ import './Reservation.scss';
 import axios from 'axios';
 
 
-export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal }) {
+export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal, providerID }) {
     const [addresses, setAddresses] = useState([]);
     const [data, setData] = useState({
         user: '',
+        providerID: providerID,
         provider: provider,
         date: date,
         hour: hour,
         service: service,
         price: price,
-        address: ''
+        address: '',
+        isActive: true
     });
 
     useEffect(() => {
@@ -29,9 +31,6 @@ export default function Reservation({ handleActive, date, hour, provider, servic
             }
         }
     }, [])
-    useEffect(() => {
-        console.log(data)
-    }, [data])
 
     useEffect(() => {
         if (data.user !== '') {
@@ -87,7 +86,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                         </tr>
                         <tr>
                             <td>Hora</td>
-                            <td>{hour}</td>
+                            <td>{`${hour}:00hs`}</td>
                         </tr>
                         <tr>
                             <td>Servicio</td>
@@ -95,7 +94,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                         </tr>
                         <tr>
                             <td>Precio</td>
-                            <td>{price}</td>
+                            <td>{`$${price}`}</td>
                         </tr>
                         <tr>
                             <td>Dirección</td>

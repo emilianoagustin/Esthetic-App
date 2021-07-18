@@ -36,8 +36,8 @@ export default function ProviderCalendar({ match }) {
                         const serviceData = serv.data
                         setService(serviceData);
                     })
-                    setLoading(false);
-            })    
+                setLoading(false);
+            })
             .catch(err => {
                 setError(true);
                 setLoading(false);
@@ -138,9 +138,10 @@ export default function ProviderCalendar({ match }) {
                                                                                 handleActive={() => handleClick(index)}
                                                                                 provider={`${provider.firstName} ${provider.lastName}`}
                                                                                 date={e.date}
-                                                                                hour={`${e.hour}:00hs`}
+                                                                                hour={e.hour}
                                                                                 service={service.name}
                                                                                 price={service.price}
+                                                                                providerID={providerID}
                                                                                 handleClickModal={() => handleClickModal(index)}
                                                                             />
                                                                         ) : null
