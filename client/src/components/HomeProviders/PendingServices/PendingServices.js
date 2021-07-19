@@ -143,7 +143,7 @@ export default function RecipeReviewCard({ data }) {
           <CardContent>
             {data.description && (
               <>
-                <Typography paragraph>Description:</Typography>
+                <Typography paragraph>Descripción:</Typography>
                 <Typography paragraph>{data.description}</Typography>
               </>
             )}
