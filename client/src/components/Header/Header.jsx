@@ -177,7 +177,7 @@ export default function PrimarySearchAppBar() {
       TransitionComponent={Fade}
     >
       <Link
-        to={'/perfil'}
+        to={'/provider/profile'}
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
       >
         <MenuItem onClick={handleClose}>Perfil</MenuItem>
