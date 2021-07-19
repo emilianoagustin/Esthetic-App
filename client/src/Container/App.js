@@ -41,7 +41,7 @@ const App = () => {
         
       <Route path='/profile/:id' component={UserProfile} />
         
-      <Route path='/provider/profile' component={ProviderProfile} />
+     
     </React.Fragment>
   );
 };
