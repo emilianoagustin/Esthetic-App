@@ -154,6 +154,7 @@ const handleRedirect= (e) => {
     setRender('');
     history.push('/');
     handleClose()
+    setAnchorEl(null)
   };
 
   const loginAndRegister = [
