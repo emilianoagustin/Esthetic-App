@@ -43,4 +43,13 @@
   .about {
     justify-content: center;
   }
+
+  .render-clients {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 25px;
+    justify-content: center;
+    align-items: center;
+  }
 }

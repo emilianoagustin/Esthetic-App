@@ -8,18 +8,18 @@ import RecipeReviewCard from '../PendingServices/PendingServices';
 
 const buyedServices = [
   {
-    image: 'uploads\\d385f597-16ee-4845-8db2-9ea25d5f37f8.jpg',
-    firstName: 'Mario Martinez',
+    image: 'https://pymstatic.com/44253/conversions/xavier-molina-medium.jpg',
+    firstName: 'Mario',
+    lastName: 'Martinez',
     _id: '60f1bfde1497da2570de1a3a',
-    lastName: 'Male',
-    gender: 'Female',
+    gender: 'Male',
     email: 'lau@gmail.com',
     phone: 3152964865,
     services: ['Corte y peinado - Caballero'],
     addresses: ['calle 15 # 4a - 55'],
   },
   {
-    image: 'uploads\\4a59968e-527a-4f00-81a8-7f8bbf466c77.jpg',
+    image: 'https://muhimu.es/wp-content/uploads/2017/04/FRENTE-NITIDA.jpg',
     firstName: 'Euge',
     _id: '60f1bfde1497da2570de1a3e',
     lastName: 'Butazzoni',
@@ -54,13 +54,16 @@ const HomeProvider = () => {
       <div className='banner'>
         <img className='banner-img' src={banner} alt='banner-img'></img>
       </div>
-      {user.providerFound?.services.length < 1 ? (
-        <VerticalLinearStepper />
-      ) : (
-        buyedServices.map((user) => (
-          <RecipeReviewCard data={user} key={user._id} />
-        ))
-      )}
+
+      <div className='render-clients'>
+        {user.providerFound?.services.length < 1 ? (
+          <VerticalLinearStepper />
+        ) : (
+          buyedServices.map((user) => (
+            <RecipeReviewCard data={user} key={user._id} />
+          ))
+        )}
+      </div>
     </div>
   );
 };

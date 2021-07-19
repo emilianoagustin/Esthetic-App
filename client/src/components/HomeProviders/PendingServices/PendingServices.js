@@ -18,6 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import './PendingServices.scss';
 
@@ -51,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   whatsApp: {
     color: green[500],
   },
+  font: {
+    fontSize: '18px',
+  },
 }));
 
 export default function RecipeReviewCard({ data }) {
@@ -69,6 +73,8 @@ export default function RecipeReviewCard({ data }) {
   return (
     <div className='card-services'>
       <Card className={classes.root}>
+        <Typography variant='h3'></Typography>
+
         <CardHeader
           avatar={
             <Avatar
@@ -82,8 +88,8 @@ export default function RecipeReviewCard({ data }) {
               <MoreVertIcon />
             </IconButton>
           }
-          title={`${data.firstName} ${data.lastName}`}
-          subheader={`$ ${data.price}`}
+          title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
+          subheader={data.price ? `$ ${data.price}` : ''}
         />
         <Link to={`/services/providers/${data.name}`}>
           <CardMedia
@@ -96,9 +102,7 @@ export default function RecipeReviewCard({ data }) {
           <Typography variant='body2' color='textSecondary' component='p'>
             {data.description && data.description.slice(0, 86).concat('...')}
             {data.services &&
-              data.services.map(
-                (service) => `Adquirio el o los servicios de ${service}`
-              )}
+              'Los servicios adquiridos y los datos principales del cliente se encuentran al desplegando la flecha...'}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -117,6 +121,12 @@ export default function RecipeReviewCard({ data }) {
           >
             <WhatsAppIcon />
           </IconButton>
+
+          {data.addresses && (
+            <IconButton aria-label='location'>
+              <LocationOnIcon />
+            </IconButton>
+          )}
 
           <IconButton
             className={clsx(classes.expand, {
@@ -137,8 +147,15 @@ export default function RecipeReviewCard({ data }) {
                 <Typography paragraph>{data.description}</Typography>
               </>
             )}
-            {data.email && (
+            {data.services && (
               <>
+                <Typography paragraph>Servicio(s):</Typography>
+                <Typography paragraph>
+                  {data.services.map((service) => (
+                    <li key={service}>{service}</li>
+                  ))}
+                </Typography>
+
                 <Typography paragraph>Correo:</Typography>
                 <Typography paragraph>{data.email}</Typography>
 
