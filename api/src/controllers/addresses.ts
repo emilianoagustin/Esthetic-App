@@ -1,7 +1,7 @@
-import { RequestHandler } from "express";
-import Addresses from "../models/Addresses";
-import Providers from "../models/Providers";
-import Users from "../models/Users";
+import { RequestHandler } from 'express';
+import Addresses from '../models/Addresses';
+import Providers from '../models/Providers';
+import Users from '../models/Users';
 
 export const getAllAddresses: RequestHandler = async (req, res) => {
   try {
@@ -77,7 +77,7 @@ export const createAddress: RequestHandler = async (req, res) => {
       }
     } else if (provider) {
       let check = false;
-      provider.addresses.forEach((address: any) => {
+      provider?.addresses.forEach((address: any) => {
         if (address.name === req.body.name) check = true;
       });
       if (check) {
@@ -91,8 +91,8 @@ export const createAddress: RequestHandler = async (req, res) => {
           provider: provider.id,
         });
         newAddress.save();
-        provider.addresses.push(newAddress);
-        provider.save();
+        provider?.addresses.push(newAddress);
+        provider?.save();
         return res.status(201).send({
           data: newAddress,
           message: `Nuevo domicilio ${newAddress.name} guardado con éxito.`,
@@ -101,7 +101,7 @@ export const createAddress: RequestHandler = async (req, res) => {
     }
   } catch (error: any) {
     res.status(500).send({
-      message: "Ha habido un problema con tu pedido.",
+      message: 'Ha habido un problema con tu pedido.',
     });
   }
 };
@@ -137,7 +137,7 @@ export const updateAddress: RequestHandler = async (req, res) => {
         .send({ message: "Domicilio de prestador no encontrado" });
     }
   } catch (error: any) {
-    res.status(500).send({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).send({ message: 'Ha habido un problema con tu pedido' });
   }
 };
 
@@ -166,6 +166,6 @@ export const deleteAddress: RequestHandler = async (req, res) => {
         .send({ message: "Domicilio de prestador no encontrado" });
     }
   } catch (error: any) {
-    res.status(500).send({ message: "Ha habido un problema con tu pedido" });
+    res.status(500).send({ message: 'Ha habido un problema con tu pedido' });
   }
 };

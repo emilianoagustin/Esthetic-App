@@ -39,10 +39,10 @@ function Provider({ provider, service }) {
               Ver Perfil
             </NavLink>
             <NavLink
-              className="navLink card-button"
-              to={`/services/providers/${service}/${provider._id}/calendar`}
+              className={provider.hasCalendar ? "navLink card-button" : "navlink card-button inactive"}
+              to={provider.hasCalendar ? `/services/providers/${service}/${provider._id}/calendar` : `/services/providers/${service}`}
             >
-              Ver Agenda
+              {provider.hasCalendar ? "Ver Agenda" : "Sin Agenda"}
             </NavLink>
             <NavLink className="navLink card-button" to="/">
               Ver Reseñas

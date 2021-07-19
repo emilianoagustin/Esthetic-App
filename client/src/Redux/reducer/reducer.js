@@ -11,13 +11,14 @@ const initialState = {
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providers: { loading: true, data: [] },
-  providerById: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
   reservation_status: {},
   userData: {
     loading: true,
     data: {},
   },
+  userReservations:{loading: true,
+    data: []}
 };
 
 const appReducer = (state = initialState, action) => {
@@ -50,8 +51,11 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         loginData: action.payload,
-        userActive: action.payload.userFound.firstName,
+        userActive: action.payload.userFound
+          ? action.payload.userFound.firstName
+          : action.payload.providerFound.firstName,
       };
+
     case actionsTypes.LOGIN_FAIL:
       // window.localStorage.setItem('token', action.payload.token);
       return {
@@ -63,6 +67,7 @@ const appReducer = (state = initialState, action) => {
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
+        loginData: {},
         userActive: action.payload,
       };
 
@@ -124,11 +129,11 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS' DETAILS
-    case actionsTypes.GET_PROVIDER_DETAILS_REQ:
-      return {
-        ...state,
-        providerDetails: { loading: true },
-      };
+    // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+    //   return {
+    //     ...state,
+    //     providerDetails: { loading: true },
+    //   };
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
@@ -176,6 +181,28 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userData: { loading: false, error: action.payload },
       };
+
+
+      //GET USER RESERVATIONS
+
+      case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
+      return {
+        ...state,
+        userReservations: { loading: true },
+      };
+    case actionsTypes.GET_USER_RESERVATIONS_SUCCESS:
+      return {
+        ...state,
+        userReservations: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_RESERVATIONS_FAIL:
+      return {
+        ...state,
+        userReservations: { loading: false, error: action.payload },
+      };
+
+
+
 
     default:
       return state;

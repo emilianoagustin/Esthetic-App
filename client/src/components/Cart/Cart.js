@@ -7,6 +7,7 @@ import Image from '../../img/wall-cart.jpg';
 import axios from 'axios';
 import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
+import Error from '../Error/Error';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,7 +28,6 @@ function Cart() {
     const [loading, setLoading] = useState(true);
     const [totalPrice, setTotalPrice] = useState(0);
     const [page, setPage] = useState(0);
-    const [invalid, setInvalid] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
@@ -40,12 +40,13 @@ function Cart() {
                         setLoading(false);
                     })
                     .catch(err => {
-                        setError(true);
+                        setError('Error al cargar los servicios');
                         setLoading(false);
                     })
             }
         } else {
-            setInvalid(true)
+            setError('Debe estar registrado para acceder a su bolsa de compras');
+            setLoading(false);
         }
     }, [])
 
@@ -59,23 +60,26 @@ function Cart() {
         <div className='container-main'>
             <div className='container'>
                 <h1 className='title'>Bolsa de compras</h1>
-                <Grid container direction="row">
-                    <Grid
-                        container
-                        item
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        xs={12}
-                        sm={6}
-                        className={classes.gridContainer}
+                {
+                    loading ? (<div>Loading...</div>) :
+                        error ? (<div>{error}</div>) :
+                            !views.length ? (
+                                <Error
+                                    message='No dispone de ninguna reservación de servicio en este momento'
+                                />) :
+                                (
+                                    <Grid container direction="row">
+                                        <Grid
+                                            container
+                                            item
+                                            direction="column"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            xs={12}
+                                            sm={6}
+                                            className={classes.gridContainer}
 
-                    >
-                        {
-                            loading ? (<div>Loading...</div>) :
-                                error ? (<div>Error...</div>) :
-                                    !views.length ? (<div>No hay reservaciones...</div>) :
-                                        (
+                                        >
                                             <div>
                                                 <div>
                                                     <button onClick={() => changePage('previous')}>{'<<<'}</button>
@@ -91,22 +95,21 @@ function Cart() {
                                                     ))
                                                 }
                                             </div>
-                                        )
-                        }
-                    </Grid>
-
-                    <Grid
-                        container
-                        item
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        xs={12}
-                        sm={6}
-                    >
-                        <CartOrder />
-                    </Grid>
-                </Grid>
+                                        </Grid>
+                                        <Grid
+                                            container
+                                            item
+                                            direction="column"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            xs={12}
+                                            sm={6}
+                                        >
+                                            <CartOrder />
+                                        </Grid>
+                                    </Grid>
+                                )
+                }
             </div>
         </div>
     )
