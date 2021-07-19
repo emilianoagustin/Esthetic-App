@@ -9,9 +9,9 @@ import { getUserReservations } from "../../Redux/actions/user.actions";
 import './UserProfile.css';
 
 
-const ID = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
+const ID = window.localStorage.getItem('loggedSpatifyApp') ? JSON.parse(window.localStorage.getItem('loggedSpatifyApp')) : null
 
-console.log('Esta es la info del ID', ID);
+console.log('Esta es la info del ID', ID);  
 
 
 function UserProfile() {
@@ -22,29 +22,29 @@ function UserProfile() {
     if (ID.userFound?._id) {
       dispatch(getUserReservations(ID));
     }
-  }, []);
+  }, []); 
 
   return (
     <div className='container'>
       <div className='profile-container'>
         <div className='profile-data'>
           <div className='profile-img'>
-            {ID.img ? (
-              <img className='img' src={ID.img} alt='Service Image'></img>
+          {ID.userFound.img ? (
+              <img className='img' src={ID.userFound.img} alt='Service Image'></img>
             ) : (
               <img className='img' src={defaultImg} alt='Default Image'></img>
-            )}
+            )} 
           </div>
         </div>
         <div className='profile-info'>
           <h1>MIS DATOS</h1>
           <hr />
           <hr />
-          <p className='p'>Nombre: {ID && ID.firstName}</p>
-          <p className='p'>Apellido: {ID && ID.lastName}</p>
-          <p className='p'>Correo Electronico: {ID.email}</p>
-          <p className='p'>Telefono: {ID.phone}</p>
-          <p className='p'>Direccion: {ID.addresses}</p>
+          <p className='p'>Nombre: {ID && ID.userFound.firstName}</p>
+          <p className='p'>Apellido: {ID && ID.userFound.lastName}</p>
+          <p className='p'>Correo Electronico: {ID.userFound.email}</p>
+          <p className='p'>Telefono: {ID.userFound.phone}</p>
+          <p className='p'>Direccion: {ID.userFound.addresses}</p>
         </div>
         <br></br>
       </div>
