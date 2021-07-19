@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { updateProvider, updateProviderAddress } from '../../../Redux/actions/actions';
-import { Grid, Paper, Typography, TextField, Divider, Button } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProviderAddress, updateProvider, updateProviderAddress } from '../../../Redux/actions/actions';
+import { Grid, 
+    Paper, 
+    Typography, 
+    TextField, 
+    Divider, 
+    Button, 
+    Switch, 
+    FormControlLabel, 
+    MenuItem, 
+    FormControl, 
+    InputLabel,
+    Select } from '@material-ui/core';
 import { Validate } from '../../../utils/validate';
 
 function ProviderProfileUpdate({ classes, provider }) {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const addressMessage = useSelector(state => state.provider_address_status.message);
+    // const updateAddressMessage = useSelector(state => state.provider__address_update_status.message);
+    // const updateMessage = useSelector(state => state.provider_update_status.message);
+    const addresses = useSelector(state => state.providersAddresses);
 
     const [providerData, setProviderData] = useState({
         firstName: '',
@@ -27,7 +42,16 @@ function ProviderProfileUpdate({ classes, provider }) {
     });
 
     const [errors, setErrors] = useState({});
+    const [check, setCheck] = useState({checked: true});
+    const [selected, setSelected] = useState('')
 
+    const handleCheck = (e) => {
+        setCheck({[e.target.name]: e.target.checked});
+    };
+
+    const handleSelected = (e) => {
+        setSelected(e.target.value)
+    }
     const handleChange = (e) => {
         if(e.target.id === 'address_input') {
             const validate = Validate({
@@ -50,20 +74,32 @@ function ProviderProfileUpdate({ classes, provider }) {
     };
 
     const formIsValid = () => {
-        return address && providerData && Object.values(errors).every( value => value === "")
+        return  Object.values(address).some( value => value !== "") &&
+                Object.values(providerData).every( value => value !== "") && 
+                Object.values(errors).every( value => value === "")
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(provider.addresses.length === 0){
-            console.log('hay que poner el put del address');
-            dispatch(updateProvider(id, providerData))
+            if(check.checked === true){
+                dispatch(createProviderAddress(id, {...address, is_main: true}))
+                dispatch(updateProvider(id, providerData))
+            }else {
+                dispatch(createProviderAddress(id, address))
+                dispatch(updateProvider(id, providerData))
+            }
         }else{
-            dispatch(updateProviderAddress(provider.addresses[0]._id, address))
+            provider.addresses.forEach( (a, i) => {
+                if(selected === i) {
+                    console.log(a._id);
+                    dispatch(updateProviderAddress(id, a._id, address))
+                }
+            })
             dispatch(updateProvider(id, providerData))
         }
     };
-    console.log(errors);
+
     return (
         <Grid item className={classes.gridForm}>
             <Paper className={classes.paper} elevation={3}>
@@ -270,6 +306,43 @@ function ProviderProfileUpdate({ classes, provider }) {
                             helperText={errors.city}
                         />
                         </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <FormControlLabel
+                                control={<Switch
+                                            checked={check.checked}
+                                            name="checked"
+                                            onChange={handleCheck}
+                                            color="primary"
+                                            disabled={addresses.length > 0}
+                                        />}
+                                label='Dirección principal'
+                            />
+                        </Grid>
+                        { 
+                            addresses.length > 0 && 
+                                <Grid item xs={12} sm={4}>
+                                    <FormControl variant="outlined" className={classes.select}>
+                                        <InputLabel id="address">Dirección para actualizar</InputLabel>
+                                        <Select
+                                        labelId="address_input_label"
+                                        id="address_input"
+                                        value={selected}
+                                        onChange={handleSelected}
+                                        label="Address"
+                                        className={classes.select}
+                                        >
+                                        <MenuItem value="">
+                                            <em>Selecciona una dirección</em>
+                                        </MenuItem>
+                                        { addresses.map((address, i) => {
+                                            return (
+                                                <MenuItem key={i} value={i}>{address.name}</MenuItem>
+                                            )
+                                        })}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                        }
                     </Grid>
 
                     <Grid item className={classes.buttonContainer}>

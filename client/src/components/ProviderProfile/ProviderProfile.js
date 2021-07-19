@@ -68,12 +68,24 @@ const useStyles = makeStyles(() => ({
     data: {
         marginTop: 20
     },
+    dataItems: {
+        margin: '10px auto'
+    },
+    dataSubtitle: {
+        fontWeight: 'bold'
+    },
+    dirItems: {
+        margin: '5px auto'
+    },
     divider: {
         margin: '20px auto'
     },
     buttonContainer: {
         margin: '30px auto 5px auto',
         width: 200
+    },
+    select: {
+        width: '100%'
     }
 }));
 
@@ -83,7 +95,7 @@ function ProviderProfile() {
     const { id } = useParams();
     const classes = useStyles();
 
-    console.log('providerDetail----------------', provider);
+    // console.log('providerDetail----------------', provider);
 
     useEffect(() => {
         dispatch(getProviderDetails(id))
@@ -97,7 +109,7 @@ function ProviderProfile() {
                         <Grid item>
                             <ProviderProfileData provider={provider.data} classes={classes}/>
                         </Grid>
-                        <Grid item container direction='column' justifyContent='center' alignItems='center' className={classes.gridItem}>
+                        <Grid item container direction='column' justifyContent='flex-start' alignItems='center' className={classes.gridItem}>
                             <ProviderProfileBanner provider={provider.data} classes={classes}/>
                             <ProviderProfileUpdate classes={classes} provider={provider.data}/>
                         </Grid>
