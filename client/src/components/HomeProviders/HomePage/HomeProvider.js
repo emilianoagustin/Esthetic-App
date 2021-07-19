@@ -44,18 +44,15 @@ const HomeProvider = () => {
         ? setUsers({
             ...users,
             firstName: user.userFound?.firstName,
-            services: [...user.userFound?.services],
+            services: user.userFound?.services,
           })
         : setUsers({
             ...users,
             firstName: user.providerFound?.firstName,
-            services: [...user.providerFound?.services],
+            services: user.providerFound?.services,
           });
-
-      //(() => dispatch(userActiveSession()))();
     }
   }, []);
-  console.log(users.services);
 
   return (
     <div className='banner-container'>
@@ -69,7 +66,7 @@ const HomeProvider = () => {
       </div>
 
       <div className='render-clients'>
-        {users.services.length < 1 ? (
+        {users.services?.length < 1 ? (
           <VerticalLinearStepper />
         ) : (
           buyedServices.map((user) => (
