@@ -10,8 +10,11 @@ const initialState = {
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
-  providers: { loading: true, data: [] },
   providersByService: { loading: true, data: [] },
+  providersAddresses: [],
+  provider_address_status: {},
+  provider_address_update_status: {},
+  provider_update_status: {},
   reservation_status: {},
   userData: {
     loading: true,
@@ -92,23 +95,6 @@ const appReducer = (state = initialState, action) => {
         serviceDetails: { loading: false, error: action.payload },
       };
 
-    //GET PROVIDERS
-    case actionsTypes.GET_PROVIDERS_REQUEST:
-      return {
-        ...state,
-        providers: { loading: true },
-      };
-    case actionsTypes.GET_PROVIDERS_SUCCESS:
-      return {
-        ...state,
-        providers: { loading: false, data: action.payload },
-      };
-    case actionsTypes.GET_PROVIDERS_FAIL:
-      return {
-        ...state,
-        providers: { loading: false, error: action.payload },
-      };
-
     //GET PROVIDERS BY SERVICE
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST:
       return {
@@ -142,6 +128,34 @@ const appReducer = (state = initialState, action) => {
         ...state,
         providerDetails: { loading: false, error: action.payload },
       };
+
+    //GET PROVIDERS ADDRESSES
+    case actionsTypes.GET_PROVIDERS_ADDRESSES:
+      return {
+        ...state,
+        providersAddresses: action.payload
+      };
+
+    //SET PROVIDER ADDRESS
+    case actionsTypes.SET_PROVIDER_ADDRESS:
+      return {
+        ...state,
+        provider_address_status: { message: action.payload }
+      }
+
+      //SET PROVIDER ADDRESS UPDATE
+    case actionsTypes.SET_PROVIDER_ADDRESS_UPDATE:
+      return {
+        ...state,
+        provider_address_update_status: { message: action.payload }
+      }
+
+      //SET PROVIDER UPDATE
+    case actionsTypes.SET_PROVIDER_UPDATE:
+      return {
+        ...state,
+        provider_update_status: { message: action.payload }
+      }
 
     ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
