@@ -4,14 +4,8 @@ import {
   // getProvidersByService,
   // getServicesBack,
   HOST,
-<<<<<<< HEAD
 } from "../../utils/constants.js";
 import { GET_PROVIDERS, GET_SERVICES } from "../../utils/constants.js";
-=======
-} from '../../utils/constants.js';
-import { GET_PROVIDERS, GET_SERVICES } from '../../utils/constants.js';
->>>>>>> 7e0480ef5a4952e23549d2f8ca9e62d493747ebf
-//GET SERVICES
 
 export const getServices = () => async (dispatch) => {
   dispatch({
@@ -79,17 +73,12 @@ export const serviceSearch = (payload) => (dispatch) => {
 export const reservationStatus = (data) => async (dispatch) => {
   const default_data = {
     loading: true,
-<<<<<<< HEAD
     message: "Loading...",
-=======
-    message: 'Loading...',
->>>>>>> 7e0480ef5a4952e23549d2f8ca9e62d493747ebf
   };
   dispatch({
     type: actionsTypes.SET_RESERVATION_STATUS_LOADING,
     payload: default_data,
   });
-<<<<<<< HEAD
   try {
     const { message } = await axios.post(`${HOST}/reservations`, data);
     const success = "Turno agregado con éxito";
@@ -111,16 +100,6 @@ export const checkoutMP = (payload) => async (dispatch) => {
     console.error(error);
   }
 };
-=======
-  try {
-    const { message } = await axios.post(`${HOST}/reservations`, data);
-    const success = 'Turno agregado con éxito';
-    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: success });
-  } catch (error) {
-    const err = 'Error al agregar el turno';
-    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: err });
-  }
-};
 
 export const addServicesToProvider = (services) => async () => {
   try {
@@ -137,4 +116,3 @@ export const addHoursJobToProvider = (hours) => async () => {
     console.log(error);
   }
 };
->>>>>>> 7e0480ef5a4952e23549d2f8ca9e62d493747ebf
