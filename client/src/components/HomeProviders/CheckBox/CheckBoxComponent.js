@@ -52,7 +52,7 @@ const CheckBoxComponent = ({ data }) => {
     dispatch(addServicesToProvider(serviceAdd));
     alert('por favor continue con el siguiente paso');
   };
-
+  // console.log('services', serviceAdd);
   return (
     <>
       <form action='' onSubmit={handleSubmit}>
@@ -78,7 +78,7 @@ const CheckBoxComponent = ({ data }) => {
             <Button
               variant='contained'
               color='secondary'
-              onSubmit={handleSubmit}
+              onClick={handleSubmit}
               className='input-submit-service'
             >
               Confirmar

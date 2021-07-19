@@ -29,7 +29,7 @@ export default function MaterialUIPickers() {
 
   const provider = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
   const [addHours, setAddHours] = useState({
-    eventHours: [],
+    eventsHours: [],
     provider: provider.providerFound._id,
   });
 
@@ -38,15 +38,17 @@ export default function MaterialUIPickers() {
 
     setAddHours({
       ...addHours,
-      eventHours: [...addHours.eventHours, date.getHours()],
+      eventsHours: [...addHours.eventsHours, Number(date.getHours())],
     });
 
-    const have = addHours.eventHours.some((hour) => hour === date.getHours());
+    const have = addHours.eventsHours.some(
+      (hour) => hour === Number(date.getHours())
+    );
     //for no repeat hour
     if (have) {
       setAddHours({
         ...addHours,
-        eventHours: [...addHours.eventHours],
+        eventsHours: [...addHours.eventsHours],
       });
     }
   };
@@ -77,11 +79,7 @@ export default function MaterialUIPickers() {
       </MuiPickersUtilsProvider>
 
       <div className={classes.root}>
-        <Button
-          variant='contained'
-          color='secondary'
-          // onSubmit={handleSubmit}
-        >
+        <Button variant='contained' color='secondary' onClick={handleSubmit}>
           Confirmar
         </Button>
       </div>

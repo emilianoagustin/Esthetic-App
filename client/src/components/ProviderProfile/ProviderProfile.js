@@ -83,7 +83,7 @@ function ProviderProfile() {
   const { id } = useParams();
   const classes = useStyles();
 
-  console.log('providerDetail----------------', provider);
+  //console.log('providerDetail----------------', provider);
 
   useEffect(() => {
     dispatch(getProviderDetails(id));

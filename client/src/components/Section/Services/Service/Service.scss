@@ -11,8 +11,18 @@
   border: 3px solid rgb(139, 139, 139);
   -webkit-box-shadow: 8px 3px 8px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 8px 3px 8px 0px rgba(0, 0, 0, 0.75);
-  transition: background-color 2s ease-out 100ms;
-  transition: width 100ms ease-out 100ms;
+
+  // transition: background-color 2s ease-out 100ms;
+  // transition: width 100ms ease-out 100ms;
+
+  &:hover {
+    transform: scale(1.1, 1.1);
+    transition: transform 0.5s ease-in-out;
+    background-color: rgb(255, 197, 247);
+    .service-text {
+      opacity: 100%;
+    }
+  }
 }
 
 .service-text {
@@ -22,14 +32,6 @@
   opacity: 0%;
   transition-property: opacity, left;
   transition-duration: 1s, 4s;
-}
-
-.service:hover {
-  background-color: rgb(255, 197, 247);
-  width: 280px;
-  .service-text {
-    opacity: 100%;
-  }
 }
 
 .img {
