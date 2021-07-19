@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { getProviderDetails } from '../../Redux/actions/actions'
-import ProviderProfileData from './ProviderProfileData.js/ProviderProfileData';
+import ProviderProfileData from './ProviderProfileData/ProviderProfileData';
 import ProviderProfileUpdate from './ProviderProfileUpdate/ProviderProfileUpdate';
 import ProviderProfileBanner from './ProviderProfileBanner/ProviderProfileBanner';
 
@@ -90,16 +87,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ProviderProfile() {
-    const dispatch = useDispatch();
-    const provider = useSelector(state => state.providerDetails);
-    const { id } = useParams();
     const classes = useStyles();
-
-    // console.log('providerDetail----------------', provider);
-
-    useEffect(() => {
-        dispatch(getProviderDetails(id))
-    }, [dispatch, id]);
+    const provider = JSON.parse(window.localStorage.getItem('loggedSpatifyApp')).providerFound;
 
     return (
         <>
@@ -107,11 +96,11 @@ function ProviderProfile() {
                 <div className='container'>
                     <div className={classes.providerProfile}>
                         <Grid item>
-                            <ProviderProfileData provider={provider.data} classes={classes}/>
+                            <ProviderProfileData provider={provider} classes={classes}/>
                         </Grid>
                         <Grid item container direction='column' justifyContent='flex-start' alignItems='center' className={classes.gridItem}>
-                            <ProviderProfileBanner provider={provider.data} classes={classes}/>
-                            <ProviderProfileUpdate classes={classes} provider={provider.data}/>
+                            <ProviderProfileBanner provider={provider} classes={classes}/>
+                            <ProviderProfileUpdate classes={classes} provider={provider}/>
                         </Grid>
                     </div>
                 </div>

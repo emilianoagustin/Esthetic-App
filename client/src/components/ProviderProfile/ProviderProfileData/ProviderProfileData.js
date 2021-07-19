@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProvidersAddresses } from '../../../Redux/actions/actions';
-import { useParams } from 'react-router-dom';
 import { Grid, Box, Paper, Typography, Divider, Avatar } from '@material-ui/core';
 import ShareIcon from '@material-ui/icons/Share';
 import Image from '../../../img/Barberia.jpg';
 
 function ProviderProfileData({ provider, classes }) {
-    const { id } = useParams();
     const dispatch = useDispatch();
     const addresses = useSelector(state => state.providersAddresses);
+
     useEffect( async () => {
-        dispatch(getAllProvidersAddresses(id))
+        dispatch(getAllProvidersAddresses(provider._id))
     }, []);
 
     return (
@@ -66,7 +65,9 @@ function ProviderProfileData({ provider, classes }) {
                                                 </Grid>
                                                 <Grid item container justifyContent='space-between' className={classes.dirItems}>
                                                     <Typography variant='h7'>Piso/Dpto</Typography>
-                                                    <Typography variant='h7'>{a.address_details}</Typography>                                                
+                                                    {a.address_details ? <Typography variant='h7'>{a.address_details}</Typography>
+                                                        : <Typography variant='subtitle1'>no definido</Typography>
+                                                    }                                                
                                                 </Grid>
                                                 <Grid item container justifyContent='space-between' className={classes.dirItems}>
                                                     <Typography variant='h7'>Ciudad</Typography>
@@ -86,28 +87,3 @@ function ProviderProfileData({ provider, classes }) {
 }
 
 export default ProviderProfileData;
-{/* {addresses.map((address, i) => {
-    return (
-            <Grid item container>
-                <Grid item container justifyContent='space-between' className={classes.dataItems}>
-                    <Typography key={i} variant='h7'>Lugar</Typography>
-                    <Typography key={i} variant='h7'>{address.name}</Typography>
-                </Grid>
-                <Grid item container justifyContent='space-between' className={classes.dataItems}>
-                    <Typography key={i} variant='h7'>Dirección</Typography>
-                    <Typography key={i} variant='h7'>{address.address_1}</Typography>
-                </Grid>
-                <Grid item container justifyContent='space-between' className={classes.dataItems}>
-                    <Typography key={i} variant='h7'>Provincia</Typography>
-                    <Typography key={i} variant='h7'>{address.state}</Typography>
-                </Grid>
-                {/* <Grid item container justifyContent='space-between' className={classes.dataItems}>
-                    <Typography key={i} variant='h7'>Ciudad</Typography>
-                    <Typography key={i} variant='h7'>{address.city}</Typography>
-                </Grid> */}
-            //</Grid>
-    //)
-//})} */}
-
-{/* <Typography variant='h7'>género</Typography>
-<Typography variant='h7'>{provider.gender}</Typography> */}

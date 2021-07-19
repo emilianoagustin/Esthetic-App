@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProviderAddress, updateProvider, updateProviderAddress } from '../../../Redux/actions/actions';
 import { Grid, 
@@ -13,15 +12,18 @@ import { Grid,
     MenuItem, 
     FormControl, 
     InputLabel,
-    Select } from '@material-ui/core';
+    Select,
+    Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import { Validate } from '../../../utils/validate';
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
+
 function ProviderProfileUpdate({ classes, provider }) {
-    const { id } = useParams();
+    const id = provider._id;
     const dispatch = useDispatch();
-    const addressMessage = useSelector(state => state.provider_address_status.message);
-    // const updateAddressMessage = useSelector(state => state.provider__address_update_status.message);
-    // const updateMessage = useSelector(state => state.provider_update_status.message);
     const addresses = useSelector(state => state.providersAddresses);
 
     const [providerData, setProviderData] = useState({
@@ -43,7 +45,8 @@ function ProviderProfileUpdate({ classes, provider }) {
 
     const [errors, setErrors] = useState({});
     const [check, setCheck] = useState({checked: true});
-    const [selected, setSelected] = useState('')
+    const [selected, setSelected] = useState('');
+    const [open, setOpen] = useState(false);
 
     const handleCheck = (e) => {
         setCheck({[e.target.name]: e.target.checked});
@@ -51,7 +54,15 @@ function ProviderProfileUpdate({ classes, provider }) {
 
     const handleSelected = (e) => {
         setSelected(e.target.value)
-    }
+    };
+
+    const handleClose = (e, reason) => {
+        if (reason === 'clickaway') {
+            setOpen(false)
+        }
+        setOpen(false);
+    };
+
     const handleChange = (e) => {
         if(e.target.id === 'address_input') {
             const validate = Validate({
@@ -98,6 +109,7 @@ function ProviderProfileUpdate({ classes, provider }) {
             })
             dispatch(updateProvider(id, providerData))
         }
+        setOpen(true)
     };
 
     return (
@@ -344,7 +356,13 @@ function ProviderProfileUpdate({ classes, provider }) {
                                 </Grid>
                         }
                     </Grid>
-
+                        <>
+                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="success">
+                                Perfil actualizado con éxito!
+                                </Alert>
+                            </Snackbar>
+                        </>
                     <Grid item className={classes.buttonContainer}>
                         <Button
                             type="submit"
