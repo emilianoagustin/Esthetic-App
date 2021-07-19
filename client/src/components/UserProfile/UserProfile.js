@@ -1,9 +1,11 @@
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultImg from "../../img/wall-cart.jpg";
 import { getUserReservations } from "../../Redux/actions/user.actions";
 
 import "./UserProfile.css";
+
 
 const ID = JSON.parse(localStorage.getItem("loggedSpatifyApp")).userFound;
 console.log("Esta es la info del ID", ID);
@@ -45,6 +47,7 @@ function UserProfile() {
         <div className="booking-data">
           <h1 className="h1"> MIS TURNOS</h1>
           <p className="p">Proximos Turnos: {userData && userData._id}</p>
+
         </div>
       </div>
     </div>

@@ -38,7 +38,9 @@ const App = () => {
       />
 
       <Route exact path='/providers/:id' component={ProviderDetails} />
-      <Route path='/perfil/:id' component={UserProfile} />
+        
+      <Route path='/profile/:id' component={UserProfile} />
+        
       <Route path='/provider/profile' component={ProviderProfile} />
     </React.Fragment>
   );
