@@ -85,9 +85,18 @@ function ProviderProfile() {
 
   //console.log('providerDetail----------------', provider);
 
+<<<<<<< HEAD
   useEffect(() => {
     dispatch(getProviderDetails(id));
   }, [dispatch, id]);
+=======
+
+    useEffect(() => {
+
+        dispatch(getProviderDetails(id))
+    }, [dispatch, id]);
+
+>>>>>>> 89271c7dc2fecd9149a46c75e9752e652f48cdce
 
   return (
     <>
