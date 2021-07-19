@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //IMPORT MATERIAL UI
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
@@ -9,8 +9,20 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 import { addHoursJobToProvider } from '../../../Redux/actions/actions';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 export default function MaterialUIPickers() {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   const initialState = new Date();
   const [selectedDate, setSelectedDate] = useState(initialState.getHours());
@@ -18,7 +30,7 @@ export default function MaterialUIPickers() {
   const provider = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
   const [addHours, setAddHours] = useState({
     eventHours: [],
-    provider: provider.providerFound._id.toString(),
+    provider: provider.providerFound._id,
   });
 
   const handleDateChange = (date) => {
@@ -26,12 +38,10 @@ export default function MaterialUIPickers() {
 
     setAddHours({
       ...addHours,
-      eventHours: [...addHours.eventHours, date.getHours().toString()],
+      eventHours: [...addHours.eventHours, date.getHours()],
     });
 
-    const have = addHours.eventHours.some(
-      (hour) => hour === date.getHours().toString()
-    );
+    const have = addHours.eventHours.some((hour) => hour === date.getHours());
     //for no repeat hour
     if (have) {
       setAddHours({
@@ -47,7 +57,7 @@ export default function MaterialUIPickers() {
     alert('por favor haz click en siguiente');
   };
 
-  //console.log(addHours);
+  console.log('xxxxxx--->', addHours);
 
   return (
     <form action='' onSubmit={handleSubmit}>
@@ -65,7 +75,16 @@ export default function MaterialUIPickers() {
           />
         </Grid>
       </MuiPickersUtilsProvider>
-      <button>Confirmar</button>
+
+      <div className={classes.root}>
+        <Button
+          variant='contained'
+          color='secondary'
+          // onSubmit={handleSubmit}
+        >
+          Confirmar
+        </Button>
+      </div>
     </form>
   );
 }
