@@ -32,14 +32,14 @@ const buyedServices = [
 ];
 
 const HomeProvider = () => {
-  const [user, setUser] = useState('');
+  const [users, setUsers] = useState('');
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSpatifyApp');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       user.userFound
-        ? setUser(user.userFound?.firstName)
-        : setUser(user.providerFound?.firstName);
+        ? setUsers(user.userFound?.firstName)
+        : setUsers(user.providerFound?.firstName);
       //(() => dispatch(userActiveSession()))();
     }
   }, []);
@@ -48,7 +48,7 @@ const HomeProvider = () => {
     <div className='banner-container'>
       <div className='title-background'>
         <h1>Spa-tify </h1>
-        <h2>Bienvenido {user}</h2>
+        <h2>Bienvenido {users}</h2>
       </div>
 
       <div className='banner'>
@@ -56,11 +56,11 @@ const HomeProvider = () => {
       </div>
 
       <div className='render-clients'>
-        {user.providerFound?.services.length < 1 ? (
+        {users.providerFound?.services.length < 1 ? (
           <VerticalLinearStepper />
         ) : (
           buyedServices.map((user) => (
-            <RecipeReviewCard data={user} key={user._id} />
+            <RecipeReviewCard data={users} key={user._id} />
           ))
         )}
       </div>

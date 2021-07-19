@@ -1,18 +1,13 @@
-
-
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import defaultImg from "../../img/wall-cart.jpg";
-import { getUserReservations } from "../../Redux/actions/user.actions";
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import defaultImg from '../../img/wall-cart.jpg';
+import { getUserReservations } from '../../Redux/actions/user.actions';
 
 import './UserProfile.css';
-
 
 const ID = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
 
 console.log('Esta es la info del ID', ID);
-
 
 function UserProfile() {
   const dispatch = useDispatch();
@@ -49,12 +44,10 @@ function UserProfile() {
         <br></br>
       </div>
 
-      <div className="booking-container">
-        <div className="booking-data">
-          <h1 className="h1"> MIS TURNOS</h1>
-          <p className="p">Proximos Turnos: {userData && userData._id}</p>
-
-
+      <div className='booking-container'>
+        <div className='booking-data'>
+          <h1 className='h1'> MIS TURNOS</h1>
+          <p className='p'>Proximos Turnos: {userData && userData._id}</p>
         </div>
       </div>
     </div>
