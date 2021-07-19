@@ -66,6 +66,49 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   }
 };
 
+export const updateProvider = (providerId, providerData) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(`${GET_PROVIDERS}/${providerId}`, providerData);
+    const success = 'Datos de perfil actualizados correctamente';
+    dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success});
+  } catch (error) {
+    const err = 'Ocurrió un error al actualizar los datos de tu perfil'
+    dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: err})
+  }
+};
+
+export const getAllProvidersAddresses = (providerId) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${GET_PROVIDERS}/${providerId}/addresses`);
+    dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: data });
+  } catch (error) {
+    const err = 'Ocurrió un error al cargar tus direcciones'
+    dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: err})
+  }
+};
+
+export const createProviderAddress = (providerId, addressData) => async (dispatch) => {
+  try {
+    const { data } = await axios.post(`${GET_PROVIDERS}/${providerId}/addresses`, addressData);
+    const success = 'Dirección agregada correctamente'
+    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: success });
+  } catch (error) {
+    const err = 'Ocurrió un error al crear tu dirección'
+    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: err})
+  }
+};
+
+export const updateProviderAddress = (providerId, addressId, addressData) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(`${GET_PROVIDERS}/${providerId}/addresses/${addressId}`, addressData);
+    const success = 'Dirección actualizada correctamente'
+    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE, payload: success });
+  } catch (error) {
+    const err = 'Ocurrió un error al actualizar tu dirección'
+    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE, payload: err})
+  }
+};
+
 export const serviceSearch = (payload) => (dispatch) => {
   dispatch({ type: actionsTypes.SEARCH_SERVICE_BY_NAME, payload });
 };
