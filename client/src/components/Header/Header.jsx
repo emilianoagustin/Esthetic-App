@@ -106,6 +106,7 @@ export default function PrimarySearchAppBar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const loginData = useSelector((state) => state.loginData) 
+  
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
@@ -137,8 +138,11 @@ export default function PrimarySearchAppBar() {
 
 const handleRedirect= (e) => {
   if (userActive) {
-    let id = loginData.userFound._id
+    let id = loginData.userFound?._id
     history.push(`/profile/${id}`)} 
+if(loginData.providerFound){
+  history.push("/provider/profile")
+}
     setAnchorEl(null)
 }
 
@@ -187,8 +191,13 @@ const handleRedirect= (e) => {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
+
       {/* <Link
         to={`/user/profile/`}
+
+      <Link
+        to={'/provider/profile'}
+
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
       >  */}
         <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>

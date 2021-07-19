@@ -23,7 +23,7 @@ export function ProvidersByService() {
           <div className='providers-filters'>
             <div>
               <h1 className="title">{`${serviceName}`}</h1>
-              <h4 className='title'>Proveedores disponibles</h4>
+              <h4 className='title'>Prestadores disponibles</h4>
             </div>
           </div>
           <div className="providers-list">
