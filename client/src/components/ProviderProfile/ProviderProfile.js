@@ -1,76 +1,156 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ProviderProfileData from './ProviderProfileData.js/ProviderProfileData';
-import NoCalendarModal from './NoCalendarModal/NoCalendarModal';
+import { Grid } from '@material-ui/core';
+import ProviderProfileData from './ProviderProfileData/ProviderProfileData';
+import ProviderProfileUpdate from './ProviderProfileUpdate/ProviderProfileUpdate';
+import ProviderProfileBanner from './ProviderProfileBanner/ProviderProfileBanner';
+import { useDispatch } from 'react-redux';
+import { getProviderDetails } from '../../Redux/actions/actions';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
+  providerProfile: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: 30,
+  },
   gridItem: {
+    width: '70%',
     height: 'auto',
-    width: '50%',
+  },
+  gridBanner: {
+    width: '100%',
+    height: 'auto',
+    alignSelf: 'flex-start',
+  },
+  gridProfile: {
+    height: 'auto',
+    width: 'auto',
+  },
+  gridForm: {
+    height: 'auto',
+    width: '80%',
   },
   paper: {
     margin: 'auto 10px',
     padding: 15,
   },
+  containerBanner: {
+    position: 'relative',
+    textAlign: 'center',
+    boxShadow: '0px 2px 2px #888888',
+    marginBottom: 30,
+    borderRadius: 3,
+  },
+  bannerText: {
+    position: 'absolute',
+    top: '20%',
+    left: 16,
+  },
+  bannerTextSubt: {
+    position: 'absolute',
+    top: '40%',
+    left: 16,
+  },
   image: {
     display: 'flex',
     justifyContent: 'center',
   },
-  img: {
+  profileImg: {
     borderRadius: '50%',
     width: 300,
     height: 300,
   },
+  bannerImg: {
+    width: '100%',
+    height: 'auto',
+  },
   data: {
     marginTop: 20,
   },
+  dataItems: {
+    margin: '10px auto',
+  },
+  dataSubtitle: {
+    fontWeight: 'bold',
+  },
+  dirItems: {
+    margin: '5px auto',
+  },
+  divider: {
+    margin: '20px auto',
+  },
+  buttonContainer: {
+    margin: '30px auto 5px auto',
+    width: 200,
+  },
+  select: {
+    width: '100%',
+  },
 }));
-//getP;
+
 function ProviderProfile() {
-    const dispatch = useDispatch();
-    const provider = useSelector(state => state.providerById);
-    const { id } = useParams();
-    const classes = useStyles();
-    const [isActive, setIsActive] = useState(true)
-    console.log('providerDetail----------------', provider);
-    console.log('handleActive---------', isActive);
-    useEffect(() => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const { id } = useParams();
+  const provider = JSON.parse(
+    window.localStorage.getItem('loggedSpatifyApp')
+  ).providerFound;
 
-        // dispatch(getProviderById(id))
+  useEffect(() => {
+    dispatch(getProviderDetails(id));
+  }, [dispatch, id]);
 
-    }, [dispatch, id]);
-
-  const handleActive = () => {
-    setIsActive(false);
-  };
+  //   return (
+  //     <>
+  //       <div className='container-main'>
+  //         <div className='container'>
+  //           <div className={classes.providerProfile}>
+  //             <Grid item>
+  //               <ProviderProfileData provider={provider.data} classes={classes} />
+  //             </Grid>
+  //             <Grid
+  //               item
+  //               container
+  //               direction='column'
+  //               justifyContent='center'
+  //               alignItems='center'
+  //               className={classes.gridItem}
+  //             >
+  //               <ProviderProfileBanner
+  //                 provider={provider.data}
+  //                 classes={classes}
+  //               />
+  //               <ProviderProfileUpdate classes={classes} />
+  //             </Grid>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
 
   return (
     <>
-      {provider.data.hasCalendar === false ? (
-        <NoCalendarModal
-          name={provider.data.firstName}
-          handleActive={handleActive}
-        />
-      ) : (
-        <div className='container-main'>
-          <div className='container'>
-            <div className='providers-container'>
-              <ProviderProfileData provider={provider.data} classes={classes} />
-            </div>
+      <div className='container-main'>
+        <div className='container'>
+          <div className={classes.providerProfile}>
+            <Grid item>
+              <ProviderProfileData provider={provider} classes={classes} />
+            </Grid>
+            <Grid
+              item
+              container
+              direction='column'
+              justifyContent='flex-start'
+              alignItems='center'
+              className={classes.gridItem}
+            >
+              <ProviderProfileBanner provider={provider} classes={classes} />
+              <ProviderProfileUpdate classes={classes} provider={provider} />
+            </Grid>
           </div>
         </div>
-      )}
-      {isActive ? null : (
-        <div className='container-main'>
-          <div className='container'>
-            <div className='providers-container'>
-              <ProviderProfileData provider={provider.data} classes={classes} />
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </>
   );
 }

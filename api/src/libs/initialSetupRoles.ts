@@ -129,7 +129,7 @@ export const createService = async () => {
       }).save(),
       new Services({
         image:
-          'https://lh3.googleusercontent.com/proxy/bfFLVTFbO1pXPaimi6XLdqQfku30q-UMqzV4zqJ8fjxZrS_O5_RTc9ZvBMPfN8yWiMZj1p-59DQk9rFJTJAYrrEpL6TefJSMQRRC78C5si8Zqc_yvUi7AxpkNty3crhvCn5NKzzrdwENeYz1l1Q5PA',
+          'https://www.hola.com/imagenes//bienestar/20141028498/masajes-deportivos-descontracturantes-y-relajantes/0-1-212/masajes-deportistas--z.jpg',
         name: 'Masaje - descontracturante',
         price: 2200,
         description: `Tratando la capa profunda de los músculos, este masaje energiza, estimula y ayuda a incrementar el flujo de oxígeno. Varios niveles de presión de masaje liberarán y disolverán la tensión, aliviarán el dolor crónico y provocarán un bienestar general en todo el cuerpo.
@@ -145,7 +145,7 @@ export const createService = async () => {
       }).save(),
       new Services({
         image:
-          'https://lh3.googleusercontent.com/proxy/yWyVEIcz44Hn3adLWXOl8iGg6I5RpErjPnV_ZJriXehcKYjInDG1O5mTzpf-ZeQpYBhtNrSrxyXwgiW-0CTwq41c8xnkRwj5WG4',
+          'https://www.fisioterapia-madrid.es/wp-content/uploads/2018/11/fisioterapia_madrid_blog14.jpg',
         name: 'Masaje - drenaje linfático',
         price: 2200,
         description: `Consiste en un masaje suave y repetitivo, cuyo ritmo, más lento que el del masaje tradicional, y la adherencia a la piel sin la ayuda de productos, favorecen la activación de la linfa y la eliminación de los líquidos estancados.

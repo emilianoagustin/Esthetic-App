@@ -87,6 +87,9 @@ export const signUp: RequestHandler = async (req, res) => {
         phone,
         password,
         roles,
+        hasCalendar,
+        addresses,
+        services,
       } = req.body;
 
       if (!email || !password)

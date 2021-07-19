@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { reservationStatus } from '../../../Redux/actions/actions';
 import { HOST } from '../../../utils/constants';
 import './Reservation.scss';
 import axios from 'axios';
 
+export default function Reservation({
+  handleActive,
+  date,
+  hour,
+  provider,
+  service,
+  price,
+  handleClickModal,
+}) {
+  const [userID, setUserID] = useState('');
 
 export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal, providerID }) {
     const [addresses, setAddresses] = useState([]);
@@ -68,12 +78,12 @@ export default function Reservation({ handleActive, date, hour, provider, servic
         handleActive()
     }
 
-    return (
-        <div className='modal'>
-            <div className='modal-content'>
-                <h2>Reservación</h2>
-                <div className='modal-detail'>
-                    <h3>Detalle del turno</h3>
+  return (
+    <div className='modal'>
+      <div className='modal-content'>
+        <h2>Reservación</h2>
+        <div className='modal-detail'>
+          <h3>Detalle del turno</h3>
 
                     <tbody>
                         <tr>
@@ -122,7 +132,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                     className='modal-button right'
                     onClick={handleAccept}
                 >ACEPTAR</button>
-            </div>
-        </div>
-    )
+      </div>
+    </div>
+  );
 }

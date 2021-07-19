@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory,useParams } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,6 +20,7 @@ import Fade from '@material-ui/core/Fade';
 import SearchBar from '../Searchbar/Searchbar';
 import { logout, userActiveSession } from '../../Redux/actions/user.actions';
 import './Header.scss';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -104,13 +105,14 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const loginData = useSelector((state) => state.loginData) 
+  console.log(loginData)
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
   const [render, setRender] = React.useState('');
-
-  const open = Boolean(anchorEl);
+  
+  const open = Boolean(anchorEl); 
   const abrir = Boolean(zona);
 
   useEffect(() => {
@@ -130,8 +132,22 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
   };
+
+
+const handleRedirect= (e) => {
+  console.log("entre")
+  console.log(loginData.providerFound)
+  if (loginData.userFound) {
+    let id = loginData.userFound?._id
+    history.push(`/profile/${id}`)} 
+else if (loginData.providerFound){
+  let id = loginData.providerFound?._id
+  history.push(`/providers/${id}/profile`)
+}
+    setAnchorEl(null)
+}
 
   const handleClickZona = (event) => {
     setzona(event.currentTarget);
@@ -144,6 +160,8 @@ export default function PrimarySearchAppBar() {
     dispatch(logout());
     setRender('');
     history.push('/');
+    handleClose()
+    setAnchorEl(null)
   };
 
   const loginAndRegister = [
@@ -161,36 +179,72 @@ export default function PrimarySearchAppBar() {
       <Button color='inherit'>REGISTRARSE </Button>
     </Link>,
   ];
-
-  const loginProfile = [
+  let loginProvider = [
     <Avatar
-      onClick={handleClick}
-      alt='Remy Sharp'
-      src='/static/images/avatar/1.jpg'
+        onClick={handleClick}
+        alt='Remy Sharp'
+        src='/static/images/avatar/1.jpg'
+      />,
+      <Menu
+        id='fade-menu'
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+   <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>
+      {/*   </Link> */}
+        <Link
+          to={'/user/provider'}
+          style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
+          >
+          <MenuItem onClick={handleClose}>Mis Servicios</MenuItem>
+        </Link>
+        <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
+      </Menu>,
+  ]
+
+  let loginProfile = loginData.userFound ? [
+    <Avatar
+    onClick={handleClick}
+    alt='Remy Sharp'
+    src='/static/images/avatar/1.jpg'
     />,
     <Menu
-      id='fade-menu'
-      anchorEl={anchorEl}
-      keepMounted
-      open={open}
-      onClose={handleClose}
-      TransitionComponent={Fade}
+    id='fade-menu'
+    anchorEl={anchorEl}
+    keepMounted
+    open={open}
+    onClose={handleClose}
+    TransitionComponent={Fade}
     >
-      <Link
-        to={'/perfil'}
+
+      {/* <Link
+        to={`/user/profile/`}
+        
+        <Link
+        to={'/provider/profile'}
+        
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
-      >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
-      </Link>
+      >  */}
+        <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>
+    {/*   </Link> */}
       <Link
         to={'/perfil/historial'}
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
-      >
+        >
         <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
       </Link>
       <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
     </Menu>,
-  ];
+  ] : loginProvider;
+
+ 
+
+
+  
+  
 
   const zonas = [
     <Button
@@ -258,7 +312,7 @@ export default function PrimarySearchAppBar() {
               </Link> */}
             </div>
           </div>
-          <b>{render === '' ? loginAndRegister : loginProfile}</b>
+          <b>{render === '' ? loginAndRegister :   loginProfile }</b>
           {/* <b>{!logginState ? loginAndRegister : loginProfile}</b> */}
 
           <Link
