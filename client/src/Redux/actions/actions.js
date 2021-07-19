@@ -1,10 +1,10 @@
-import axios from 'axios';
-import actionsTypes from '../constants/constants';
+import axios from "axios";
+import actionsTypes from "../constants/constants";
 import {
   getProvidersByService,
   getServicesBack,
   HOST,
-} from '../../utils/constants.js';
+} from "../../utils/constants.js";
 import { GET_PROVIDERS, GET_SERVICES } from "../../utils/constants.js";
 //GET SERVICES
 
@@ -74,15 +74,30 @@ export const serviceSearch = (payload) => (dispatch) => {
 export const reservationStatus = (data) => async (dispatch) => {
   const default_data = {
     loading: true,
-    message: 'Loading...'
-  }
-  dispatch({ type: actionsTypes.SET_RESERVATION_STATUS_LOADING, payload: default_data })
+    message: "Loading...",
+  };
+  dispatch({
+    type: actionsTypes.SET_RESERVATION_STATUS_LOADING,
+    payload: default_data,
+  });
   try {
-    const { message } = await axios.post(`${HOST}/reservations`, data)
-    const success = 'Turno agregado con éxito';
-    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: success })
+    const { message } = await axios.post(`${HOST}/reservations`, data);
+    const success = "Turno agregado con éxito";
+    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: success });
   } catch (error) {
-    const err = 'Error al agregar el turno';
-    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: err })
+    const err = "Error al agregar el turno";
+    dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: err });
   }
-}
+};
+
+export const checkoutMP = (payload) => async (dispatch) => {
+  try {
+    const response = await axios.post(
+      `${HOST}/paymentMP/create_preference`,
+      payload
+    );
+    window.location = response.data.response.sandbox_init_pont;
+  } catch (error) {
+    console.error(error);
+  }
+};
