@@ -32,23 +32,36 @@ const buyedServices = [
 ];
 
 const HomeProvider = () => {
-  const [users, setUsers] = useState('');
+  const [users, setUsers] = useState({
+    firstName: '',
+    services: [],
+  });
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSpatifyApp');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       user.userFound
-        ? setUsers(user.userFound?.firstName)
-        : setUsers(user.providerFound?.firstName);
+        ? setUsers({
+            ...users,
+            firstName: user.userFound?.firstName,
+            services: [...user.userFound?.services],
+          })
+        : setUsers({
+            ...users,
+            firstName: user.providerFound?.firstName,
+            services: [...user.providerFound?.services],
+          });
+
       //(() => dispatch(userActiveSession()))();
     }
   }, []);
+  console.log(users.services);
 
   return (
     <div className='banner-container'>
       <div className='title-background'>
         <h1>Spa-tify </h1>
-        <h2>Bienvenido {users}</h2>
+        <h2>Bienvenido {users.firstName}</h2>
       </div>
 
       <div className='banner'>
@@ -56,11 +69,11 @@ const HomeProvider = () => {
       </div>
 
       <div className='render-clients'>
-        {users.providerFound?.services.length < 1 ? (
+        {users.services.length < 1 ? (
           <VerticalLinearStepper />
         ) : (
           buyedServices.map((user) => (
-            <RecipeReviewCard data={users} key={user._id} />
+            <RecipeReviewCard data={user} key={user._id} />
           ))
         )}
       </div>
