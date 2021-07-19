@@ -193,8 +193,13 @@ const handleRedirect= (e) => {
       onClose={handleClose}
       TransitionComponent={Fade}
     >
+
       {/* <Link
         to={`/user/profile/`}
+
+      <Link
+        to={'/provider/profile'}
+
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
       >  */}
         <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>

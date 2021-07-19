@@ -12,7 +12,8 @@ import ProviderCalendar from '../components/ProviderCalendar/ProviderCalendar';
 import ProviderProfile from '../components/ProviderProfile/ProviderProfile';
 import UserProfile from '../components/UserProfile/UserProfile';
 import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
-import HomeProvider from '../components/HomeProviders/HomeProvider';
+import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
+
 
 const App = () => {
   return (
@@ -35,8 +36,12 @@ const App = () => {
         path='/services/providers/:service/:provider/calendar'
         component={ProviderCalendar}
       />
+
       <Route exact path='/providers/:id' component={ProviderDetails} />
+        
       <Route path='/profile/:id' component={UserProfile} />
+        
+      <Route path='/provider/profile' component={ProviderProfile} />
     </React.Fragment>
   );
 };
