@@ -1,6 +1,6 @@
 import axios from 'axios';
 import actionsTypes from '../constants/constants';
-import { HOST } from '../../utils/constants';
+import { HOST, RESERVATIONS } from '../../utils/constants';
 
 // login
 export const LoginUser = (data) => {
@@ -58,6 +58,25 @@ export const getUserProfile = (userId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionsTypes.GET_USER_DATA_PROFILE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//USER RESERVATIONS
+
+export const getUserReservations = (userId) => async (dispatch) => {
+  dispatch({ type: actionsTypes.GET_USER_RESERVATIONS_REQUEST });
+
+  try {
+    const { data } = await axios.get(`${HOST}${RESERVATIONS}/${userId}`);
+    dispatch({
+      type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_USER_RESERVATIONS_FAIL,
       payload: error.message,
     });
   }
