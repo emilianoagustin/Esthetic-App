@@ -106,7 +106,7 @@ export default function PrimarySearchAppBar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const loginData = useSelector((state) => state.loginData) 
-  
+  console.log(loginData)
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
@@ -137,11 +137,14 @@ export default function PrimarySearchAppBar() {
 
 
 const handleRedirect= (e) => {
-  if (userActive) {
+  console.log("entre")
+  console.log(loginData.providerFound)
+  if (loginData.userFound) {
     let id = loginData.userFound?._id
     history.push(`/profile/${id}`)} 
-if(loginData.providerFound){
-  history.push("/provider/profile")
+else if (loginData.providerFound){
+  let id = loginData.providerFound?._id
+  history.push(`/providers/${id}/profile`)
 }
     setAnchorEl(null)
 }
@@ -176,28 +179,53 @@ if(loginData.providerFound){
       <Button color='inherit'>REGISTRARSE </Button>
     </Link>,
   ];
-
-  const loginProfile = [
+  let loginProvider = [
     <Avatar
-      onClick={handleClick}
-      alt='Remy Sharp'
-      src='/static/images/avatar/1.jpg'
+        onClick={handleClick}
+        alt='Remy Sharp'
+        src='/static/images/avatar/1.jpg'
+      />,
+      <Menu
+        id='fade-menu'
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+   <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>
+      {/*   </Link> */}
+        <Link
+          to={'/user/provider'}
+          style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
+          >
+          <MenuItem onClick={handleClose}>Mis Servicios</MenuItem>
+        </Link>
+        <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
+      </Menu>,
+  ]
+
+  let loginProfile = loginData.userFound ? [
+    <Avatar
+    onClick={handleClick}
+    alt='Remy Sharp'
+    src='/static/images/avatar/1.jpg'
     />,
     <Menu
-      id='fade-menu'
-      anchorEl={anchorEl}
-      keepMounted
-      open={open}
-      onClose={handleClose}
-      TransitionComponent={Fade}
+    id='fade-menu'
+    anchorEl={anchorEl}
+    keepMounted
+    open={open}
+    onClose={handleClose}
+    TransitionComponent={Fade}
     >
 
       {/* <Link
         to={`/user/profile/`}
-
-      <Link
+        
+        <Link
         to={'/provider/profile'}
-
+        
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
       >  */}
         <MenuItem /* onClick={handleClose} */ onClick={(e)=>handleRedirect(e)}>Perfil</MenuItem>
@@ -205,12 +233,18 @@ if(loginData.providerFound){
       <Link
         to={'/perfil/historial'}
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
-      >
+        >
         <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
       </Link>
       <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
     </Menu>,
-  ];
+  ] : loginProvider;
+
+ 
+
+
+  
+  
 
   const zonas = [
     <Button
@@ -278,7 +312,7 @@ if(loginData.providerFound){
               </Link> */}
             </div>
           </div>
-          <b>{render === '' ? loginAndRegister : loginProfile}</b>
+          <b>{render === '' ? loginAndRegister :   loginProfile }</b>
           {/* <b>{!logginState ? loginAndRegister : loginProfile}</b> */}
 
           <Link
