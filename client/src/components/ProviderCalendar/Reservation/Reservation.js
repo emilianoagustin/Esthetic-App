@@ -5,17 +5,6 @@ import { HOST } from '../../../utils/constants';
 import './Reservation.scss';
 import axios from 'axios';
 
-export default function Reservation({
-  handleActive,
-  date,
-  hour,
-  provider,
-  service,
-  price,
-  handleClickModal,
-}) {
-  const [userID, setUserID] = useState('');
-
 export default function Reservation({ handleActive, date, hour, provider, service, price, handleClickModal, providerID }) {
     const [addresses, setAddresses] = useState([]);
     const [data, setData] = useState({

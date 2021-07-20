@@ -8,6 +8,7 @@ import axios from 'axios';
 import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 import Error from '../Error/Error';
+import loadingGiff from '../../giff/loading.gif'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,6 +29,7 @@ function Cart() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(true);
     const [loadingItems, setLoadingItems] = useState(false);
+    const [responseLoading, setResponseLoading] = useState(false);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
@@ -70,6 +72,19 @@ function Cart() {
                                 />) :
                                 (
                                     <Grid container direction="row">
+                                        {
+                                            responseLoading ? (
+                                                <div className='modal'>
+                                                    <div className='modal-content loading'>
+                                                        {
+                                                            responseLoading ? (
+                                                                <img className='giff' src={loadingGiff}></img>
+                                                            ) : null
+                                                        }
+                                                    </div>
+                                                </div>
+                                            ) : null
+                                        }
                                         <Grid
                                             container
                                             item
@@ -109,6 +124,7 @@ function Cart() {
                                             <CartOrder
                                                 total={totalPrice}
                                                 itemLoading={() => setLoadingItems(!loadingItems)}
+                                                response={(b) => setResponseLoading(b)}
                                             />
                                         </Grid>
                                     </Grid>
