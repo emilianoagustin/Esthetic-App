@@ -48,7 +48,7 @@ function CartItem({data}) {
                                 {data.date}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                {data.hour}
+                                {`${data.hour}:00hs`}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                 {data.address}

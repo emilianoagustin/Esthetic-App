@@ -13,7 +13,7 @@ export const isValidDate = (date: String, hour: Number) => {
         if (dateSplit[1] === compareDate[1]) {
             if (dateSplit[0] > compareDate[0]) return true;
             if (dateSplit[0] === compareDate[0]) {
-                if (hour >= actualHours) return true;
+                if (hour > actualHours) return true;
                 else return false;
             }
             else return false;

@@ -138,9 +138,10 @@ export default function ProviderCalendar({ match }) {
                                                                                 handleActive={() => handleClick(index)}
                                                                                 provider={`${provider.firstName} ${provider.lastName}`}
                                                                                 date={e.date}
-                                                                                hour={`${e.hour}:00hs`}
+                                                                                hour={e.hour}
                                                                                 service={service.name}
                                                                                 price={service.price}
+                                                                                providerID={providerID}
                                                                                 handleClickModal={() => handleClickModal(index)}
                                                                             />
                                                                         ) : null
@@ -160,7 +161,7 @@ export default function ProviderCalendar({ match }) {
                                                                                 className='card-button'
                                                                                 onClick={() => handleClick(index)}
                                                                             >
-                                                                                Reservar
+                                                                                Añadir al bolso
                                                                             </button>
                                                                         )
                                                                             : null

@@ -25,12 +25,10 @@ const EventSchema = new Schema(
         service: {
             type: Schema.Types.ObjectId,
             ref: 'Services',
-            autopopulate: true,
         },
         user: {
             type: Schema.Types.ObjectId,
             ref: 'Users',
-            autopopulate: true,
         },
         calendar: {
             type: Schema.Types.ObjectId,

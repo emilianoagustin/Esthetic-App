@@ -187,7 +187,7 @@ export default function MultipleSelect() {
             onChange={handleInput}
             // onChange={handleInput}
           />
-          <Button color='primary' onClick={handleClick}>
+          <Button color='secondary' onClick={handleClick}>
             Agregar cuenta
           </Button>
         </div>

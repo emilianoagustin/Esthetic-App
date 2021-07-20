@@ -3,17 +3,28 @@ import { useDispatch } from 'react-redux';
 import { addServicesToProvider } from '../../../Redux/actions/actions';
 
 //IMPORT MNATERIAL UI
-
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 //styles
 import './CheckBoxComponent.scss';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
 const CheckBoxComponent = ({ data }) => {
+  const classes = useStyles();
+
   const provider = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
   const dispatch = useDispatch();
 
   const [serviceAdd, setServiceAdd] = React.useState({
     services: [],
-    provider: provider.providerFound._id.toString(),
+    provider: provider.providerFound?._id.toString(),
   });
 
   const handleChange = (e) => {
@@ -41,7 +52,7 @@ const CheckBoxComponent = ({ data }) => {
     dispatch(addServicesToProvider(serviceAdd));
     alert('por favor continue con el siguiente paso');
   };
-
+  // console.log('services', serviceAdd);
   return (
     <>
       <form action='' onSubmit={handleSubmit}>
@@ -63,20 +74,16 @@ const CheckBoxComponent = ({ data }) => {
           ) : (
             <h1>loading...</h1>
           )}
-          <input
-            value='Confirmar'
-            type='submit'
-            className='input-submit-service'
-          />
-
-          <button
-            value='Confirmar'
-            type='submit'
-            onSubmit={handleSubmit}
-            className='input-submit-service'
-          >
-            Confirmar
-          </button>
+          <div className={classes.root}>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleSubmit}
+              className='input-submit-service'
+            >
+              Confirmar
+            </Button>
+          </div>
         </div>
       </form>
     </>
