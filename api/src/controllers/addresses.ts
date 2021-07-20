@@ -136,6 +136,19 @@ export const updateAddress: RequestHandler = async (req, res) => {
         .status(404)
         .send({ message: "Domicilio de prestador no encontrado" });
     }
+    if (provider) {
+      const updateAddress = await Addresses.findByIdAndUpdate(idAd, req.body, {
+        new: true,
+      });
+      if (!updateAddress)
+        return res
+          .status(404)
+          .send({ message: 'No encontramos el domicilio solicitado' });
+      return res.status(201).send({
+        data: updateAddress,
+        message: 'Domicilio actualizado con éxito.',
+      });
+    }
   } catch (error: any) {
     res.status(500).send({ message: 'Ha habido un problema con tu pedido' });
   }

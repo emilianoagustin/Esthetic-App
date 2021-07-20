@@ -3,6 +3,7 @@ import Role from '../models/Roles';
 import Users from '../models/Users';
 import Providers from '../models/Providers';
 import createToken from '../utils/functionToken';
+import Bags from '../models/Bags';
 
 //SIGNUP USERS: user / provider
 
@@ -60,6 +61,9 @@ export const signUp: RequestHandler = async (req, res) => {
     //   const role = await Role.find({ name: 'user' });
     //   newUser.roles = [role._id];
     // }
+
+    const userBag = new Bags({ user: newUser });
+    await userBag.save()
 
     const savedUser = await newUser.save();
     return res.status(201).json(savedUser);
