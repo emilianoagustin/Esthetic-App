@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function CartOrder({ total, itemLoading, response }) {
     const [userID, setUserID] = useState('');
     const [available, setAvailable] = useState(false);
+    const [preferenceID, setPreferenceID] = useState(null);
 
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
@@ -94,18 +95,35 @@ function CartOrder({ total, itemLoading, response }) {
                     position: toast.POSITION.TOP_CENTER
                 })
             } else {
-                await axios.get(`${HOST}/reservations/events/pay/${userID}`)
+                const r1 = await axios.get(`${HOST}/checkout/${userID}`);
                 response(false)
-                toast.success(`Todos los turnos fueron reservados exitosamente`, {
-                    position: toast.POSITION.TOP_CENTER
-                })
-                await axios.get(`${HOST}/reservations/events/${userID}`)
-                itemLoading()
+                if (r1.data.body) {
+                    setPreferenceID(r1.data.body.id)
+                };
+
+                // await axios.get(`${HOST}/reservations/events/pay/${userID}`)
+                // toast.success(`Todos los turnos fueron reservados exitosamente`, {
+                //     position: toast.POSITION.TOP_CENTER
+                // })
+                // await axios.get(`${HOST}/reservations/events/${userID}`)
+                // itemLoading()
             }
         } catch (error) {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        if (preferenceID) {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src =
+                'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
+            script.setAttribute('data-preference-id', preferenceID);
+            const form = document.getElementById('payment-form');
+            form.appendChild(script);
+        }
+    }, [preferenceID])
 
     const classes = useStyles();
 
@@ -113,6 +131,7 @@ function CartOrder({ total, itemLoading, response }) {
         <Grid
             item
         >
+            <form id='payment-form' method="GET"></form>
             <Paper className={classes.paper}>
                 <Grid container direction='column' justifyContent='space-between' className={classes.content}>
                     <Typography variant='h4' className={classes.title}>
