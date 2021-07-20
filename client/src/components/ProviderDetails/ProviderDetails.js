@@ -8,6 +8,7 @@ import defaultImg from "../../img/wall-cart.jpg";
 const ProviderDetails = () => {
   const dispatch = useDispatch();
   const providerDetails = useSelector((state) => state.providerDetails);
+  const services = useSelector((state) => state.services.data);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const ProviderDetails = () => {
               `Bienvenido al espacio de ${providerDetails.data.firstName}`}
           </h1>
           <div>
-            {providerDetails.data && providerDetails.data.image ? (
+            {!providerDetails.data.image.includes(undefined) ? ( //REVER ESTO PORQUE NO ENCUENTRA LA RUTA DE LA FOTO, PERO SÍ EL ATRIBUTO
               <img
                 className="card-img"
                 src={providerDetails.data.image}
@@ -37,14 +38,31 @@ const ProviderDetails = () => {
                 alt="Default Image"
               ></img>
             )}
-            {/* <div>
-              <NavLink
-                className="navLink card-button"
-                to={`../${service}/${provider._id}/calendar`}
-              >
-                Ver Agenda
-              </NavLink>
-            </div> */}
+            <div>
+              <h2>Acerca de mí...</h2>
+              <span>
+                {providerDetails.data.bio ? (
+                  <p>{providerDetails.data.bio}</p>
+                ) : (
+                  <p>
+                    <b>Lorem ipsum</b> dolor sit amet consectetur adipisicing
+                    elit. Corporis dolor, ea reprehenderit adipisci, maxime
+                    suscipit magnam inventore voluptatem animi veniam ratione
+                    quasi quae fuga perferendis, architecto modi ab dolorum
+                    facere. Lorem ipsum dolor sit, amet consectetur adipisicing
+                    elit. At nesciunt ducimus amet commodi dolor doloremque
+                    praesentium omnis. Voluptatem doloremque suscipit ad natus
+                    dignissimos qui omnis! Voluptas explicabo dolor voluptatum
+                    distinctio incidunt atque quas rerum neque, aspernatur
+                    soluta debitis quaerat iusto.
+                  </p>
+                )}
+              </span>
+            </div>
+            <div>
+              <h2>Estos son algunos de los servicios que brindo</h2>
+              <span></span>
+            </div>
           </div>
         </div>
       </div>

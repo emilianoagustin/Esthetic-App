@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-import bcrypt from 'bcrypt';
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcrypt";
 
 export interface IProvider extends Document {
   image: string;
@@ -9,6 +9,7 @@ export interface IProvider extends Document {
   email: string;
   phone: number;
   password: string;
+  bio: string;
   roles: any[];
   hasCalendar: any;
   addresses: any[];
@@ -34,7 +35,7 @@ const ProvidersSchema = new Schema<IProvider>(
     },
     gender: {
       type: String,
-      enum: ['Male', 'Female', 'Non-binary'],
+      enum: ["Male", "Female", "Non-binary"],
     },
     email: {
       type: String,
@@ -50,11 +51,14 @@ const ProvidersSchema = new Schema<IProvider>(
       required: true,
       trim: true,
     },
-
+    bio: {
+      type: String,
+      trim: true,
+    },
     roles: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Role',
+        ref: "Role",
         autopopulate: true,
       },
     ],
@@ -66,14 +70,14 @@ const ProvidersSchema = new Schema<IProvider>(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Addresses',
+        ref: "Addresses",
         autopopulate: true,
       },
     ],
     services: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Services',
+        ref: "Services",
       },
     ],
   },
@@ -81,9 +85,9 @@ const ProvidersSchema = new Schema<IProvider>(
 );
 
 // encrypted user password
-ProvidersSchema.pre<IProvider>('save', async function (next) {
+ProvidersSchema.pre<IProvider>("save", async function (next) {
   const provider = this;
-  if (!provider.isNew || !provider.isModified('password')) return next();
+  if (!provider.isNew || !provider.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(provider.password, salt);
   provider.password = hash;
@@ -96,6 +100,6 @@ ProvidersSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, this.password);
 };
 
-ProvidersSchema.plugin(require('mongoose-autopopulate'));
+ProvidersSchema.plugin(require("mongoose-autopopulate"));
 
-export default model<IProvider>('Providers', ProvidersSchema);
+export default model<IProvider>("Providers", ProvidersSchema);

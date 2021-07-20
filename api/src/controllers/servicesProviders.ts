@@ -1,6 +1,6 @@
-import { RequestHandler } from 'express';
-import Providers from '../models/Providers';
-import Services from '../models/Services';
+import { RequestHandler } from "express";
+import Providers from "../models/Providers";
+import Services from "../models/Services";
 
 export const addServiceToProvider: RequestHandler = async (req, res) => {
   try {
@@ -12,13 +12,13 @@ export const addServiceToProvider: RequestHandler = async (req, res) => {
       if (provider._id == req.body.provider) check = true;
     });
     if (check) {
-      return res.status(301).send('The service has already been registered');
+      return res.status(301).send("The service has already been registered");
     } else {
       provider?.services.push(service);
       provider?.save();
       service.providers.push(provider);
       service.save();
-      return res.status(200).send('Service added successfully');
+      return res.status(200).send("Service added successfully");
     }
   } catch (error) {
     res.status(400).send(error);
@@ -30,6 +30,19 @@ export const getProvidersByService: RequestHandler = async (req, res) => {
     const { serviceName } = req.params;
     const service = await Services.findOne({ name: serviceName });
     res.status(200).send(service.providers);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+export const getServicesByProvider: RequestHandler = async (req, res) => {
+  try {
+    let provServices: any = [];
+    const thisProvider = await Providers.findById(req.params.id);
+    const theseServices = thisProvider?.services.forEach((servID) => {
+      const servDetails = Services.findById(servID);
+      if (servDetails) provServices.push(servDetails);
+    });
+    return res.status(200).send(provServices);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -67,7 +80,7 @@ export const addAllServicesToProvider: RequestHandler = async (req, res) => {
 
       return res.status(200).send(prov);
     } else {
-      return res.status(404).send('Provider not found');
+      return res.status(404).send("Provider not found");
     }
   } catch (error) {
     res.status(400).send(error);
