@@ -67,12 +67,12 @@ export default function Reservation({ handleActive, date, hour, provider, servic
         handleActive()
     }
 
-  return (
-    <div className='modal'>
-      <div className='modal-content'>
-        <h2>Reservación</h2>
-        <div className='modal-detail'>
-          <h3>Detalle del turno</h3>
+    return (
+        <div className='modal'>
+            <div className='modal-content'>
+                <h2>Reservación</h2>
+                <div className='modal-detail'>
+                    <h3>Detalle del turno</h3>
 
                     <tbody>
                         <tr>
@@ -97,21 +97,29 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                         </tr>
                         <tr>
                             <td>Dirección</td>
-                            <td>
-                                {
-                                    addresses && addresses.length ? (
-                                        <select onChange={(e) => handleChange(e)}>
-                                            {
-                                                addresses.map((el, index) => (
-                                                    <option key={index} value={el.name}>{el.name}</option>
-                                                ))
-                                            }
-                                        </select>
-                                    ) : "No dispone de direcciones"
-                                }
+                            <td className='td-address'>
+                                <span>
+                                    {data.address}
+                                </span>
+                                <span>
+                                    {"Cambiar"}
+                                    {
+                                        addresses && addresses.length ? (
+                                            <select onChange={(e) => handleChange(e)}>
+                                                {
+                                                    addresses.map((el, index) => (
+                                                        <option key={index} value={el.name}>{el.name}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        ) : "No dispone de direcciones"
+                                    }
+                                </span>
                             </td>
                         </tr>
                     </tbody>
+                    <p>IMPORTANTE*</p>
+                    <p>El turno se añadirá a la bolsa de pago, pero estará disponible para otros usuarios hasta que se complete el pago del mismo.*</p>
                 </div>
                 <button
                     className='modal-button left'
@@ -121,7 +129,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                     className='modal-button right'
                     onClick={handleAccept}
                 >ACEPTAR</button>
-      </div>
-    </div>
-  );
+            </div>
+        </div>
+    );
 }

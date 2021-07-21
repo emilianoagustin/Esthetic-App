@@ -99,7 +99,6 @@ function CartOrder({ total, itemLoading, response, props }) {
                     setPreferenceID(mercadoPagoResponse.data.body.id)
                     response(false)
                 };
-                setAvailable(true)
                 setTimeout(function () { setAvailable(false); }, 5000);
             }
         } catch (error) {
@@ -131,6 +130,7 @@ function CartOrder({ total, itemLoading, response, props }) {
                 form.removeChild(child);
             }
             form.appendChild(script);
+            setAvailable(true)
         }
     }, [preferenceID])
 
