@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+
 import {
   createProviderAddress,
   updateProvider,
   updateProviderAddress,
-} from '../../../Redux/actions/actions';
+} from '../../../../../Redux/actions/actions.js';
 import {
   Grid,
   Paper,
@@ -21,14 +23,96 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import { Validate } from '../../../utils/validate';
+import { Validate } from '../../../../../utils/validate';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-function ProviderProfileUpdate({ classes, provider }) {
-  const id = provider._id;
+const useStyles = makeStyles(() => ({
+  providerProfile: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: 30,
+  },
+  gridItem: {
+    width: '70%',
+    height: 'auto',
+  },
+  gridBanner: {
+    width: '100%',
+    height: 'auto',
+    alignSelf: 'flex-start',
+  },
+  gridProfile: {
+    height: 'auto',
+    width: 'auto',
+  },
+  gridForm: {
+    height: 'auto',
+    width: '80%',
+  },
+  paper: {
+    margin: 'auto 10px',
+    padding: 15,
+  },
+  containerBanner: {
+    position: 'relative',
+    textAlign: 'center',
+    boxShadow: '0px 2px 2px #888888',
+    marginBottom: 30,
+    borderRadius: 3,
+  },
+  bannerText: {
+    position: 'absolute',
+    top: '20%',
+    left: 16,
+  },
+  bannerTextSubt: {
+    position: 'absolute',
+    top: '40%',
+    left: 16,
+  },
+  image: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  profileImg: {
+    borderRadius: '50%',
+    width: 300,
+    height: 300,
+  },
+  bannerImg: {
+    width: '100%',
+    height: 'auto',
+  },
+  data: {
+    marginTop: 20,
+  },
+  dataItems: {
+    margin: '10px auto',
+  },
+  dataSubtitle: {
+    fontWeight: 'bold',
+  },
+  dirItems: {
+    margin: '5px auto',
+  },
+  divider: {
+    margin: '20px auto',
+  },
+  buttonContainer: {
+    margin: '30px auto 5px auto',
+    width: 200,
+  },
+  select: {
+    width: '100%',
+  },
+}));
+
+function ServiceUpload({ provider }) {
+  const classes = useStyles();
+  // const id = provider?._id;
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.providersAddresses);
 
@@ -101,20 +185,20 @@ function ProviderProfileUpdate({ classes, provider }) {
     e.preventDefault();
     if (provider.addresses.length === 0) {
       if (check.checked === true) {
-        dispatch(createProviderAddress(id, { ...address, is_main: true }));
-        dispatch(updateProvider(id, providerData));
-      } else {
-        dispatch(createProviderAddress(id, address));
-        dispatch(updateProvider(id, providerData));
+        //   dispatch(createProviderAddress(id, { ...address, is_main: true }));
+        //   dispatch(updateProvider(id, providerData));
+        // } else {
+        //   dispatch(createProviderAddress(id, address));
+        //   dispatch(updateProvider(id, providerData));
       }
     } else {
       provider.addresses.forEach((a, i) => {
         if (selected === i) {
-          console.log(a._id);
-          dispatch(updateProviderAddress(id, a._id, address));
+          // console.log(a._id);
+          // dispatch(updateProviderAddress(id, a._id, address));
         }
       });
-      dispatch(updateProvider(id, providerData));
+      // dispatch(updateProvider(id, providerData));
     }
     setOpen(true);
   };
@@ -124,7 +208,7 @@ function ProviderProfileUpdate({ classes, provider }) {
       <Paper className={classes.paper} elevation={3}>
         <Grid container direction='column' spacing={2}>
           <Grid item container direction='row'>
-            <Typography variant='h5'>Actualiza tu perfil</Typography>
+            <Typography variant='h5'>Actualiza el servicio 🖊 :</Typography>
           </Grid>
 
           <Divider variant='inset' />
@@ -396,4 +480,4 @@ function ProviderProfileUpdate({ classes, provider }) {
   );
 }
 
-export default ProviderProfileUpdate;
+export default ServiceUpload;

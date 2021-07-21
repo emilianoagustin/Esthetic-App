@@ -15,6 +15,8 @@ import { getServices } from '../../../Redux/actions/actions';
 import CheckBoxComponent from '../CheckBox/CheckBoxComponent';
 import MaterialUIPickers from '../SelectHour/SelectorHour';
 import MultipleSelect from '../AddPayMethod/addPayMethod';
+import FormAdresses from '../FormAdresses/FormAdress';
+import DialogFinalRegister from '../DialogFinalRegister/DialogFinalRegister';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +38,7 @@ function getSteps() {
   return [
     'Selecciona los servicios a prestar',
     'Ingresa tus horarios de trabajo',
+    'ingresa tu dirección',
     'Agrega tu número de cuenta para recibir tus pagos',
   ];
 }
@@ -58,6 +61,12 @@ function getStepContent(step, services) {
         </>
       );
     case 2:
+      return (
+        <>
+          <FormAdresses />
+        </>
+      );
+    case 3:
       return (
         <>
           <MultipleSelect />
@@ -87,10 +96,11 @@ export default function VerticalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
 
+  //
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep} orientation='vertical'>
@@ -114,7 +124,9 @@ export default function VerticalLinearStepper() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Siguiente'}
+                    {activeStep === steps.length - 1
+                      ? 'Siguiente'
+                      : 'Siguiente'}
                   </Button>
                 </div>
               </div>
@@ -122,15 +134,17 @@ export default function VerticalLinearStepper() {
           </Step>
         ))}
       </Stepper>
+
       {activeStep === steps.length && (
         <Paper square elevation={0} className={classes.resetContainer}>
           <Typography>
             ¡Haz completado todos los pasos!
             <br /> 🎉 Felicitaciones 🎉
           </Typography>
-          <Button onClick={handleReset} className={classes.button}>
+          <DialogFinalRegister nameBoton={'Terminar'} />
+          {/* <Button onClick={handleReset} className={classes.button}>
             Reiniciar
-          </Button>
+          </Button> */}
         </Paper>
       )}
     </div>
