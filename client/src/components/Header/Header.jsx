@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import loto from "../../img/loto.png";
@@ -17,8 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
-import SearchBar from "../Searchbar/Searchbar";
-import { logout, userActiveSession } from "../../Redux/actions/user.actions";
+import { logout} from "../../Redux/actions/user.actions";
 import "./Header.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -91,14 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = [
-  "Zona Norte ",
-  "Zona Sur",
-  "Centro",
-  "Zona Este",
-  "Zona Oeste",
-];
-const ITEM_HEIGHT = 48;
+
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -147,13 +135,6 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
-  const handleClickZona = (event) => {
-    setzona(event.currentTarget);
-  };
-
-  const handleCloseZona = () => {
-    setzona(null);
-  };
   const handleCloseLogin = () => {
     dispatch(logout());
     setRender("");
@@ -247,39 +228,8 @@ export default function PrimarySearchAppBar() {
       ]
     : loginProvider;
 
-  const zonas = [
-    <Button
-      onClick={handleClickZona}
-      color="inherit"
-      style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
-    >
-      ZONAS{" "}
-    </Button>,
-    <Menu
-      id="long-menu"
-      anchorEl={zona}
-      keepMounted
-      open={abrir}
-      onClose={handleCloseZona}
-      PaperProps={{
-        style: {
-          color: "rgb(121, 47, 111)",
-          maxHeight: ITEM_HEIGHT * 4.5,
-          width: "20ch",
-        },
-      }}
-    >
-      {options.map((option) => (
-        <MenuItem
-          key={option}
-          selected={option === "Pyxis"}
-          onClick={handleCloseZona}
-        >
-          {option}
-        </MenuItem>
-      ))}
-    </Menu>,
-  ];
+ 
+ 
 
   return (
     <div className={`${classes.grow} header`}>
@@ -309,18 +259,11 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>
           <div style={{ display: "flex", marginRight: "2rem" }}>
-            <div>
-              {zonas}|
-              {/* <Link
-                to={"/provaiderRegister"}
-                style={{ color: "black", textDecoration: "none", background:"grey" }}
-              >
-                <Button color="inherit">INSCRIBITE COMO PROFESIONAL</Button>
-              </Link> */}
+              
             </div>
-          </div>
+    
           <b>{render === "" ? loginAndRegister : loginProfile}</b>
-          {/* <b>{!logginState ? loginAndRegister : loginProfile}</b> */}
+         
 
           <Link
             to={"/cart"}
