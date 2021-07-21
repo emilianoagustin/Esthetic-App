@@ -105,17 +105,10 @@ export const updateProvider =
         `${GET_PROVIDERS}/${providerId}`,
         providerData
       );
-<<<<<<< HEAD
       const success = "Datos de perfil actualizados correctamente";
       dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success });
     } catch (error) {
       const err = "Ocurrió un error al actualizar los datos de tu perfil";
-=======
-      const success = 'Datos de perfil actualizados correctamente';
-      dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success });
-    } catch (error) {
-      const err = 'Ocurrió un error al actualizar los datos de tu perfil';
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
       dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: err });
     }
   };
@@ -127,11 +120,7 @@ export const getAllProvidersAddresses = (providerId) => async (dispatch) => {
     );
     dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: data });
   } catch (error) {
-<<<<<<< HEAD
     const err = "Ocurrió un error al cargar tus direcciones";
-=======
-    const err = 'Ocurrió un error al cargar tus direcciones';
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
     dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: err });
   }
 };
@@ -143,17 +132,10 @@ export const createProviderAddress =
         `${GET_PROVIDERS}/${providerId}/addresses`,
         addressData
       );
-<<<<<<< HEAD
-      const success = "Dirección agregada correctamente";
-      dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: success });
-    } catch (error) {
-      const err = "Ocurrió un error al crear tu dirección";
-=======
       const success = 'Dirección agregada correctamente';
       dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: success });
     } catch (error) {
       const err = 'Ocurrió un error al crear tu dirección';
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
       dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: err });
     }
   };
@@ -165,21 +147,13 @@ export const updateProviderAddress =
         `${GET_PROVIDERS}/${providerId}/addresses/${addressId}`,
         addressData
       );
-<<<<<<< HEAD
-      const success = "Dirección actualizada correctamente";
-=======
       const success = 'Dirección actualizada correctamente';
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
       dispatch({
         type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE,
         payload: success,
       });
     } catch (error) {
-<<<<<<< HEAD
-      const err = "Ocurrió un error al actualizar tu dirección";
-=======
       const err = 'Ocurrió un error al actualizar tu dirección';
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
       dispatch({
         type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE,
         payload: err,
@@ -237,8 +211,6 @@ export const addHoursJobToProvider = (hours) => async () => {
     console.log(error);
   }
 };
-<<<<<<< HEAD
-=======
 
 export const addAdressesToProvider = (adresses) => async () => {
   try {
@@ -250,4 +222,3 @@ export const addAdressesToProvider = (adresses) => async () => {
     console.log(error);
   }
 };
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944

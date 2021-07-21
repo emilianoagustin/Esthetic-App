@@ -282,14 +282,10 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={`${classes.grow} header`}>
-<<<<<<< HEAD
-      <AppBar position="static" style={{ backgroundColor: "white" }}>
-=======
       <AppBar
         position="static"
         style={{ backgroundColor: "white" }}
       >
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to={"/"} style={{ textDecoration: "none" }}>

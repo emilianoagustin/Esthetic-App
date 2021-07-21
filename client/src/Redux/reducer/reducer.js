@@ -6,15 +6,11 @@ const initialState = {
     loading: true,
     data: [],
   },
-<<<<<<< HEAD
-  userActive: "",
-=======
-allProviders:{
-loading:true,
-data:[],
+  allProviders: {
+    loading: true,
+    data: [],
   },
-  userActive: '',
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
+  userActive: "",
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
@@ -29,13 +25,8 @@ data:[],
     loading: true,
     data: {},
   },
-<<<<<<< HEAD
   userReservations: { loading: true, data: [] },
-=======
-  userReservations:{loading: true,
-    data: []},
-    keyword: "", 
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
+  keyword: "",
 };
 
 const appReducer = (state = initialState, action) => {
@@ -137,24 +128,11 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS' DETAILS
-<<<<<<< HEAD
     case actionsTypes.GET_PROVIDER_DETAILS_REQ:
       return {
         ...state,
         providerDetails: { loading: true },
       };
-=======
-    // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
-    //   return {
-    //     ...state,
-    //     providerDetails: { loading: true },
-    //   };
-    case actionsTypes.GET_ALL_PROVIDERS_SUCCES:
-    return{
-      ...state,
-      allProviders:{loading: false, data: action.payload}
-    }
->>>>>>> a9cf56381b12487516695c0ed2e455d86b9c0944
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
