@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    font:16
   },
   title: {
     display: "none",
@@ -148,14 +149,14 @@ export default function PrimarySearchAppBar() {
       to={"/login"}
       style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
     >
-      <Button color="inherit">INGRESAR</Button>
+      <Button style={{fontSize:"16px"}} color="inherit">INGRESAR</Button>
     </Link>,
     "|",
     <Link
       to={"/userRegister"}
-      style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
+      style={{ color: "rgb(121, 47, 111)", textDecoration: "none",font:"16px" }}
     >
-      <Button color="inherit">REGISTRARSE </Button>
+      <Button style={{fontSize:"16px"}} color="inherit">REGISTRARSE </Button>
     </Link>,
   ];
   let loginProvider = [
@@ -251,11 +252,11 @@ export default function PrimarySearchAppBar() {
               />
             </Link>
           </Typography>
-          <Link to={"/search"}>
-            <div style={{marginLeft: "4rem"}}>BUSQUEDA</div>
+          <Link to={"/search"} style={{textDecoration:"none"}}>
+            <div style={{marginLeft: "4rem"}}>BUSQUEDA AVANZADA</div>
           </Link>
 
-          {/*   <SearchBar /> */}
+          
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>
           <div style={{ display: "flex", marginRight: "2rem" }}>
