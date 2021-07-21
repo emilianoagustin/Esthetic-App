@@ -9,6 +9,7 @@ export interface IProvider extends Document {
   email: string;
   phone: number;
   password: string;
+  bio: string;
   roles: any[];
   hasCalendar: any;
   addresses: any[];
@@ -50,7 +51,10 @@ const ProvidersSchema = new Schema<IProvider>(
       required: true,
       trim: true,
     },
-
+    bio: {
+      type: String,
+      trim: true,
+    },
     roles: [
       {
         type: Schema.Types.ObjectId,
@@ -74,7 +78,6 @@ const ProvidersSchema = new Schema<IProvider>(
       {
         type: Schema.Types.ObjectId,
         ref: 'Services',
-        // autopopulate: true,
       },
     ],
   },

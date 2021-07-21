@@ -28,7 +28,7 @@ const App = () => {
         path='/services/providers/:serviceName'
         component={ProvidersByService}
       />
-
+      {/* <Route path='/services/details/:id' component={ServiceDetails} /> */}
       <Route exact path={['/cart', '/cart/:id']} component={Cart} />
       <Route path='/service/upload/:id' component={ServiceUpload} />
       <Route path='/providers/:id/profile' component={ProviderProfile} />
