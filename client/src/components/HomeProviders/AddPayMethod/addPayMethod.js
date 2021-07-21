@@ -13,6 +13,8 @@ import Chip from '@material-ui/core/Chip';
 //second import materialUI
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
   noLabel: {
     marginTop: theme.spacing(3),
+  },
+  add: {
+    width: '3rem',
+    height: '3rem',
+  },
+  count: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -178,19 +190,30 @@ export default function MultipleSelect() {
           </Select>
         </FormControl>
 
-        <div>
-          <TextField
-            required
-            id='filled-required'
-            label='Numero de cuenta (Required)'
-            variant='filled'
-            onChange={handleInput}
-            // onChange={handleInput}
-          />
-          <Button color='secondary' onClick={handleClick}>
-            Agregar cuenta
-          </Button>
-        </div>
+        <FormControl className={classes.formControl}>
+          <div className={classes.count}>
+            <TextField
+              required
+              id='filled-required'
+              label={`N° de cuenta (Required)`}
+              variant='filled'
+              onChange={handleInput}
+              // onChange={handleInput}
+            >
+              <Button color='secondary' onClick={handleClick}>
+                Agregar cuenta
+              </Button>
+            </TextField>
+
+            <IconButton
+              onClick={handleClick}
+              color='primary'
+              className={classes.add}
+            >
+              <AddIcon />
+            </IconButton>
+          </div>
+        </FormControl>
 
         <FormControl className={classes.formControl}>
           <InputLabel id='demo-mutiple-chip-label'>Seleccionado</InputLabel>
