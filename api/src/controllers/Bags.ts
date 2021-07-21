@@ -5,6 +5,7 @@ import Calendar from "../models/Calendar";
 import Events from "../models/Events";
 import Services from "../models/Services";
 import Users from "../models/Users";
+import { isValidDate } from '../utils/functions'
 
 export const addReservation: RequestHandler = async (req, res) => {
     try {
@@ -60,7 +61,13 @@ export const getReservationsAvailability: RequestHandler = async (req, res) => {
                 ]
             })
             if (eventFound) notAvailable.push(bag.reservations[i])
-            else available.push(bag.reservations[i])
+            else {
+                if (!isValidDate(bag.reservations[i].date, bag.reservations[i].hour)) {
+                    notAvailable.push(bag.reservations[i])
+                } else {
+                    available.push(bag.reservations[i])
+                }
+            }
         }
 
         if (notAvailable.length) {

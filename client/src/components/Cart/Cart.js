@@ -8,7 +8,8 @@ import axios from 'axios';
 import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 import Error from '../Error/Error';
-import loadingGiff from '../../giff/loading.gif'
+import loadingGiff from '../../giff/loading.gif';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Cart() {
+function Cart(props) {
     const [views, setViews] = useState([]);
     const [error, setError] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -125,6 +126,7 @@ function Cart() {
                                                 total={totalPrice}
                                                 itemLoading={() => setLoadingItems(!loadingItems)}
                                                 response={(b) => setResponseLoading(b)}
+                                                props={props}
                                             />
                                         </Grid>
                                     </Grid>

@@ -28,8 +28,9 @@ const App = () => {
         path='/services/providers/:serviceName'
         component={ProvidersByService}
       />
+      <Route path='/services/details/:id' component={ServiceDetails} />
+      <Route exact path={['/cart', '/cart/:id']} component={Cart} />
       <Route path='/service/upload/:id' component={ServiceUpload} />
-      <Route exact path='/cart' component={Cart} />
       <Route path='/providers/:id/profile' component={ProviderProfile} />
       <Route
         exact
@@ -40,7 +41,6 @@ const App = () => {
       <Route exact path='/providers/:id' component={ProviderDetails} />
 
       <Route path='/profile/:id' component={UserProfile} />
-
       <Route path='/search' component={Providers} />
     </React.Fragment>
   );
