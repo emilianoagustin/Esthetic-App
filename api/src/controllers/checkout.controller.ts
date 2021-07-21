@@ -24,12 +24,11 @@ export const checkoutController: RequestHandler = async (req, res) => {
 
     let preference = {
         items: preferenceData,
-        "back_urls": {
-            "success": `${HOST}/cart`,
-            "failure": `${HOST}/cart`,
-            "pending": `${HOST}/cart`
-        },
-        "auto_return": "approved"
+        back_urls: {
+            "success": `${HOST}/cart/${req.params.id}`,
+            "failure": `${HOST}/cart/${req.params.id}`,
+            "pending": `${HOST}/cart/${req.params.id}`
+        }
     };
 
     mercadopago.preferences.create(preference)

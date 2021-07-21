@@ -29,7 +29,7 @@ const App = () => {
         component={ProvidersByService}
       />
       <Route path='/services/details/:id' component={ServiceDetails} />
-      <Route exact path='/cart' component={Cart} />
+      <Route exact path={['/cart', '/cart/:id']} component={Cart} />
       <Route path='/providers/:id/profile' component={ProviderProfile} />
       <Route
         exact
@@ -38,10 +38,10 @@ const App = () => {
       />
 
       <Route exact path='/providers/:id' component={ProviderDetails} />
-        
+
       <Route path='/profile/:id' component={UserProfile} />
-        
-     
+
+
     </React.Fragment>
   );
 };

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { HOST } from '../../../utils/constants';
 import { toast } from 'react-toastify';
+import './CartOrder.scss';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function CartOrder({ total, itemLoading, response }) {
+function CartOrder({ total, itemLoading, response, props }) {
     const [userID, setUserID] = useState('');
     const [available, setAvailable] = useState(false);
     const [preferenceID, setPreferenceID] = useState(null);
+
 
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
@@ -56,6 +58,22 @@ function CartOrder({ total, itemLoading, response }) {
             }
         }
     }, [])
+
+    useEffect(async () => {
+        if (userID !== '') {
+            if (props.location) {
+                const status = props.location.search
+                if (status.includes('status=approved')) {
+                    await axios.get(`${HOST}/reservations/events/pay/${userID}`)
+                    toast.success(`Todos los turnos fueron reservados exitosamente`, {
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                }
+                await axios.get(`${HOST}/reservations/events/${userID}`)
+                itemLoading()
+            }
+        }
+    }, [userID])
 
     const handleCheck = async () => {
         response(true)
@@ -76,6 +94,11 @@ function CartOrder({ total, itemLoading, response }) {
                 toast.success(`Todos los turnos se encuentras disponibles`, {
                     position: toast.POSITION.TOP_CENTER
                 })
+                const mercadoPagoResponse = await axios.get(`${HOST}/checkout/${userID}`);
+                if (mercadoPagoResponse.data.body) {
+                    setPreferenceID(mercadoPagoResponse.data.body.id)
+                    response(false)
+                };
                 setAvailable(true)
                 setTimeout(function () { setAvailable(false); }, 5000);
             }
@@ -85,33 +108,15 @@ function CartOrder({ total, itemLoading, response }) {
         itemLoading()
     }
 
-    const handlePay = async () => {
-        response(true)
-        try {
-            const res = await axios.get(`${HOST}/reservations/events/${userID}`)
-            if (res.data.error) {
-                response(false)
-                toast.error(`Error al pagar, por favor verifique la disponibilidad`, {
-                    position: toast.POSITION.TOP_CENTER
-                })
-            } else {
-                const r1 = await axios.get(`${HOST}/checkout/${userID}`);
-                response(false)
-                if (r1.data.body) {
-                    setPreferenceID(r1.data.body.id)
-                };
-
-                // await axios.get(`${HOST}/reservations/events/pay/${userID}`)
-                // toast.success(`Todos los turnos fueron reservados exitosamente`, {
-                //     position: toast.POSITION.TOP_CENTER
-                // })
-                // await axios.get(`${HOST}/reservations/events/${userID}`)
-                // itemLoading()
+    useEffect(() => {
+        if (!available) {
+            const form = document.getElementById('payment-form');
+            const child = form.lastElementChild;
+            if (child) {
+                form.removeChild(child);
             }
-        } catch (error) {
-            console.log(error)
         }
-    }
+    }, [available])
 
     useEffect(() => {
         if (preferenceID) {
@@ -121,6 +126,10 @@ function CartOrder({ total, itemLoading, response }) {
                 'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
             script.setAttribute('data-preference-id', preferenceID);
             const form = document.getElementById('payment-form');
+            const child = form.lastElementChild;
+            if (child) {
+                form.removeChild(child);
+            }
             form.appendChild(script);
         }
     }, [preferenceID])
@@ -131,7 +140,6 @@ function CartOrder({ total, itemLoading, response }) {
         <Grid
             item
         >
-            <form id='payment-form' method="GET"></form>
             <Paper className={classes.paper}>
                 <Grid container direction='column' justifyContent='space-between' className={classes.content}>
                     <Typography variant='h4' className={classes.title}>
@@ -167,16 +175,13 @@ function CartOrder({ total, itemLoading, response }) {
                             <Button onClick={handleCheck} fullWidth='true' className={classes.check}>
                                 REVISAR DISPONIBILIDAD
                             </Button>
+                            <form className='test' id='payment-form' method="GET"></form>
                             {
-                                available ? (
-                                    <Button onClick={handlePay} fullWidth='true' className={classes.submit}>
-                                        PAGAR
-                                    </Button>
-                                ) : (
+                                !available ? (
                                     <Button fullWidth='true' className={classes.notAvailable}>
                                         PAGAR
                                     </Button>
-                                )
+                                ) : null
                             }
                         </Grid>
                     </Grid>
