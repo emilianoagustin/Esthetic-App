@@ -6,6 +6,7 @@ import path from 'path';
 import passport from 'passport';
 import JWTStrategy from './libs/passport-jwt';
 import { createRoles, createService } from './libs/initialSetupRoles';
+
 // const fileUpload = require('express-fileupload');
 
 const app: Application = express();
