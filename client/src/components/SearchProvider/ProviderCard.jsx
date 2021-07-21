@@ -55,15 +55,6 @@ const useStyles = makeStyles((theme) => ({
   font: {
     fontSize: '18px',
   },
-  cardContent:{
-    color:"#af63a4", 
-    backgroundColor:"rgba(175,99,164,0.3)",
-    fontWeight: "bold"
-  },
-  cardTitle:{
-    color:"purple",
-    fontWeight: "bold",
-  }
 }));
 
 export default function RecipeReviewCard({ data }) {
@@ -78,7 +69,7 @@ export default function RecipeReviewCard({ data }) {
   const handleFavorites = () => {
     setStateFav(!stateFav);
   };
-console.log(data.gender)
+
   return (
     <div className='card-services'>
       <Card className={classes.root}>
@@ -95,7 +86,7 @@ console.log(data.gender)
           title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
           subheader={data.price ? `$ ${data.price}` : ''}
         />
-        <Link to={`/profile`}>
+        <Link to={`/providers/${data._id}`}>
           <CardMedia
             className={classes.media}
             image={data.image}
