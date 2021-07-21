@@ -1,8 +1,11 @@
 import { RequestHandler } from "express";
+import Addresses from "../models/Addresses";
 import Bags from "../models/Bags";
 import Calendar from "../models/Calendar";
 import Events from "../models/Events";
+import Services from "../models/Services";
 import Users from "../models/Users";
+import { isValidDate } from '../utils/functions'
 
 export const addReservation: RequestHandler = async (req, res) => {
     try {
@@ -58,16 +61,70 @@ export const getReservationsAvailability: RequestHandler = async (req, res) => {
                 ]
             })
             if (eventFound) notAvailable.push(bag.reservations[i])
-            else available.push(bag.reservations[i])
+            else {
+                if (!isValidDate(bag.reservations[i].date, bag.reservations[i].hour)) {
+                    notAvailable.push(bag.reservations[i])
+                } else {
+                    available.push(bag.reservations[i])
+                }
+            }
         }
 
         if (notAvailable.length) {
             bag.reservations = available;
             await bag.save();
-            res.status(200).json({error: true, notAvailable});
+            res.status(200).json({ error: true, notAvailable });
         } else {
-            res.status(200).json({error: false, available})
+            res.status(200).json({ error: false, available })
         }
+
+    } catch (error) {
+        return res.send(error);
+    }
+}
+
+export const payReservations: RequestHandler = async (req, res) => {
+    try {
+        const user: any = await Users.findById(req.params.id)
+        const bag = await Bags.findOne({ user: user })
+
+        for (let i = 0; i < bag.reservations.length; i++) {
+
+            const actual = bag.reservations[i]
+            const calendar = await Calendar.findOne({ provider: actual.providerID })
+
+            const address = await Addresses.findOne({
+                $and: [
+                    { name: actual.address },
+                    { user: user }
+                ]
+            })
+            const service = await Services.findOne({ name: actual.service })
+
+            let eventData: any = {
+                user: req.params.id,
+                calendar: calendar,
+                address: address,
+                service: service,
+                isAvailable: false,
+                isActive: true,
+                hour: actual.hour,
+                date: actual.date,
+                title: actual.title || 'servicio'
+            }
+            const event = new Events(eventData);
+            await event.save();
+
+            service.events.push(event);
+            await service.save();
+
+            user.events.push(event);
+            await user.save();
+
+            calendar.events.push(event);
+            await calendar.save();
+        }
+        res.status(200).json('All events added');
 
     } catch (error) {
         return res.send(error);

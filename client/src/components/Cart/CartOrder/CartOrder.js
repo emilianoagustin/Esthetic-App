@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { HOST } from '../../../utils/constants';
 import { toast } from 'react-toastify';
+import './CartOrder.scss';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,9 +44,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function CartOrder({ total, itemLoading }) {
+function CartOrder({ total, itemLoading, response, props }) {
     const [userID, setUserID] = useState('');
     const [available, setAvailable] = useState(false);
+    const [preferenceID, setPreferenceID] = useState(null);
+
 
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
@@ -56,10 +59,28 @@ function CartOrder({ total, itemLoading }) {
         }
     }, [])
 
+    useEffect(async () => {
+        if (userID !== '') {
+            if (props.location) {
+                const status = props.location.search
+                if (status.includes('status=approved')) {
+                    await axios.get(`${HOST}/reservations/events/pay/${userID}`)
+                    toast.success(`Todos los turnos fueron reservados exitosamente`, {
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                }
+                await axios.get(`${HOST}/reservations/events/${userID}`)
+                itemLoading()
+            }
+        }
+    }, [userID])
+
     const handleCheck = async () => {
+        response(true)
         try {
             const res = await axios.get(`${HOST}/reservations/events/${userID}`)
             if (res.data.error) {
+                response(false)
                 res.data.notAvailable.forEach((reservationDeleted) => {
                     toast.error(`El turno para 
                     ${reservationDeleted.service} del día 
@@ -69,10 +90,15 @@ function CartOrder({ total, itemLoading }) {
                     })
                 })
             } else {
+                response(false)
                 toast.success(`Todos los turnos se encuentras disponibles`, {
-                        position: toast.POSITION.TOP_CENTER
-                    })
-                setAvailable(true)
+                    position: toast.POSITION.TOP_CENTER
+                })
+                const mercadoPagoResponse = await axios.get(`${HOST}/checkout/${userID}`);
+                if (mercadoPagoResponse.data.body) {
+                    setPreferenceID(mercadoPagoResponse.data.body.id)
+                    response(false)
+                };
                 setTimeout(function () { setAvailable(false); }, 5000);
             }
         } catch (error) {
@@ -80,6 +106,33 @@ function CartOrder({ total, itemLoading }) {
         }
         itemLoading()
     }
+
+    useEffect(() => {
+        if (!available) {
+            const form = document.getElementById('payment-form');
+            const child = form.lastElementChild;
+            if (child) {
+                form.removeChild(child);
+            }
+        }
+    }, [available])
+
+    useEffect(() => {
+        if (preferenceID) {
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src =
+                'https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js';
+            script.setAttribute('data-preference-id', preferenceID);
+            const form = document.getElementById('payment-form');
+            const child = form.lastElementChild;
+            if (child) {
+                form.removeChild(child);
+            }
+            form.appendChild(script);
+            setAvailable(true)
+        }
+    }, [preferenceID])
 
     const classes = useStyles();
 
@@ -122,9 +175,14 @@ function CartOrder({ total, itemLoading }) {
                             <Button onClick={handleCheck} fullWidth='true' className={classes.check}>
                                 REVISAR DISPONIBILIDAD
                             </Button>
-                            <Button fullWidth='true' className={available ? classes.submit : classes.notAvailable}>
-                                PAGAR
-                            </Button>
+                            <form className='test' id='payment-form' method="GET"></form>
+                            {
+                                !available ? (
+                                    <Button fullWidth='true' className={classes.notAvailable}>
+                                        PAGAR
+                                    </Button>
+                                ) : null
+                            }
                         </Grid>
                     </Grid>
                 </Grid>

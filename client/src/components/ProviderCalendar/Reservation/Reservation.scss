@@ -13,34 +13,62 @@
   /* Modal Content/Box */
   .modal-content {
     background-color: #e2e2e2;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 30px;
+    margin: 12% auto; /* 15% from the top and centered */
     border: 1px solid #888;
+    padding: 30px;
+    border-radius: 0.5em;
     width: fit-content; /* Could be more or less, depending on screen size */
     position: relative;
   }
 
   .modal-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 400px;
     margin: 20px 0 20px 0;
     tbody{
-      tr{
-      }
+      display: table;
       td{
         border: 1px solid black;
         padding: 5px 15px 5px 15px;
       }
     }
+    p{
+      color: rgb(124, 0, 0);
+      display: flex;
+      margin: 10px 0 10px 0;
+    }
   }
 
   .modal-button{
+    font-family: "Mulish", sans-serif;
+    border-radius: 0.5em;
+    padding: 2px;
     position: absolute;
-    bottom: 5px;
+    bottom: 20px;
+  }
+
+  .modal-button:hover {
+    background-color: rgb(224, 224, 224);
+    font-weight: bold;
   }
 
   .left{
-    left: 5px;
+    left: 20px;
   }
   
   .right{
-    right: 5px;
+    right: 20px;
+  }
+
+  .td-address{
+    display: flex;
+    justify-content: space-between;
+    select{
+     height: max-content;
+     border-radius: 0.2em;
+     margin-left: 5px;
+     padding: 0 5px 0 5px;
+    }
   }

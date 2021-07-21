@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,11 +19,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-//
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-//
-import './PendingServices.scss';
+
+import '../HomeProviders/PendingServices/PendingServices.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,9 +60,6 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard({ data }) {
   const whatsApp = 'https://web.whatsapp.com/';
   const classes = useStyles();
-  const history = useHistory();
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [expanded, setExpanded] = React.useState(false);
   const [stateFav, setStateFav] = React.useState(false);
 
@@ -74,17 +68,6 @@ export default function RecipeReviewCard({ data }) {
   };
   const handleFavorites = () => {
     setStateFav(!stateFav);
-  };
-  //settings admin
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleEdit = () => {
-    history.push(`/service/upload/${data._id}`);
   };
 
   return (
@@ -101,32 +84,14 @@ export default function RecipeReviewCard({ data }) {
             ></Avatar>
           }
           action={
-            <>
-              <IconButton
-                aria-label='settings'
-                aria-controls='simple-menu'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id='simple-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleEdit}>Editar 🖊</MenuItem>
-                <MenuItem onClick={handleClose}>Remover</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
-            </>
+            <IconButton aria-label='settings'>
+              <MoreVertIcon />
+            </IconButton>
           }
           title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
           subheader={data.price ? `$ ${data.price}` : ''}
         />
-        <Link to={`/services/providers/${data.name}`}>
+        <Link to={`/profile`}>
           <CardMedia
             className={classes.media}
             image={data.image}
@@ -153,7 +118,6 @@ export default function RecipeReviewCard({ data }) {
             aria-label='share'
             className={classes.whatsApp}
             href={whatsApp}
-            target='_blank'
           >
             <WhatsAppIcon />
           </IconButton>

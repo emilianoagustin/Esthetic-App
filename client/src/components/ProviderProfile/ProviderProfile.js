@@ -101,34 +101,6 @@ function ProviderProfile() {
     dispatch(getProviderDetails(id));
   }, [dispatch, id]);
 
-  //   return (
-  //     <>
-  //       <div className='container-main'>
-  //         <div className='container'>
-  //           <div className={classes.providerProfile}>
-  //             <Grid item>
-  //               <ProviderProfileData provider={provider.data} classes={classes} />
-  //             </Grid>
-  //             <Grid
-  //               item
-  //               container
-  //               direction='column'
-  //               justifyContent='center'
-  //               alignItems='center'
-  //               className={classes.gridItem}
-  //             >
-  //               <ProviderProfileBanner
-  //                 provider={provider.data}
-  //                 classes={classes}
-  //               />
-  //               <ProviderProfileUpdate classes={classes} />
-  //             </Grid>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </>
-  //   );
-
   return (
     <>
       <div className='container-main'>
