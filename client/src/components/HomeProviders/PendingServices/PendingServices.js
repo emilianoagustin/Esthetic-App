@@ -89,16 +89,24 @@ export default function RecipeReviewCard({ data }) {
 
   return (
     <div className='card-services'>
-      <Card className={classes.root}>
+      <Card className={classes.root} style ={{height: "29rem",
+    width: "21rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  }}>
         <Typography variant='h3'></Typography>
+<div style={{marginTop:"-1.5rem"}}>
+      
 
         <CardHeader
           avatar={
             <Avatar
-              aria-label='recipe'
-              className={classes.avatar}
-              src={data.image}
+            aria-label='recipe'
+            className={classes.avatar}
+            src={data.image}
             ></Avatar>
+            
           }
           action={
             <>
@@ -107,7 +115,7 @@ export default function RecipeReviewCard({ data }) {
                 aria-controls='simple-menu'
                 aria-haspopup='true'
                 onClick={handleClick}
-              >
+                >
                 <MoreVertIcon />
               </IconButton>
               <Menu
@@ -116,7 +124,7 @@ export default function RecipeReviewCard({ data }) {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-              >
+                >
                 <MenuItem onClick={handleEdit}>Editar 🖊</MenuItem>
                 <MenuItem onClick={handleClose}>Remover</MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
@@ -126,6 +134,7 @@ export default function RecipeReviewCard({ data }) {
           title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
           subheader={data.price ? `$ ${data.price}` : ''}
         />
+</div>
         <Link to={`/services/providers/${data.name}`}>
           <CardMedia
             className={classes.media}
