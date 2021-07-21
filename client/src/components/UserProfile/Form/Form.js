@@ -35,7 +35,7 @@ function Form({ showModal, setShowModal }) {
 
     /* e.preventDefault(); */
     try {
-        git 
+        
       const res = await axios.post(`${GET_USERS}/${userId}`, input);
       console.log(res);
     } catch (error) {
