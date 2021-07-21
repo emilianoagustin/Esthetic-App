@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import Providers from "../models/Providers";
 import Services from "../models/Services";
+import { getServiceDetail } from "./getServices";
 
 export const addServiceToProvider: RequestHandler = async (req, res) => {
   try {
@@ -36,13 +37,20 @@ export const getProvidersByService: RequestHandler = async (req, res) => {
 };
 export const getServicesByProvider: RequestHandler = async (req, res) => {
   try {
-    let provServices: any = [];
-    const thisProvider = await Providers.findById(req.params.id);
-    const theseServices = thisProvider?.services.forEach((servID) => {
-      const servDetails = Services.findById(servID);
-      if (servDetails) provServices.push(servDetails);
+    const provServices: any = [];
+    const thisProvider: any = await Providers.findById(req.params.id);
+    for (let i = 0; i < thisProvider.services.length; i++) {
+      const service = await Services.findById(thisProvider.services[i]);
+      provServices.push(service);
+    }
+    // const provServices = await Services.findById({
+    //   $in: thisProvider.services,
+    // });
+    console.log("ARREGLO: ", provServices);
+    return res.status(200).send({
+      message: `Éstos son los servicios de ${thisProvider?.firstName}`,
+      data: provServices,
     });
-    return res.status(200).send(provServices);
   } catch (error) {
     res.status(400).send(error);
   }

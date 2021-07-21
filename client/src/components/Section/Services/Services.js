@@ -12,7 +12,6 @@ export function Services({ services }) {
   useEffect(() => {
     dispatch(getServices());
   }, []);
-  console.log("SERVICIOS: ", services);
 
   return (
     <div>

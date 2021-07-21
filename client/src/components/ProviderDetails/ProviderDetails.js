@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProviderDetails } from "../../Redux/actions/actions";
 // import "./providerDetails.scss";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import defaultImg from "../../img/wall-cart.jpg";
+import ProviderServices from "../ProviderServices/ProviderServices";
 
 const ProviderDetails = () => {
   const dispatch = useDispatch();
   const providerDetails = useSelector((state) => state.providerDetails);
-  const services = useSelector((state) => state.services.data);
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(getProviderDetails(id));
   }, [dispatch]);
-  console.log("PROVIDER DETAILS: ", providerDetails.data);
+  console.log("DETALLES:", providerDetails);
 
   return (
     <div className="container-main">
@@ -25,10 +25,10 @@ const ProviderDetails = () => {
               `Bienvenido al espacio de ${providerDetails.data.firstName}`}
           </h1>
           <div>
-            {!providerDetails.data.image.includes(undefined) ? ( //REVER ESTO PORQUE NO ENCUENTRA LA RUTA DE LA FOTO, PERO SÍ EL ATRIBUTO
+            {providerDetails.data?.image === undefined ? ( //REVER ESTO PORQUE NO ENCUENTRA LA RUTA DE LA FOTO, PERO SÍ EL ATRIBUTO
               <img
                 className="card-img"
-                src={providerDetails.data.image}
+                src={providerDetails.data?.image}
                 alt="Provider picture"
               ></img>
             ) : (
@@ -41,7 +41,7 @@ const ProviderDetails = () => {
             <div>
               <h2>Acerca de mí...</h2>
               <span>
-                {providerDetails.data.bio ? (
+                {providerDetails.data?.bio ? (
                   <p>{providerDetails.data.bio}</p>
                 ) : (
                   <p>
@@ -60,8 +60,7 @@ const ProviderDetails = () => {
               </span>
             </div>
             <div>
-              <h2>Estos son algunos de los servicios que brindo</h2>
-              <span></span>
+              <ProviderServices providerId={id} />
             </div>
           </div>
         </div>
