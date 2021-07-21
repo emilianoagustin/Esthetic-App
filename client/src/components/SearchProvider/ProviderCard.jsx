@@ -55,6 +55,15 @@ const useStyles = makeStyles((theme) => ({
   font: {
     fontSize: '18px',
   },
+  cardContent:{
+    color:"#af63a4", 
+    backgroundColor:"rgba(175,99,164,0.3)",
+    fontWeight: "bold"
+  },
+  cardTitle:{
+    color:"purple",
+    fontWeight: "bold",
+  }
 }));
 
 export default function RecipeReviewCard({ data }) {
@@ -69,7 +78,7 @@ export default function RecipeReviewCard({ data }) {
   const handleFavorites = () => {
     setStateFav(!stateFav);
   };
-
+console.log(data.gender)
   return (
     <div className='card-services'>
       <Card className={classes.root}>
@@ -83,11 +92,6 @@ export default function RecipeReviewCard({ data }) {
               src={data.image}
             ></Avatar>
           }
-          action={
-            <IconButton aria-label='settings'>
-              <MoreVertIcon />
-            </IconButton>
-          }
           title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
           subheader={data.price ? `$ ${data.price}` : ''}
         />
@@ -100,8 +104,8 @@ export default function RecipeReviewCard({ data }) {
         </Link>
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {data.description && data.description.slice(0, 86).concat('...')}
-            {data.services &&
+           <div> <h1>{`${data.addresses[0]?.city} / ${data.addresses[0]?.state} `}</h1></div> 
+            {data.services && 
               'Los servicios adquiridos y los datos principales del cliente se encuentran al desplegando la flecha...'}
           </Typography>
         </CardContent>
@@ -149,21 +153,21 @@ export default function RecipeReviewCard({ data }) {
             )}
             {data.services && (
               <>
-                <Typography paragraph>Servicio(s):</Typography>
-                <Typography paragraph>
+                <Typography paragraph className={classes.cardTitle}>Servicio(s):</Typography>
+                <Typography paragraph className={classes.cardContent}>
                   {data.services.map((service) => (
                     <li key={service}>{service}</li>
                   ))}
                 </Typography>
 
-                <Typography paragraph>Correo:</Typography>
-                <Typography paragraph>{data.email}</Typography>
+                <Typography paragraph className={classes.cardTitle}>Correo:</Typography>
+                <Typography paragraph className={classes.cardContent}>{data.email}</Typography>
 
-                <Typography paragraph>Telefono:</Typography>
-                <Typography paragraph>{data.phone}</Typography>
+                <Typography paragraph className={classes.cardTitle}>Telefono:</Typography>
+                <Typography paragraph  className={classes.cardContent}>{data.phone}</Typography>
 
-                <Typography paragraph>Genero:</Typography>
-                <Typography paragraph>{data.gender}</Typography>
+                <Typography paragraph className={classes.cardTitle}>Genero:</Typography>
+                <Typography  paragraph  className={classes.cardContent}>{data.gender}</Typography>
               </>
             )}
           </CardContent>

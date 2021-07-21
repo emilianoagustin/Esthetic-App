@@ -5,44 +5,70 @@ import ProviderCard from "./ProviderCard";
 import PendingServices from "../HomeProviders/PendingServices/PendingServices";
 import SearchBar from "../Searchbar/Searchbar";
 
+
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+
+const options = [
+  "Zona Norte ",
+  "Zona Sur",
+  "Centro",
+  "Zona Este",
+  "Zona Oeste",
+];
+
+
+
+
+
 function Providers({ data }) {
-  const allProviders = useSelector((state) => state.allProviders);
-  console.log(allProviders)
-  const services = useSelector((state) => state.services);
-  console.log(services);
-  const keyword = useSelector((state) => state.keyword);
- 
   const dispatch = useDispatch();
+
+  const allProviders = useSelector((state) => state.allProviders);
+  const services = useSelector((state) => state.services);
+  const keyword = useSelector((state) => state.keyword);
+  
+  const city =  allProviders.data?.map((z) => z.addresses[0]).map(x => x ? x.city : "")
+ const city1 = city.map(x => x).indexOf(keyword) !== -1
+
 
   useEffect(() => {
     dispatch(getAllProviders());
     dispatch(getServices());
   }, [dispatch]);
 
-  
+
   useEffect(() => {
     dispatch(handleKeyword())
   }, [])
+
+
+  
   
   return (
     <div>
-      <SearchBar />
+      <SearchBar /> 
       <div key="data" className="services-container">
+       
         {allProviders.data &&
           allProviders.data
             .filter((dato) => {
-              console.log(dato.firstName.concat(" ", dato.lastName))
+              console.log(dato.addresses[0]?.city)
               return keyword?.length > 0
                 ? dato.firstName?.concat(" " , dato.lastName).indexOf(keyword) !==
-                    -1
+                    -1  
                 : dato;
-            })
+            }) 
             .map((firstName, index) => (
               <>
-                {/* <Service key={index} data={service} /> */}
                 <ProviderCard data={firstName} key={index} />
               </>
-            ))}
+            ))
+            
+            }
+
         {services.data &&
           services.data
             .filter((dato) => {
@@ -52,12 +78,29 @@ function Providers({ data }) {
             })
             .map((name, index) => (
               <>
-                {/* <Service key={index} data={service} /> */}
                 <PendingServices data={name} key={index} />
               </>
             ))}
-      </div>
+           
 
+          {allProviders.data &&
+          allProviders.data
+            .filter((dato) => {
+              console.log(dato)
+              return keyword?.length > 0
+                ? dato.addresses[0]?.city.indexOf(keyword) !== -1 
+                || dato.addresses[0]?.state.indexOf(keyword) !== -1 
+              : dato;
+            })
+            .map((firstName, index) => (
+              <div>
+                <ProviderCard data={firstName} key={index} />
+              </div>
+            ))}   
+      </div>
+      <div>
+              
+              </div>
       {/* /* <Link to={`/providers/providers/${data.name}`}>
         <div className='service-title-btn'>
           <button>
