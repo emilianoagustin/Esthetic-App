@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function CartOrder({ total, itemLoading }) {
+function CartOrder({ total, itemLoading, response }) {
     const [userID, setUserID] = useState('');
     const [available, setAvailable] = useState(false);
 
@@ -57,9 +57,11 @@ function CartOrder({ total, itemLoading }) {
     }, [])
 
     const handleCheck = async () => {
+        response(true)
         try {
             const res = await axios.get(`${HOST}/reservations/events/${userID}`)
             if (res.data.error) {
+                response(false)
                 res.data.notAvailable.forEach((reservationDeleted) => {
                     toast.error(`El turno para 
                     ${reservationDeleted.service} del día 
@@ -69,9 +71,10 @@ function CartOrder({ total, itemLoading }) {
                     })
                 })
             } else {
+                response(false)
                 toast.success(`Todos los turnos se encuentras disponibles`, {
-                        position: toast.POSITION.TOP_CENTER
-                    })
+                    position: toast.POSITION.TOP_CENTER
+                })
                 setAvailable(true)
                 setTimeout(function () { setAvailable(false); }, 5000);
             }
@@ -79,6 +82,29 @@ function CartOrder({ total, itemLoading }) {
             console.log(error)
         }
         itemLoading()
+    }
+
+    const handlePay = async () => {
+        response(true)
+        try {
+            const res = await axios.get(`${HOST}/reservations/events/${userID}`)
+            if (res.data.error) {
+                response(false)
+                toast.error(`Error al pagar, por favor verifique la disponibilidad`, {
+                    position: toast.POSITION.TOP_CENTER
+                })
+            } else {
+                await axios.get(`${HOST}/reservations/events/pay/${userID}`)
+                response(false)
+                toast.success(`Todos los turnos fueron reservados exitosamente`, {
+                    position: toast.POSITION.TOP_CENTER
+                })
+                await axios.get(`${HOST}/reservations/events/${userID}`)
+                itemLoading()
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const classes = useStyles();
@@ -122,9 +148,17 @@ function CartOrder({ total, itemLoading }) {
                             <Button onClick={handleCheck} fullWidth='true' className={classes.check}>
                                 REVISAR DISPONIBILIDAD
                             </Button>
-                            <Button fullWidth='true' className={available ? classes.submit : classes.notAvailable}>
-                                PAGAR
-                            </Button>
+                            {
+                                available ? (
+                                    <Button onClick={handlePay} fullWidth='true' className={classes.submit}>
+                                        PAGAR
+                                    </Button>
+                                ) : (
+                                    <Button fullWidth='true' className={classes.notAvailable}>
+                                        PAGAR
+                                    </Button>
+                                )
+                            }
                         </Grid>
                     </Grid>
                 </Grid>

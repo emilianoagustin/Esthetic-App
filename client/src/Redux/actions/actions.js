@@ -46,6 +46,25 @@ export const getProviderDetails = (providerId) => async (dispatch) => {
     });
   }
 };
+export const getAllProviders = () => async (dispatch) => {
+
+  dispatch({ type: actionsTypes.GET_ALL_PROVIDERS });
+  try {
+    const { data } = await axios.get(`${GET_PROVIDERS}`);
+    dispatch({ type: actionsTypes.GET_ALL_PROVIDERS_SUCCES, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_ALL_PROVIDERS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const handleKeyword = (keyword) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(keyword)
+  dispatch({ type: actionsTypes.GET_KEYWORD_SEARCHBAR ,  payload: keyword})
+} 
 
 export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST });
