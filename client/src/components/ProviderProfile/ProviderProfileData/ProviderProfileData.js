@@ -44,7 +44,6 @@ function ProviderProfileData({ provider, classes }) {
             <Grid item className={classes.dataItems}>
               <Avatar className={classes.icon}>
                 <IconButton>
-                  {/* <EditIcon /> */}
                   <FormAdresses type='profile' />
                 </IconButton>
               </Avatar>

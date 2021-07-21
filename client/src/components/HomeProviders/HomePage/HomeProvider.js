@@ -8,7 +8,8 @@ import RecipeReviewCard from '../PendingServices/PendingServices';
 //
 import { makeStyles } from '@material-ui/core/styles';
 import ProviderProfileData from '../../ProviderProfile/ProviderProfileData/ProviderProfileData';
-import { red, green } from '@material-ui/core/colors';
+import { red, green, orange } from '@material-ui/core/colors';
+import ProviderProfileAddresses from '../../ProviderProfile/ProviderProfileAddresses/ProviderProfileAddresses';
 //
 
 const buyedServices = [
@@ -123,6 +124,7 @@ const useStyles = makeStyles(() => ({
       transform: 'scale(1.2, 1.2) rotate(270deg)',
       transition: 'transform 0.5s ease-in-out',
     },
+    color: red[500],
   },
 }));
 
@@ -175,6 +177,12 @@ const HomeProvider = () => {
             classes={classes}
             provider={provider}
           />
+          <div>
+            <ProviderProfileAddresses classes={classes} provider={provider} />
+          </div>
+          <div className='container-hours-profile'>
+            <h1>Hours</h1>
+          </div>
         </div>
 
         {users.services?.length < 1 ? (
@@ -192,5 +200,3 @@ const HomeProvider = () => {
 };
 
 export default HomeProvider;
-
-// <h1>muestros los servicios</h1>

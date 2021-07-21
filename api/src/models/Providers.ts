@@ -74,6 +74,7 @@ const ProvidersSchema = new Schema<IProvider>(
       {
         type: Schema.Types.ObjectId,
         ref: 'Services',
+        // autopopulate: true,
       },
     ],
   },

@@ -53,13 +53,21 @@
     align-items: center;
 
     .info-provider {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
       margin-right: 4rem;
       margin-left: 0px;
       justify-self: left;
+      .container-hours-profile {
+        border-radius: 5px;
+        box-shadow: 4px 4px 5px grey;
+      }
     }
 
     .prov-detail {
       align-self: flex-start;
+      padding: 1rem;
     }
 
     .render-clients {

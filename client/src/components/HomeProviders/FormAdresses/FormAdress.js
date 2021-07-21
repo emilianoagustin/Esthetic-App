@@ -27,6 +27,7 @@ export default function FormAdresses({ type }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [principal, setPrincipal] = useState(false);
+
   const initialStateProfile = {
     provider: provider.providerFound?._id,
   };
@@ -83,7 +84,7 @@ export default function FormAdresses({ type }) {
 
   return (
     <div>
-      {type === 'profile' ? (
+      {type === 'profile' || type === 'addresses' ? (
         <Avatar>
           <IconButton onClick={handleClickOpen}>
             <EditIcon />

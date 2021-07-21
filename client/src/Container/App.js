@@ -40,6 +40,7 @@ const App = () => {
       <Route exact path='/providers/:id' component={ProviderDetails} />
 
       <Route path='/profile/:id' component={UserProfile} />
+
       <Route path='/search' component={Providers} />
     </React.Fragment>
   );
