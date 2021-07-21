@@ -13,6 +13,7 @@ import ProviderProfile from '../components/ProviderProfile/ProviderProfile';
 import UserProfile from '../components/UserProfile/UserProfile';
 import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
 import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
+import Providers from '../components/SearchProvider/Providers';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
       <Route exact path='/providers/:id' component={ProviderDetails} />
 
       <Route path='/profile/:id' component={UserProfile} />
+      <Route path='/search' component={Providers} />
     </React.Fragment>
   );
 };
