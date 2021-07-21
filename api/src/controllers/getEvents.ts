@@ -5,8 +5,17 @@ import Users from '../models/Users';
 import Calendar from '../models/Calendar';
 import { isValidDate } from '../utils/functions';
 import Providers from '../models/Providers';
+import Bags from '../models/Bags';
 
-export const getCalendarEventsByDay: RequestHandler = (req, res) => {
+export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
+
+    let reservations: any = []
+
+    if (req.body.user !== '') {
+        const user: any = await Users.findById(req.body.user);
+        const bag: any = await Bags.findOne({ user: user });
+        reservations = bag.reservations;
+    }
 
     Providers.findById(req.body.provider)
         .then((prov: any) => {
@@ -17,11 +26,22 @@ export const getCalendarEventsByDay: RequestHandler = (req, res) => {
                     result.eventsHours.forEach((hour: Number, index: any) => {
                         let validate = isValidDate(req.body.date, hour);
 
+                        let cartItem = false;
+
+                        reservations.forEach((reservation: any) => {
+                            if (reservation.providerID === req.body.provider &&
+                                reservation.date === req.body.date &&
+                                reservation.hour === hour) {
+                                cartItem = true;
+                            }
+                        })
+
                         events[index] = {
                             isActive: validate,
                             isAvailable: true,
                             date: req.body.date,
                             hour: hour,
+                            isCartItem: cartItem
                         }
                     })
 

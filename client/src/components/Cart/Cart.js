@@ -108,6 +108,7 @@ function Cart(props) {
                                                         <CartItem
                                                             key={index}
                                                             data={reservation}
+                                                            itemLoading={() => setLoadingItems(!loadingItems)}
                                                         />
                                                     ))
                                                 }
