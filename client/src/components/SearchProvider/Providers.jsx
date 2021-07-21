@@ -6,22 +6,6 @@ import PendingServices from "../HomeProviders/PendingServices/PendingServices";
 import SearchBar from "../Searchbar/Searchbar";
 
 
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-
-
-const options = [
-  "Zona Norte ",
-  "Zona Sur",
-  "Centro",
-  "Zona Este",
-  "Zona Oeste",
-];
-
-
-
-
 
 function Providers({ data }) {
   const dispatch = useDispatch();
