@@ -22,6 +22,7 @@ router.get('/', usersCtrl.getUsers);
 router.get('/:id', usersCtrl.getUser);
 router.delete('/:id', usersCtrl.deleteUser);
 router.put('/:id', usersCtrl.updateUser);
+router.post('/:id', usersCtrl.updateUser);
 
 // router.put('/assignService/:id', usersCtrl.assignService);
 // router.put('/removeService/:id', usersCtrl.removeService);

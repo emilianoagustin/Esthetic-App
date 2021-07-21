@@ -1,6 +1,6 @@
 import axios from 'axios';
 import actionsTypes from '../constants/constants';
-import { HOST, RESERVATIONS } from '../../utils/constants';
+import { GET_USERS, HOST, RESERVATIONS } from '../../utils/constants';
 
 // login
 export const LoginUser = (data) => {
@@ -81,3 +81,24 @@ export const getUserReservations = (userId) => async (dispatch) => {
     });
   }
 };
+
+//POST USER DATA ->>> UPDATE PROFILE
+
+
+export const putUserData = (userId, updatedData) => async (dispatch) => {
+  dispatch({ type: actionsTypes.POST_USER_DATA_PROFILE_REQUEST });
+
+  try {
+    const { data } = await axios.put(`${GET_USERS}/${userId}`, updatedData);
+    dispatch({
+      type: actionsTypes.POST_USER_DATA_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.POST_USER_DATA_PROFILE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
