@@ -6,6 +6,10 @@ const initialState = {
     loading: true,
     data: [],
   },
+allProviders:{
+loading:true,
+data:[],
+  },
   userActive: '',
   loginData: {},
   serviceDetails: { loading: true, data: {} },
@@ -21,7 +25,8 @@ const initialState = {
     data: {},
   },
   userReservations:{loading: true,
-    data: []}
+    data: []},
+    keyword: "", 
 };
 
 const appReducer = (state = initialState, action) => {
@@ -113,6 +118,11 @@ const appReducer = (state = initialState, action) => {
         ...state,
         providersByService: { loading: false, error: action.payload },
       };
+    case actionsTypes.GET_KEYWORD_SEARCHBAR:
+      return {
+        ...state,
+        keyword: action.payload,
+      };
 
     //GET PROVIDERS' DETAILS
     // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
@@ -120,6 +130,11 @@ const appReducer = (state = initialState, action) => {
     //     ...state,
     //     providerDetails: { loading: true },
     //   };
+    case actionsTypes.GET_ALL_PROVIDERS_SUCCES:
+    return{
+      ...state,
+      allProviders:{loading: false, data: action.payload}
+    }
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,

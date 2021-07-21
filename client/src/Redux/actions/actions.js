@@ -1,11 +1,11 @@
-import axios from "axios";
-import actionsTypes from "../constants/constants";
+import axios from 'axios';
+import actionsTypes from '../constants/constants';
 import {
   // getProvidersByService,
   // getServicesBack,
   HOST,
-} from "../../utils/constants.js";
-import { GET_PROVIDERS, GET_SERVICES } from "../../utils/constants.js";
+} from '../../utils/constants.js';
+import { GET_PROVIDERS, GET_SERVICES } from '../../utils/constants.js';
 
 export const getServices = () => async (dispatch) => {
   dispatch({
@@ -46,6 +46,25 @@ export const getProviderDetails = (providerId) => async (dispatch) => {
     });
   }
 };
+export const getAllProviders = () => async (dispatch) => {
+
+  dispatch({ type: actionsTypes.GET_ALL_PROVIDERS });
+  try {
+    const { data } = await axios.get(`${GET_PROVIDERS}`);
+    dispatch({ type: actionsTypes.GET_ALL_PROVIDERS_SUCCES, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_ALL_PROVIDERS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const handleKeyword = (keyword) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(keyword)
+  dispatch({ type: actionsTypes.GET_KEYWORD_SEARCHBAR ,  payload: keyword})
+} 
 
 export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST });
@@ -66,48 +85,68 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   }
 };
 
-export const updateProvider = (providerId, providerData) => async (dispatch) => {
-  try {
-    const { data } = await axios.put(`${GET_PROVIDERS}/${providerId}`, providerData);
-    const success = 'Datos de perfil actualizados correctamente';
-    dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success});
-  } catch (error) {
-    const err = 'Ocurrió un error al actualizar los datos de tu perfil'
-    dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: err})
-  }
-};
+export const updateProvider =
+  (providerId, providerData) => async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `${GET_PROVIDERS}/${providerId}`,
+        providerData
+      );
+      const success = 'Datos de perfil actualizados correctamente';
+      dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success });
+    } catch (error) {
+      const err = 'Ocurrió un error al actualizar los datos de tu perfil';
+      dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: err });
+    }
+  };
 
 export const getAllProvidersAddresses = (providerId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${GET_PROVIDERS}/${providerId}/addresses`);
+    const { data } = await axios.get(
+      `${GET_PROVIDERS}/${providerId}/addresses`
+    );
     dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: data });
   } catch (error) {
-    const err = 'Ocurrió un error al cargar tus direcciones'
-    dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: err})
+    const err = 'Ocurrió un error al cargar tus direcciones';
+    dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: err });
   }
 };
 
-export const createProviderAddress = (providerId, addressData) => async (dispatch) => {
-  try {
-    const { data } = await axios.post(`${GET_PROVIDERS}/${providerId}/addresses`, addressData);
-    const success = 'Dirección agregada correctamente'
-    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: success });
-  } catch (error) {
-    const err = 'Ocurrió un error al crear tu dirección'
-    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: err})
-  }
-};
+export const createProviderAddress =
+  (providerId, addressData) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${GET_PROVIDERS}/${providerId}/addresses`,
+        addressData
+      );
+      const success = 'Dirección agregada correctamente';
+      dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: success });
+    } catch (error) {
+      const err = 'Ocurrió un error al crear tu dirección';
+      dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS, payload: err });
+    }
+  };
 
-export const updateProviderAddress = (providerId, addressId, addressData) => async (dispatch) => {
-  try {
-    const { data } = await axios.put(`${GET_PROVIDERS}/${providerId}/addresses/${addressId}`, addressData);
-    const success = 'Dirección actualizada correctamente'
-    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE, payload: success });
-  } catch (error) {
-    const err = 'Ocurrió un error al actualizar tu dirección'
-    dispatch({ type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE, payload: err})
-  }
-};
+export const updateProviderAddress =
+  (providerId, addressId, addressData) => async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `${GET_PROVIDERS}/${providerId}/addresses/${addressId}`,
+        addressData
+      );
+      const success = 'Dirección actualizada correctamente';
+      dispatch({
+        type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE,
+        payload: success,
+      });
+    } catch (error) {
+      const err = 'Ocurrió un error al actualizar tu dirección';
+      dispatch({
+        type: actionsTypes.SET_PROVIDER_ADDRESS_UPDATE,
+        payload: err,
+      });
+    }
+  };
 
 export const serviceSearch = (payload) => (dispatch) => {
   dispatch({ type: actionsTypes.SEARCH_SERVICE_BY_NAME, payload });
@@ -116,7 +155,7 @@ export const serviceSearch = (payload) => (dispatch) => {
 export const reservationStatus = (data) => async (dispatch) => {
   const default_data = {
     loading: true,
-    message: "Loading...",
+    message: 'Loading...',
   };
   dispatch({
     type: actionsTypes.SET_RESERVATION_STATUS_LOADING,
@@ -124,10 +163,10 @@ export const reservationStatus = (data) => async (dispatch) => {
   });
   try {
     const { message } = await axios.post(`${HOST}/reservations`, data);
-    const success = "Turno agregado con éxito";
+    const success = 'Turno agregado con éxito';
     dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: success });
   } catch (error) {
-    const err = "Error al agregar el turno";
+    const err = 'Error al agregar el turno';
     dispatch({ type: actionsTypes.SET_RESERVATION_STATUS, payload: err });
   }
 };
@@ -155,6 +194,17 @@ export const addServicesToProvider = (services) => async () => {
 export const addHoursJobToProvider = (hours) => async () => {
   try {
     await axios.post(`${GET_PROVIDERS}/calendar`, hours);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addAdressesToProvider = (adresses) => async () => {
+  try {
+    await axios.post(
+      `${GET_PROVIDERS}/${adresses.provider}/addresses`,
+      adresses
+    );
   } catch (error) {
     console.log(error);
   }

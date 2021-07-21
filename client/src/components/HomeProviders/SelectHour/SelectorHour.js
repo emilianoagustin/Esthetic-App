@@ -11,12 +11,21 @@ import {
 import { addHoursJobToProvider } from '../../../Redux/actions/actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import './SelectorHour.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
     },
+  },
+  hours: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 }));
 
@@ -59,6 +68,13 @@ export default function MaterialUIPickers() {
     alert('por favor haz click en siguiente');
   };
 
+  //remove hour not desire
+  const handleCLick = () => {
+    setAddHours({
+      ...addHours,
+      eventsHours: [],
+    });
+  };
   console.log('xxxxxx--->', addHours);
 
   return (
@@ -79,6 +95,17 @@ export default function MaterialUIPickers() {
       </MuiPickersUtilsProvider>
 
       <div className={classes.root}>
+        {addHours.eventsHours.length > 0 &&
+          addHours.eventsHours.map((hour, i) => (
+            <div className={classes.hours}>
+              <AccessTimeIcon aria-label='time' />
+              <p name='t' id={i} value={Number(hour)}>{`${hour}:00 hrs`}</p>
+            </div>
+          ))}
+        <br />
+        <IconButton onClick={handleCLick}>
+          <DeleteForeverIcon />
+        </IconButton>
         <Button variant='contained' color='secondary' onClick={handleSubmit}>
           Confirmar
         </Button>

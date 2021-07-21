@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { alpha, makeStyles } from "@material-ui/core/styles";
-import { getServiceDetails, serviceSearch } from "../../Redux/actions/actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { getServices } from "../../Redux/actions/actions";
+import { getServices , handleKeyword ,getAllProviders} from "../../Redux/actions/actions";
+
+
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -55,41 +56,69 @@ const SearchBar = () => {
   const history = useHistory();
   const classes = useStyles();
   const services = useSelector((state) => state.services.data);
-  
+  const allProviders = useSelector((state) => state.allProviders)
 
+  const nameProvider = allProviders?.data.map(x => {return {name: x.firstName , lastname: x.lastName}})
+  const nameAndLastName = nameProvider.map(x => Object.values(x)).map(a => a.join(" "))
+
+  const nameServices = services?.map(x => x.name) 
+  const searchAll = nameAndLastName.concat(nameServices) 
+ 
+  /* console.log(searchAll) */
+  
+ 
+  
   const [keyword, setKeyword] = useState("");
 
-  console.log(keyword);
-  const handleChange = (e) => {
-    setKeyword(e.target.value);
-    dispatch(serviceSearch(keyword));
+  const handleChange = (e, value) => {
+    console.log("viendo cambios")
+    console.log(e.target.textContent)
+    console.log(value)
+
+    setKeyword(value);
+    /* dispatch(serviceSearch(keyword)); */
   };
+  
+  console.log(keyword);
 
   const reset = () => {
     setKeyword("");
   };
 
   const onFormSubmit = (e) => {
+    console.log("entre aca")
     e.preventDefault();
-    dispatch(getServiceDetails(keyword));
-    history.push(`/services/details/${keyword}`);
+    dispatch(handleKeyword(keyword))
     reset();
   };
 
   useEffect(() => {
     dispatch(getServices());
-  }, [dispatch]);
+    dispatch(getAllProviders())
+    
+  }, [dispatch, keyword]);
 
   return (
-    <form type="submit" action="">
+    <form type="submit" action="" onSubmit={onFormSubmit} style={{
+      display: "flex",
+      marginTop: 18,
+      justifyContent: "center",
+      borderRadius:50,
+      justifyContent: "center",
+      marginRight: "15rem"
+      }}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon style={{ color: "rgb(121, 47, 111)" }} />
         </div>
+        
         <Autocomplete
           id="custom-input-demo"
-          options={services}
-          getOptionLabel={(option) => option.name}
+          options={ searchAll } 
+          getOptionLabel={(option) => option ? option : ""}
+          onChange={(e, value) =>
+            handleChange(e, value)
+        }
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -97,16 +126,16 @@ const SearchBar = () => {
           renderInput={(params) => (
             <div ref={params.InputProps.ref}>
               <input
-                onChange={(e) => handleChange(e)}
-                style={{ width: 200 }}
-                placeholder="Buscar un servicio..."
+                style={{ width: "200%", marginRight:"1rem",
+                height:"4rem" }}
+                placeholder="Buscar a tu provedor fav..."
                 type="text"
                 {...params.inputProps}
               />
             </div>
           )}
           inputProps={{ "aria-label": "search" }}
-          onSubmit={onFormSubmit}
+          
         />
       </div>
     </form>
