@@ -1,6 +1,6 @@
 import axios from 'axios';
 import actionsTypes from '../constants/constants';
-import { HOST, RESERVATIONS } from '../../utils/constants';
+import { GET_USERS, HOST, RESERVATIONS } from '../../utils/constants';
 
 // login
 export const LoginUser = (data) => {
@@ -77,6 +77,21 @@ export const getUserReservations = (userId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// GET ALL USERS
+export const getAllUsers = () => async (dispatch) => {
+
+  dispatch({ type: actionsTypes.GET_ALL_USERS });
+  try {
+    const { data } = await axios.get(`${GET_USERS}`);
+    dispatch({ type: actionsTypes.GET_ALL_USERS_SUCCES, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_ALL_USERS_FAIL,
       payload: error.message,
     });
   }

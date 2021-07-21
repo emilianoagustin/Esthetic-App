@@ -1,18 +1,17 @@
-import actionsTypes from '../constants/constants';
-import { findService } from '../../utils/filter.js';
+import actionsTypes from "../constants/constants";
+import { findService } from "../../utils/filter.js";
 
 const initialState = {
   services: {
     loading: true,
     data: [],
   },
-allProviders:{
-loading:true,
-data:[],
-  },
-  userActive: '',
-  loginData: {},
   serviceDetails: { loading: true, data: {} },
+
+  allProviders: {
+    loading: true,
+    data: [],
+  },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
   providersAddresses: [],
@@ -20,13 +19,16 @@ data:[],
   provider_address_update_status: {},
   provider_update_status: {},
   reservation_status: {},
+
+  userActive: "",
+  loginData: {},
   userData: {
     loading: true,
     data: {},
   },
-  userReservations:{loading: true,
-    data: []},
-    keyword: "", 
+  userReservations: { loading: true, data: [] },
+  allUsers: [],
+  keyword: "",
 };
 
 const appReducer = (state = initialState, action) => {
@@ -53,7 +55,7 @@ const appReducer = (state = initialState, action) => {
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
       window.localStorage.setItem(
-        'loggedSpatifyApp',
+        "loggedSpatifyApp",
         JSON.stringify(action.payload)
       );
       return {
@@ -71,7 +73,7 @@ const appReducer = (state = initialState, action) => {
         //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      window.localStorage.setItem('loggedSpatifyApp', '');
+      window.localStorage.setItem("loggedSpatifyApp", "");
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -131,10 +133,10 @@ const appReducer = (state = initialState, action) => {
     //     providerDetails: { loading: true },
     //   };
     case actionsTypes.GET_ALL_PROVIDERS_SUCCES:
-    return{
-      ...state,
-      allProviders:{loading: false, data: action.payload}
-    }
+      return {
+        ...state,
+        allProviders: { loading: false, data: action.payload },
+      };
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
@@ -150,29 +152,29 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.GET_PROVIDERS_ADDRESSES:
       return {
         ...state,
-        providersAddresses: action.payload
+        providersAddresses: action.payload,
       };
 
     //SET PROVIDER ADDRESS
     case actionsTypes.SET_PROVIDER_ADDRESS:
       return {
         ...state,
-        provider_address_status: { message: action.payload }
-      }
+        provider_address_status: { message: action.payload },
+      };
 
-      //SET PROVIDER ADDRESS UPDATE
+    //SET PROVIDER ADDRESS UPDATE
     case actionsTypes.SET_PROVIDER_ADDRESS_UPDATE:
       return {
         ...state,
-        provider_address_update_status: { message: action.payload }
-      }
+        provider_address_update_status: { message: action.payload },
+      };
 
-      //SET PROVIDER UPDATE
+    //SET PROVIDER UPDATE
     case actionsTypes.SET_PROVIDER_UPDATE:
       return {
         ...state,
-        provider_update_status: { message: action.payload }
-      }
+        provider_update_status: { message: action.payload },
+      };
 
     ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
@@ -211,10 +213,9 @@ const appReducer = (state = initialState, action) => {
         userData: { loading: false, error: action.payload },
       };
 
+    //GET USER RESERVATIONS
 
-      //GET USER RESERVATIONS
-
-      case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
+    case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
       return {
         ...state,
         userReservations: { loading: true },
@@ -229,9 +230,12 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
-
-
-
+    ///GET ALL USERS
+    case actionsTypes.GET_ALL_USERS_SUCCES:
+      return {
+        ...state,
+        allProviders: { loading: false, data: action.payload },
+      };
 
     default:
       return state;
