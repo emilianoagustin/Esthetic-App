@@ -21,8 +21,10 @@ import {
   addAdressesToProvider,
   updateProfileProvider,
 } from '../../../Redux/actions/actions';
+import CheckBoxComponent from '../CheckBox/CheckBoxComponent';
+import MaterialUIPickers from '../SelectHour/SelectorHour';
 
-export default function FormAdresses({ type }) {
+export default function FormAdresses({ type, alldata, data }) {
   const provider = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -80,128 +82,233 @@ export default function FormAdresses({ type }) {
     }
   };
 
-  console.log('1data', dataAdress);
-
   return (
-    <div>
-      {type === 'profile' || type === 'addresses' ? (
-        <Avatar>
-          <IconButton onClick={handleClickOpen}>
-            <EditIcon />
-          </IconButton>
-        </Avatar>
-      ) : (
-        <Button color='secondary' onClick={handleClickOpen}>
-          AGREGAR
-        </Button>
+    <>
+      {type === 'horarios' && (
+        <div>
+          <Avatar>
+            <IconButton onClick={handleClickOpen}>
+              <EditIcon />
+            </IconButton>
+          </Avatar>
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'
+          >
+            <DialogTitle id='form-dialog-title'>
+              {'Actuliza tus horarios de trabajo'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {
+                  'Este es un espacio en que podrás actualizar los horarios de trabajo cuando lo desees.'
+                }
+              </DialogContentText>
+              <MaterialUIPickers />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='secondary'>
+                CANCELAR
+              </Button>
+              <Button onClick={handleSubmit} color='primary'>
+                ENVIAR
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       )}
+      {type === 'service' && (
+        <div>
+          <Avatar>
+            <IconButton onClick={handleClickOpen}>
+              <EditIcon />
+            </IconButton>
+          </Avatar>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='form-dialog-title'
-      >
-        <DialogTitle id='form-dialog-title'>
-          {type === 'profile'
-            ? 'Actualiza tus datos personales'
-            : 'Ingresa tu dirección'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {type === 'profile'
-              ? 'Es importante que completes todos los campos requeridos !'
-              : 'Es importante que llenes los siguientes campos ya que podrás ser contactado por usuarios que se encuentren cerca a tu ubicación 😉.'}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'
+          >
+            <DialogTitle id='form-dialog-title'>
+              {'Actuliza los servicios a prestar'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {
+                  'Este es un espacio en que podrás actualizar los servicios a prestar, puedes realizarlo en cualquier momento 😉.'
+                }
+              </DialogContentText>
 
-            <DialogContentText>
-              {type === 'profile'
-                ? "Nota: Una vez ingresados los datos deberá 'Click' en enviar 👇"
-                : " Nota: para agregar una nueva dirección debes completar todos los campos de este formulario y enviarlo, luego podrás dar 'Click' en 'AGREGAR' e ingresar tu nueva dirección."}
-            </DialogContentText>
-          </DialogContentText>
-
-          <TextField
-            autoFocus
-            margin='dense'
-            label={type === 'profile' ? 'Nombre' : 'Pais'}
-            type='email'
-            fullWidth
-            name={type === 'profile' ? 'firstName' : 'country'}
-            onChange={handleChange}
-          />
-          <TextField
-            autoFocus
-            margin='dense'
-            label={type === 'profile' ? 'Apellido' : 'Estado'}
-            type='email'
-            fullWidth
-            name={type === 'profile' ? 'lastName' : 'state'}
-            onChange={handleChange}
-          />
-          <TextField
-            autoFocus
-            margin='dense'
-            label={type === 'profile' ? 'Correo (email)' : 'Ciudad'}
-            type='email'
-            fullWidth
-            name={type === 'profile' ? 'email' : 'city'}
-            onChange={handleChange}
-          />
-          <TextField
-            autoFocus
-            margin='dense'
-            label={type === 'profile' ? 'Telefóno' : 'Dirección'}
-            type='email'
-            fullWidth
-            name={type === 'profile' ? 'phone' : 'address_1'}
-            onChange={handleChange}
-          />
-          {type !== 'profile' && (
-            <>
-              <TextField
-                autoFocus
-                margin='dense'
-                label='Detalles de dirección (ejemplo: apto 101, torre 36)'
-                type='email'
-                fullWidth
-                name='address_details'
-                onChange={handleChange}
-              />
-              <TextField
-                autoFocus
-                margin='dense'
-                label='Codigo Zip'
-                type='email'
-                fullWidth
-                name='zip_code'
-                onChange={handleChange}
-              />
-
-              <InputSelect data={dataAdress} />
-
-              <Grid item xs={12} sm={10}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={principal}
-                      onChange={handleCheck}
-                      color='primary'
-                    />
-                  }
-                  label='Dirección principal'
-                />
-              </Grid>
-            </>
+              <CheckBoxComponent data={alldata} />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='secondary'>
+                CANCELAR
+              </Button>
+              <Button onClick={handleSubmit} color='primary'>
+                ENVIAR
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )}
+      {type !== 'service' && type !== 'horarios' ? (
+        <div>
+          {type === 'profile' || type === 'addresses' ? (
+            <Avatar>
+              <IconButton onClick={handleClickOpen}>
+                <EditIcon />
+              </IconButton>
+            </Avatar>
+          ) : (
+            <Button color='secondary' onClick={handleClickOpen}>
+              AGREGAR
+            </Button>
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='secondary'>
-            CANCELAR
-          </Button>
-          <Button onClick={handleSubmit} color='primary'>
-            ENVIAR
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'
+          >
+            <DialogTitle id='form-dialog-title'>
+              {type === 'profile'
+                ? 'Actualiza tus datos personales'
+                : 'Ingresa tu dirección'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {type === 'profile'
+                  ? 'Es importante que completes todos los campos requeridos !'
+                  : 'Es importante que llenes los siguientes campos ya que podrás ser contactado por usuarios que se encuentren cerca a tu ubicación 😉.'}
+
+                <DialogContentText>
+                  {type === 'profile'
+                    ? "Nota: Una vez ingresados los datos deberá 'Click' en enviar 👇"
+                    : " Nota: para agregar una nueva dirección debes completar todos los campos de este formulario y enviarlo, luego podrás dar 'Click' en 'AGREGAR' e ingresar tu nueva dirección."}
+                </DialogContentText>
+              </DialogContentText>
+
+              <TextField
+                autoFocus
+                margin='dense'
+                label={type === 'profile' ? 'Nombre' : 'Pais'}
+                type='email'
+                fullWidth
+                name={type === 'profile' ? 'firstName' : 'country'}
+                onChange={handleChange}
+                defaultValue={
+                  type === 'profile'
+                    ? data?.firstName
+                    : type === 'addresses'
+                    ? data[0]?.country
+                    : ''
+                }
+              />
+              <TextField
+                autoFocus
+                margin='dense'
+                label={type === 'profile' ? 'Apellido' : 'Estado'}
+                type='email'
+                fullWidth
+                name={type === 'profile' ? 'lastName' : 'state'}
+                onChange={handleChange}
+                defaultValue={
+                  type === 'profile'
+                    ? data?.lastName
+                    : type === 'addresses'
+                    ? data[0]?.state
+                    : ''
+                }
+              />
+              <TextField
+                autoFocus
+                margin='dense'
+                label={type === 'profile' ? 'Correo (email)' : 'Ciudad'}
+                type='email'
+                fullWidth
+                name={type === 'profile' ? 'email' : 'city'}
+                onChange={handleChange}
+                defaultValue={
+                  type === 'profile'
+                    ? data?.email
+                    : type === 'addresses'
+                    ? data[0]?.city
+                    : ''
+                }
+              />
+              <TextField
+                autoFocus
+                margin='dense'
+                label={type === 'profile' ? 'Telefóno' : 'Dirección'}
+                type='email'
+                fullWidth
+                name={type === 'profile' ? 'phone' : 'address_1'}
+                onChange={handleChange}
+                defaultValue={
+                  type === 'profile'
+                    ? data?.phone
+                    : type === 'addresses'
+                    ? data[0]?.address_1
+                    : ''
+                }
+              />
+              {type === 'addresses' && (
+                <>
+                  <TextField
+                    autoFocus
+                    margin='dense'
+                    label='Detalles de dirección (ejemplo: apto 101, torre 36)'
+                    type='email'
+                    fullWidth
+                    name='address_details'
+                    onChange={handleChange}
+                    defaultValue={
+                      type === 'addresses' ? data[0]?.address_details : ''
+                    }
+                  />
+                  <TextField
+                    autoFocus
+                    margin='dense'
+                    label='Codigo Zip'
+                    type='email'
+                    fullWidth
+                    name='zip_code'
+                    onChange={handleChange}
+                    defaultValue={type === 'addresses' ? data[0]?.zip_code : ''}
+                  />
+
+                  <InputSelect data={dataAdress} />
+
+                  <Grid item xs={12} sm={10}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={principal}
+                          onChange={handleCheck}
+                          color='primary'
+                        />
+                      }
+                      label='Dirección principal'
+                    />
+                  </Grid>
+                </>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='secondary'>
+                CANCELAR
+              </Button>
+              <Button onClick={handleSubmit} color='primary'>
+                ENVIAR
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      ) : null}
+    </>
   );
 }

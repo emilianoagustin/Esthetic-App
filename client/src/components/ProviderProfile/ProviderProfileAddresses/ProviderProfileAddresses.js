@@ -17,13 +17,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import FormAdresses from '../../HomeProviders/FormAdresses/FormAdress';
 
-function ProviderProfileAddresses({ provider, classes, type }) {
-  const dispatch = useDispatch();
-  const addresses = useSelector((state) => state.providersAddresses);
+function ProviderProfileAddresses({ provider, classes, data }) {
+  // const dispatch = useDispatch();
+  // const addresses = useSelector((state) => state.providersAddresses);
 
-  useEffect(() => {
-    dispatch(getAllProvidersAddresses(provider._id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAllProvidersAddresses(provider._id));
+  // }, []);
 
   return (
     <Grid item className={classes.gridProfile}>
@@ -41,43 +41,47 @@ function ProviderProfileAddresses({ provider, classes, type }) {
               justifyContent='space-between'
               direction='column'
             >
-              {addresses.map((a) => {
-                return (
-                  <>
-                    <Accordion>
-                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant='h6'>{a.name}</Typography>
-                      </AccordionSummary>
-                      <hr />
-                      <AccordionDetails>
-                        <Typography variant='h7'>{a.address_1}</Typography>
-                      </AccordionDetails>
-                      <AccordionDetails>
-                        {a.address_details ? (
-                          <Typography variant='h7'>
-                            {a.address_details}
-                          </Typography>
-                        ) : (
-                          <Typography variant='subtitle1'>
-                            Detalles no definidos
-                          </Typography>
-                        )}
-                      </AccordionDetails>
-                      <AccordionDetails>
-                        <Typography variant='h7'>{a.city}</Typography>
-                      </AccordionDetails>
+              {data ? (
+                data?.map((a) => {
+                  return (
+                    <>
+                      <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          <Typography variant='h6'>{a.name}</Typography>
+                        </AccordionSummary>
+                        <hr />
+                        <AccordionDetails>
+                          <Typography variant='h7'>{a.address_1}</Typography>
+                        </AccordionDetails>
+                        <AccordionDetails>
+                          {a.address_details ? (
+                            <Typography variant='h7'>
+                              {a.address_details}
+                            </Typography>
+                          ) : (
+                            <Typography variant='subtitle1'>
+                              Detalles no definidos
+                            </Typography>
+                          )}
+                        </AccordionDetails>
+                        <AccordionDetails>
+                          <Typography variant='h7'>{a.city}</Typography>
+                        </AccordionDetails>
 
-                      <AccordionActions>
-                        <Avatar>
-                          <IconButton className={classes.icon}>
-                            <FormAdresses type='addresses' />
-                          </IconButton>
-                        </Avatar>
-                      </AccordionActions>
-                    </Accordion>
-                  </>
-                );
-              })}
+                        <AccordionActions>
+                          <Avatar className={classes.icon}>
+                            <IconButton>
+                              <FormAdresses type='addresses' data={data} />
+                            </IconButton>
+                          </Avatar>
+                        </AccordionActions>
+                      </Accordion>
+                    </>
+                  );
+                })
+              ) : (
+                <h2>loading...</h2>
+              )}
             </Grid>
           </Grid>
         </Box>

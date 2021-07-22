@@ -60,15 +60,15 @@ export const getAllProviders = () => async (dispatch) => {
 };
 
 export const handleKeyword = (keyword) => (dispatch) => {
-  console.log('entre aqui');
-  console.log(keyword);
+  // console.log('entre aqui');
+  // console.log(keyword);
   dispatch({ type: actionsTypes.GET_KEYWORD_SEARCHBAR, payload: keyword });
 };
 
 export const getProviderServices = (providerId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${GET_PROVIDERS}/${providerId}/services`);
-    console.log("DATA QUE LLEGA", data);
+    // console.log('DATA QUE LLEGA', data);
     dispatch({
       type: actionsTypes.GET_SERVICES_BY_PROVIDER,
       payload: data,
@@ -104,10 +104,10 @@ export const updateProvider =
         `${GET_PROVIDERS}/${providerId}`,
         providerData
       );
-      const success = "Datos de perfil actualizados correctamente";
+      const success = 'Datos de perfil actualizados correctamente';
       dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: success });
     } catch (error) {
-      const err = "Ocurrió un error al actualizar los datos de tu perfil";
+      const err = 'Ocurrió un error al actualizar los datos de tu perfil';
       dispatch({ type: actionsTypes.SET_PROVIDER_UPDATE, payload: err });
     }
   };
@@ -119,7 +119,7 @@ export const getAllProvidersAddresses = (providerId) => async (dispatch) => {
     );
     dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: data });
   } catch (error) {
-    const err = "Ocurrió un error al cargar tus direcciones";
+    const err = 'Ocurrió un error al cargar tus direcciones';
     dispatch({ type: actionsTypes.GET_PROVIDERS_ADDRESSES, payload: err });
   }
 };
@@ -229,3 +229,24 @@ export const updateProfileProvider = (updateData) => async () => {
     console.log(error);
   }
 };
+
+export const getEventsHoursProvider = (providerId) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${GET_PROVIDERS}/calendar/${providerId}`);
+    dispatch({ type: actionsTypes.GET_PROVIDERS_EVENTS_HOURS, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateEventsHoursProvider =
+  (providerId, updateData) => async () => {
+    try {
+      const data = {
+        eventsHours: updateData.eventsHours,
+      };
+      await axios.put(`${GET_PROVIDERS}/calendar/${providerId}`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };

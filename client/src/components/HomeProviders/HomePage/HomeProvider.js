@@ -3,13 +3,22 @@ import './HomeProviders.scss';
 import banner from '../../../img/banner.jpg';
 import VerticalLinearStepper from '../Stepper/SelectService';
 import RecipeReviewCard from '../PendingServices/PendingServices';
-
+import { useDispatch, useSelector } from 'react-redux';
 //siguiente variable es solo para efectos de prueba (a la espera de la ruta para renderizar)
 //
 import { makeStyles } from '@material-ui/core/styles';
 import ProviderProfileData from '../../ProviderProfile/ProviderProfileData/ProviderProfileData';
 import { red, green, orange } from '@material-ui/core/colors';
+import ServicesProvider from '../../HomeProviders/ServicesProvider/ServideProvider';
 import ProviderProfileAddresses from '../../ProviderProfile/ProviderProfileAddresses/ProviderProfileAddresses';
+import {
+  getAllProvidersAddresses,
+  getEventsHoursProvider,
+  getProviderDetails,
+  getProviderServices,
+  getServices,
+} from '../../../Redux/actions/actions';
+
 //
 
 const buyedServices = [
@@ -132,6 +141,13 @@ const useStyles = makeStyles(() => ({
 
 const HomeProvider = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const servicesByProvider = useSelector((state) => state.servicesByProvider);
+  const services = useSelector((state) => state.services);
+  const providerDetails = useSelector((state) => state.providerDetails);
+  const providerEventsHours = useSelector((state) => state.providerEventsHours);
+  //
+  const addresses = useSelector((state) => state.providersAddresses);
 
   const provider = JSON.parse(
     window.localStorage.getItem('loggedSpatifyApp')
@@ -141,10 +157,10 @@ const HomeProvider = () => {
     firstName: '',
     services: [],
   });
+
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedSpatifyApp');
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
+    const user = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
+    if (user) {
       user.userFound
         ? setUsers({
             ...users,
@@ -157,8 +173,21 @@ const HomeProvider = () => {
             services: user.providerFound?.services,
           });
     }
-  }, []);
 
+    dispatch(getServices());
+
+    dispatch(getProviderServices(user.providerFound?._id));
+
+    dispatch(getProviderDetails(user.providerFound?._id));
+
+    dispatch(getEventsHoursProvider(provider._id));
+    //
+    dispatch(getAllProvidersAddresses(provider._id));
+    //
+  }, [dispatch]);
+
+  // console.log('detailsProv', providerDetails.data);
+  // console.log('HORARIOS', providerEventsHours);
   return (
     <div className='banner-container'>
       <div className='title-background'>
@@ -175,14 +204,30 @@ const HomeProvider = () => {
           <ProviderProfileData
             className='prov-detail'
             classes={classes}
-            provider={provider}
+            provider={providerDetails?.data}
+            data={addresses}
           />
-          <div>
-            <ProviderProfileAddresses classes={classes} provider={provider} />
-          </div>
-          <div className='container-hours-profile'>
-            <h1>Hours</h1>
-          </div>
+
+          <ProviderProfileAddresses
+            classes={classes}
+            provider={provider}
+            data={addresses}
+          />
+
+          <ServicesProvider
+            classes={classes}
+            provider={provider}
+            data={servicesByProvider?.data}
+            alldata={services.data}
+            type='Servicios'
+          />
+          <ServicesProvider
+            classes={classes}
+            // provider={provider}
+            data={providerEventsHours?.eventsHours}
+            alldata={services.data}
+            type='Horarios'
+          />
         </div>
 
         {users.services?.length < 1 ? (
