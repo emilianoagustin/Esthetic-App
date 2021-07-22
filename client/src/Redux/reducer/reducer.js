@@ -14,6 +14,7 @@ const initialState = {
   },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
+  servicesByProvider: [],
   providersAddresses: [],
   provider_address_status: {},
   provider_address_update_status: {},
@@ -27,6 +28,7 @@ const initialState = {
     data: {},
   },
   userReservations: { loading: true, data: [] },
+
   allUsers: [],
   keyword: "",
 };
@@ -116,9 +118,12 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+
+    //GET SERVICES BY PROVIDER
+    case actionsTypes.GET_SERVICES_BY_PROVIDER:
       return {
         ...state,
-        providersByService: { loading: false, error: action.payload },
+        servicesByProvider: action.payload,
       };
     case actionsTypes.GET_KEYWORD_SEARCHBAR:
       return {
@@ -127,6 +132,7 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS' DETAILS
+
     // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
     //   return {
     //     ...state,
@@ -136,6 +142,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         allProviders: { loading: false, data: action.payload },
+
+    case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+      return {
+        ...state,
+        providerDetails: { loading: true },
+
       };
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
@@ -230,12 +242,14 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
+
     ///GET ALL USERS
     case actionsTypes.GET_ALL_USERS_SUCCES:
       return {
         ...state,
         allProviders: { loading: false, data: action.payload },
       };
+
 
     default:
       return state;
