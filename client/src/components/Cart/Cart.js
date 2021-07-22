@@ -9,6 +9,9 @@ import { HOST } from '../../utils/constants'
 import { getAllPrice, setPaginationViews } from '../../utils/pagination';
 import Error from '../Error/Error';
 import loadingGiff from '../../giff/loading.gif';
+import './Cart.scss';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,50 +89,30 @@ function Cart(props) {
                                                 </div>
                                             ) : null
                                         }
-                                        <Grid
-                                            container
-                                            item
-                                            direction="column"
-                                            justifyContent="center"
-                                            alignItems="center"
-                                            xs={12}
-                                            sm={6}
-                                            className={classes.gridContainer}
-
-                                        >
-                                            <div>
-                                                <div>
-                                                    <button onClick={() => changePage('previous')}>{'<<<'}</button>
-                                                    <span>{`Página ${page + 1} de ${views.length}`}</span>
-                                                    <button onClick={() => changePage('next')}>{'>>>'}</button>
-                                                </div>
-                                                {
-                                                    views[page].map((reservation, index) => (
-                                                        <CartItem
-                                                            key={index}
-                                                            data={reservation}
-                                                            itemLoading={() => setLoadingItems(!loadingItems)}
-                                                        />
-                                                    ))
-                                                }
+                                        <div className='cart-pagination'>
+                                            <div className='cart-pagination-header'>
+                                                <button className='left' onClick={() => changePage('previous')}><NavigateBeforeIcon /></button>
+                                                <span>{`Página ${page + 1} de ${views.length}`}</span>
+                                                <button className='right' onClick={() => changePage('next')}><NavigateNextIcon /></button>
                                             </div>
-                                        </Grid>
-                                        <Grid
-                                            container
-                                            item
-                                            direction="column"
-                                            justifyContent="center"
-                                            alignItems="center"
-                                            xs={12}
-                                            sm={6}
-                                        >
+                                            {
+                                                views[page].map((reservation, index) => (
+                                                    <CartItem
+                                                        key={index}
+                                                        data={reservation}
+                                                        itemLoading={() => setLoadingItems(!loadingItems)}
+                                                    />
+                                                ))
+                                            }
+                                        </div>
+                                        <div className='cart-detail'>
                                             <CartOrder
                                                 total={totalPrice}
                                                 itemLoading={() => setLoadingItems(!loadingItems)}
                                                 response={(b) => setResponseLoading(b)}
                                                 props={props}
                                             />
-                                        </Grid>
+                                        </div>
                                     </Grid>
                                 )
                 }

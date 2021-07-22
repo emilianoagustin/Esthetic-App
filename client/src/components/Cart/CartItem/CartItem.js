@@ -5,26 +5,35 @@ import Image from '../../../img/Barberia.jpg';
 import axios from 'axios';
 import { HOST } from '../../../utils/constants';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
     },
     paper: {
-        padding: theme.spacing(2),
-        margin: '20px auto',
-        maxWidth: 500,
-        border: '2px solid black'
+        padding: '5px',
+        margin: '5px auto',
+        maxWidth: 700,
+        minWidth: 600,
+        boxShadow: '0 0 10px gray'
     },
     image: {
-        width: 128,
-        height: 128,
+        borderRadius: '0.5em',
+        width: 100,
+        height: 100,
+        marginRight: '10px'
     },
     img: {
         margin: 'auto',
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
+    },
+    cartItem: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-beetween'
     },
 }));
 
@@ -56,44 +65,36 @@ function CartItem({ data, itemLoading }) {
     }
 
     return (
-        <Grid xs item>
-            <Paper className={classes.paper}>
+        <Paper className={classes.paper}>
+            <div className={classes.cartItem}>
+                <Grid item>
+                    <img className={classes.img, classes.image} alt="complex" src={Image} />
+                </Grid>
                 <Grid container spacing={2}>
-                    <Grid item>
-                        <img className={classes.img, classes.image} alt="complex" src={Image} />
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
+                    <Grid item sm container>
+                        <Grid item xs container direction="column">
                             <Grid item xs>
-                                <Typography gutterBottom variant="subtitle1">
-                                    {data.service}
+                                <Typography gutterBottom variant="body1">
+                                    {`${data.service} - ${data.provider}`}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    {data.provider}
+                                    {`Precio: $${data.price}`}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    {data.date}
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    {`${data.hour}:00hs`}
+                                    {`Fecha: ${data.date} - ${data.hour}:00hs`}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    {data.address}
+                                    {`Dirección: ${data.address}`}
                                 </Typography>
                             </Grid>
-                            <Grid item>
-                                <Button onClick={() => handleDelete()} variant='outlined' color='secondary' size='small'>
-                                    Eliminar
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="subtitle1">{data.price}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Paper>
-        </Grid>
+                <Button onClick={() => handleDelete()} color='secondary' size='medium'>
+                    <DeleteIcon />
+                </Button>
+            </div>
+        </Paper>
     )
 }
 
