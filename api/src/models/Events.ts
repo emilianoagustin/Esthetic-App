@@ -22,9 +22,18 @@ const EventSchema = new Schema(
             type: Boolean,
             default: true,
         },
+        userAlert: {
+            type: Boolean,
+            default: false,
+        },
+        providerAlert: {
+            type: Boolean,
+            default: false,
+        },
         service: {
             type: Schema.Types.ObjectId,
             ref: 'Services',
+            autopopulate: true,
         },
         user: {
             type: Schema.Types.ObjectId,
@@ -37,6 +46,7 @@ const EventSchema = new Schema(
         address: {
             type: Schema.Types.ObjectId,
             ref: 'Addresses',
+            autopopulate: true,
         },
     },
     { versionKey: false, timestamps: true }

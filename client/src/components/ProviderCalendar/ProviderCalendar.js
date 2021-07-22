@@ -208,10 +208,10 @@ export default function ProviderCalendar({ match }) {
                                                         className='modal-button left'
                                                         onClick={() => setInvalid(false)}
                                                     >CANCELAR</button>
-                                                    <NavLink exact to="/userRegister" className='navlink'>
+                                                    <NavLink exact to="/login" className='navlink'>
                                                         <button
                                                             className='modal-button right'
-                                                        >REGISTRO</button>
+                                                        >INGRESAR</button>
                                                     </NavLink>
                                                 </div>
                                             </div>
