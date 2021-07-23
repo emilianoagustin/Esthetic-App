@@ -30,6 +30,10 @@ const EventSchema = new Schema(
             type: Boolean,
             default: false,
         },
+        ratingAlert: {
+            type: Boolean,
+            default: false,
+        },
         service: {
             type: Schema.Types.ObjectId,
             ref: 'Services',

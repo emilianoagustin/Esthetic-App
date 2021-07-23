@@ -85,13 +85,22 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
             const event = await Events.findById(actual);
             const eventUser = await Users.findById(event.user);
             const eventCalendar = await Calendar.findById(event.calendar);
-            const eventProvider = await Providers.findById(eventCalendar.provider)
+            const eventProvider = await Providers.findById(eventCalendar.provider);
+
+            if (event.isActive) {
+                if (!isValidDate(event.date, event.hour)) {
+                    event.isActive = false;
+                    event.ratingAlert = true;
+                    await event.save();
+                }
+            }
 
             const eventData = {
                 _id: event._id,
                 isActive: event.isActive,
                 userAlert: event.userAlert,
                 providerAlert: event.providerAlert,
+                ratingAlert: event.ratingAlert,
                 hour: event.hour,
                 date: event.date,
                 address: {
@@ -127,5 +136,17 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
     } catch (error) {
         res.send(error);
     }
+
+};
+
+export const cancelEvent: RequestHandler = async (req, res) => {
+
+};
+
+export const giveReview: RequestHandler = async (req, res) => {
+
+};
+
+export const removeAlert: RequestHandler = async (req, res) => {
 
 };
