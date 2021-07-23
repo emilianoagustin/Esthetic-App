@@ -144,10 +144,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS' DETAILS
-<<<<<<< HEAD
-=======
-
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
     // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
     //   return {
     //     ...state,
@@ -157,19 +153,12 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         allProviders: { loading: false, data: action.payload },
-<<<<<<< HEAD
       }
-=======
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
 
     case actionsTypes.GET_PROVIDER_DETAILS_REQ:
       return {
         ...state,
         providerDetails: { loading: true },
-<<<<<<< HEAD
-=======
-
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
       };
       
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
@@ -265,17 +254,12 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
-<<<<<<< HEAD
-=======
-
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
     ///GET ALL USERS
     case actionsTypes.GET_ALL_USERS_SUCCES:
       return {
         ...state,
         allProviders: { loading: false, data: action.payload },
       };
-<<<<<<< HEAD
     ///RENDER SEARCHBAR 
     case actionsTypes.RENDER_SEARCHBAR:
       return {
@@ -287,9 +271,6 @@ const appReducer = (state = initialState, action) => {
         ...state,
         setStateSearch: action.payload,
       };
-=======
-
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
 
     default:
       return state;
