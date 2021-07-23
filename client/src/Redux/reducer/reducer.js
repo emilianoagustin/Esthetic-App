@@ -6,15 +6,12 @@ const initialState = {
     loading: true,
     data: [],
   },
-<<<<<<< HEAD
   allProviders: {
     loading: true,
     data: [],
   },
   userActive: "",
   loginData: {},
-=======
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
   serviceDetails: { loading: true, data: {} },
 
   allProviders: {
