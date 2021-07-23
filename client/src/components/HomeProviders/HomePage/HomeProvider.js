@@ -138,6 +138,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 //
+//function isRendin
 
 const HomeProvider = () => {
   const classes = useStyles();

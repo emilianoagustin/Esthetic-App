@@ -47,7 +47,7 @@ function ProviderProfileAddresses({ provider, classes, data }) {
                     <>
                       <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                          <Typography variant='h6'>{a.name}</Typography>
+                          <Typography variant='h6'>{a.name} 🏠</Typography>
                         </AccordionSummary>
                         <hr />
                         <AccordionDetails>

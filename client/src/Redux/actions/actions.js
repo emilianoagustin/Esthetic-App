@@ -60,15 +60,12 @@ export const getAllProviders = () => async (dispatch) => {
 };
 
 export const handleKeyword = (keyword) => (dispatch) => {
-  // console.log('entre aqui');
-  // console.log(keyword);
   dispatch({ type: actionsTypes.GET_KEYWORD_SEARCHBAR, payload: keyword });
 };
 
 export const getProviderServices = (providerId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${GET_PROVIDERS}/${providerId}/services`);
-    // console.log('DATA QUE LLEGA', data);
     dispatch({
       type: actionsTypes.GET_SERVICES_BY_PROVIDER,
       payload: data,

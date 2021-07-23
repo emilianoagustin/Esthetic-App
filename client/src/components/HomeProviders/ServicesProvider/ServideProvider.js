@@ -37,7 +37,9 @@ function ServicesProvider({ provider, classes, data, alldata, type }) {
             >
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant='h6'>{type}</Typography>
+                  <Typography variant='h6'>
+                    {type === 'Servicios' ? 'Servicios 💇‍♂️💅' : 'Horarios 🕚'}
+                  </Typography>
                 </AccordionSummary>
                 <hr />
                 {data?.map((service) => (

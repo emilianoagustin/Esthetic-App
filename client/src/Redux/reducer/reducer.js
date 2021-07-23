@@ -236,6 +236,7 @@ const appReducer = (state = initialState, action) => {
         userReservations: { loading: false, error: action.payload },
       };
 
+
     default:
       return state;
   }
