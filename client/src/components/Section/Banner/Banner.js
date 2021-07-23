@@ -21,10 +21,10 @@ export default function Banner() {
         <p>
           Somos La noticia en tu ciudad. Venimos a reunir a todos tus
           estilistas, terapeutas y esteticistas de spa favoritos directamente a
-          tu casa o donde sea que te encuentres. ¡Cuando sea! ¡Ése es nuestro
+          tu casa o donde sea que te encuentres. ¡Cuándo sea, dónde sea! ¡Ése es nuestro
           lema! Desde manicura hasta servicio de barbería profesional y masajes
           especializados, lo tenemos todo dentro de la seguridad de tu teléfono
-          u ordenador a sólo unos clicks de distancia. Regístrate ahora y
+          u ordenador a sólo unos clicks de distancia. Registrate ahora y
           simplemente ten un día relajante con Spa-tify.
         </p>
       </div>

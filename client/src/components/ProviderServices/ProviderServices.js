@@ -13,14 +13,13 @@ const ProviderServices = ({ providerId }) => {
   useEffect(() => {
     dispatch(getProviderServices(providerId));
   }, [dispatch]);
-  console.log("SERVICIOS:", servicesByProvider);
 
   return (
     <div>
       <h2>Éstos son algunos de los servicios que brindo</h2>
       <span>
         {servicesByProvider ? (
-          servicesByProvider.data.map((serv) => {
+          servicesByProvider.data?.map((serv) => {
             return <RecipeReviewCard data={serv} />;
           })
         ) : (

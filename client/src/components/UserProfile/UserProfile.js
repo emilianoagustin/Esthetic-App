@@ -34,7 +34,7 @@ function UserProfile() {
           {/* <div className='profile-container'>
         <div className='profile-data'>
           <div className='profile-img'>
-            {ID.userFound.img ? (
+            {ID.userFound?.img ? (
               <img
                 className='img'
                 src={ID.userFound.img}
