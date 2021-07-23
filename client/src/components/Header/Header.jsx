@@ -98,7 +98,6 @@ export default function PrimarySearchAppBar() {
   const setStateSearch = useSelector((state) => state.setStateSearch);
   console.log(setStateSearch)
   const loginData = useSelector((state) => state.loginData);
-  console.log(loginData);
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
   

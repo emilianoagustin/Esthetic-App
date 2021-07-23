@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import defaultImg from '../../img/wall-cart.jpg';
-import { getUserReservations } from '../../Redux/actions/user.actions';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import defaultImg from "../../img/wall-cart.jpg";
+import { getUserReservations } from "../../Redux/actions/user.actions";
+import UserProfileInfo from "./UserProfileInfo/UserProfileInfo";
+import UserReservations from "./UserReservations/UserReservations";
+import "./UserProfile.css";
+import UserBanner from "./UserBanner/UserBanner";
 
-import './UserProfile.css';
-
-const ID = window.localStorage.getItem('loggedSpatifyApp')
-  ? JSON.parse(window.localStorage.getItem('loggedSpatifyApp'))
+const ID = window.localStorage.getItem("loggedSpatifyApp")
+  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
   : null;
 
-console.log('Esta es la info del ID', ID);
+
+console.log("Esta es la info del ID", ID);
 
 function UserProfile() {
   const dispatch = useDispatch();
@@ -22,11 +25,16 @@ function UserProfile() {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='profile-container'>
+    <div className="container-main">
+      <div className="container">
+        <div className="user-profile-container">
+          <UserProfileInfo />
+          <UserBanner />
+
+          {/* <div className='profile-container'>
         <div className='profile-data'>
           <div className='profile-img'>
-            {ID.userFound.img ? (
+            {ID.userFound?.img ? (
               <img
                 className='img'
                 src={ID.userFound.img}
@@ -48,12 +56,15 @@ function UserProfile() {
           <p className='p'>Direccion: {ID.userFound.addresses}</p>
         </div>
         <br></br>
-      </div>
+      </div> */}
+          <UserReservations />
 
-      <div className='booking-container'>
+          {/*    <div className='booking-container'>
         <div className='booking-data'>
           <h1 className='h1'> MIS TURNOS</h1>
           <p className='p'>Proximos Turnos: {userData && userData._id}</p>
+        </div>
+      </div> */}
         </div>
       </div>
     </div>

@@ -1,0 +1,7 @@
+.banner-profile-container{
+
+    display: flex;
+    height: 150px;
+    width: 80%;
+    background-color: red;
+}

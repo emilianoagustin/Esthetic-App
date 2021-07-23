@@ -96,3 +96,23 @@ export const getAllUsers = () => async (dispatch) => {
     });
   }
 };
+//POST USER DATA ->>> UPDATE PROFILE
+
+
+export const putUserData = (userId, updatedData) => async (dispatch) => {
+  dispatch({ type: actionsTypes.POST_USER_DATA_PROFILE_REQUEST });
+
+  try {
+    const { data } = await axios.put(`${GET_USERS}/${userId}`, updatedData);
+    dispatch({
+      type: actionsTypes.POST_USER_DATA_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.POST_USER_DATA_PROFILE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+

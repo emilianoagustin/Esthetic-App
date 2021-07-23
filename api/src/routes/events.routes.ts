@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createEvent, getCalendarEventsByDay } from '../controllers/getEvents';
+import { getEventsByRole, getCalendarEventsByDay } from '../controllers/getEvents';
 
 const router = Router();
 
-router.post('/', createEvent);
+router.get('/:role/:id', getEventsByRole);
 router.post('/calendar', getCalendarEventsByDay);
 
 export default router;
