@@ -7,53 +7,53 @@ import { isValidDate } from '../utils/functions';
 import Providers from '../models/Providers';
 import Bags from '../models/Bags';
 
-<<<<<<< HEAD
-export const getCalendarEventsByDay: RequestHandler = (req, res) => {
+export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
+  let reservations: any = [];
+
+  if (req.body.user !== '') {
+    const user: any = await Users.findById(req.body.user);
+    const bag: any = await Bags.findOne({ user: user });
+    reservations = bag.reservations;
+  }
+
   Providers.findById(req.body.provider)
     .then((prov: any) => {
       Calendar.findOne({ provider: prov }).then((result: any) => {
         const events: Array<any> = [];
-=======
-export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
-
-    let reservations: any = []
-
-    if (req.body.user !== '') {
-        const user: any = await Users.findById(req.body.user);
-        const bag: any = await Bags.findOne({ user: user });
-        reservations = bag.reservations;
-    }
->>>>>>> 34e57614db84feb2899e77b4cf46e126df959399
 
         result.eventsHours.forEach((hour: Number, index: any) => {
           let validate = isValidDate(req.body.date, hour);
+
+          let cartItem = false;
+
+          reservations.forEach((reservation: any) => {
+            if (
+              reservation.providerID === req.body.provider &&
+              reservation.date === req.body.date &&
+              reservation.hour === hour
+            ) {
+              cartItem = true;
+            }
+          });
 
           events[index] = {
             isActive: validate,
             isAvailable: true,
             date: req.body.date,
             hour: hour,
+            isCartItem: cartItem,
           };
         });
 
-                        let cartItem = false;
-
-                        reservations.forEach((reservation: any) => {
-                            if (reservation.providerID === req.body.provider &&
-                                reservation.date === req.body.date &&
-                                reservation.hour === hour) {
-                                cartItem = true;
-                            }
-                        })
-
-                        events[index] = {
-                            isActive: validate,
-                            isAvailable: true,
-                            date: req.body.date,
-                            hour: hour,
-                            isCartItem: cartItem
-                        }
-                    })
+        result.events.map((event: any) => {
+          if (event.date === req.body.date) {
+            result.eventsHours.forEach((hour: Number, index: any) => {
+              if (event.hour === hour) {
+                events[index] = event;
+              }
+            });
+          }
+        });
 
         return res.status(200).json(events);
       });
@@ -65,65 +65,64 @@ export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
 };
 
 export const getEventsByRole: RequestHandler = async (req, res) => {
-    const { role, id } = req.params;
+  const { role, id } = req.params;
 
-    try {
-        let user: any;
+  try {
+    let user: any;
 
-        if (role === 'user') {
-            user = await Users.findById(id);
-        } else {
-            user = await Providers.findById(id);
-        }
-
-        let events: Array<any> = [];
-
-        for (let i = 0; i < user.events.length; i++) {
-            const actual = user.events[i];
-            const event = await Events.findById(actual);
-            const eventUser = await Users.findById(event.user);
-            const eventCalendar = await Calendar.findById(event.calendar);
-            const eventProvider = await Providers.findById(eventCalendar.provider)
-
-            const eventData = {
-                _id: event._id,
-                isActive: event.isActive,
-                userAlert: event.userAlert,
-                providerAlert: event.providerAlert,
-                hour: event.hour,
-                date: event.date,
-                address: {
-                    country: event.address.country,
-                    state: event.address.state,
-                    city: event.address.city,
-                    address_1: event.address.address_1,
-                    address_details: event.address.address_details,
-                    zip_code: event.address.zip_code,
-                },
-                service: {
-                    name: event.service.name,
-                    price: event.service.price,
-                    description: event.service.description,
-                },
-                user: {
-                    firstName: eventUser?.firstName,
-                    lastName: eventUser?.lastName,
-                    gender: eventUser?.gender,
-                    phone: eventUser?.phone,
-                },
-                provider: {
-                    firstName: eventProvider?.firstName,
-                    lastName: eventProvider?.lastName,
-                    gender: eventProvider?.gender,
-                    phone: eventProvider?.phone,
-                }
-            }
-            events.push(eventData);
-        }
-
-        res.status(200).send(events);
-    } catch (error) {
-        res.send(error);
+    if (role === 'user') {
+      user = await Users.findById(id);
+    } else {
+      user = await Providers.findById(id);
     }
 
+    let events: Array<any> = [];
+
+    for (let i = 0; i < user.events.length; i++) {
+      const actual = user.events[i];
+      const event = await Events.findById(actual);
+      const eventUser = await Users.findById(event.user);
+      const eventCalendar = await Calendar.findById(event.calendar);
+      const eventProvider = await Providers.findById(eventCalendar.provider);
+
+      const eventData = {
+        _id: event._id,
+        isActive: event.isActive,
+        userAlert: event.userAlert,
+        providerAlert: event.providerAlert,
+        hour: event.hour,
+        date: event.date,
+        address: {
+          country: event.address.country,
+          state: event.address.state,
+          city: event.address.city,
+          address_1: event.address.address_1,
+          address_details: event.address.address_details,
+          zip_code: event.address.zip_code,
+        },
+        service: {
+          name: event.service.name,
+          price: event.service.price,
+          description: event.service.description,
+        },
+        user: {
+          firstName: eventUser?.firstName,
+          lastName: eventUser?.lastName,
+          gender: eventUser?.gender,
+          phone: eventUser?.phone,
+        },
+        provider: {
+          firstName: eventProvider?.firstName,
+          lastName: eventProvider?.lastName,
+          gender: eventProvider?.gender,
+          phone: eventProvider?.phone,
+        },
+      };
+      events.push(eventData);
+    }
+
+    res.status(200).send(events);
+  } catch (error) {
+    res.send(error);
+  }
 };
