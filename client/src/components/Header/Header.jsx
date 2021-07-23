@@ -15,6 +15,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
 import { logout} from "../../Redux/actions/user.actions";
 import "./Header.scss";
+import handleSetSearchBar from '../../Redux/actions/actions'
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -93,15 +95,19 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const setStateSearch = useSelector((state) => state.setStateSearch);
+  console.log(setStateSearch)
   const loginData = useSelector((state) => state.loginData);
   console.log(loginData);
   const userActive = useSelector((state) => state.userActive);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [zona, setzona] = React.useState(null);
+  
   const [render, setRender] = React.useState("");
+  
+
 
   const open = Boolean(anchorEl);
-  const abrir = Boolean(zona);
+ 
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedSpatifyApp");
@@ -229,8 +235,7 @@ export default function PrimarySearchAppBar() {
       ]
     : loginProvider;
 
- 
- 
+
 
   return (
     <div className={`${classes.grow} header`}>
@@ -252,8 +257,8 @@ export default function PrimarySearchAppBar() {
               />
             </Link>
           </Typography>
-          <Link to={"/search"} style={{textDecoration:"none"}}>
-            <div style={{marginLeft: "4rem"}}>BUSQUEDA AVANZADA</div>
+          <Link to={"/search"} style={{textDecoration:"none"}}  /* onClick={(e)=>{handleSetSearchBar(e)} */>
+            <div  style={{marginLeft: "4rem"}}>BUSQUEDA AVANZADA</div>
           </Link>
 
           

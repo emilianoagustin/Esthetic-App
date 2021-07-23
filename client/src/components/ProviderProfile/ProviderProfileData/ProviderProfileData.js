@@ -52,7 +52,7 @@ function ProviderProfileData({ provider, classes }) {
                             </Grid>
                             <Grid item container justifyContent='space-between' direction='column'>
                                 {
-                                    addresses.filter( address => address.is_main === true).map( a => {
+                                    addresses?.filter( address => address.is_main === true).map( a => {
                                         return (
                                             <>
                                                 <Grid item container justifyContent='space-between' className={classes.dirItems}>

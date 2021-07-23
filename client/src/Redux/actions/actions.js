@@ -66,6 +66,19 @@ export const handleKeyword = (keyword) => (dispatch) => { 
   dispatch({ type: actionsTypes.GET_KEYWORD_SEARCHBAR ,  payload: keyword})
 } 
 
+
+export const handleSearchBar = (data) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(data)
+  dispatch({ type: actionsTypes.RENDER_SEARCHBAR ,  payload: data})
+} 
+
+export const handleSetSearchBar = (data) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(data)
+  dispatch({ type: actionsTypes.SET_SEARCHBAR ,  payload: data})
+} 
+
 export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST });
 

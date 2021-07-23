@@ -20,6 +20,9 @@ const initialState = {
   provider_update_status: {},
   reservation_status: {},
 
+
+  setStateSearch : "", 
+  renderSearchBar: "",
   userActive: "",
   loginData: {},
   userData: {
@@ -235,6 +238,17 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         allProviders: { loading: false, data: action.payload },
+      };
+    ///RENDER SEARCHBAR 
+    case actionsTypes.RENDER_SEARCHBAR:
+      return {
+        ...state,
+        renderSearchBar: action.payload,
+      };
+    case actionsTypes.SET_SEARCHBAR:
+      return {
+        ...state,
+        setStateSearch: action.payload,
       };
 
     default:
