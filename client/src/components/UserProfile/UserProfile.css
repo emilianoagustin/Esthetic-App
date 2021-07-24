@@ -1,4 +1,4 @@
-.container {
+.user-profile-container {
   display: flex;
   flex-direction: row;
   background-color: #ffffff;
@@ -29,6 +29,7 @@
 
 .img{
 border-radius: 100px;
+width: 300px;
 }
 
 .profile-info {

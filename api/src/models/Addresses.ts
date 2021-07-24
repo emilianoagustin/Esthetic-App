@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const AddressSchema = new Schema(
   {
@@ -42,16 +42,16 @@ const AddressSchema = new Schema(
     },
     provider: {
       type: Schema.Types.ObjectId,
-      ref: "Providers",
+      ref: 'Providers',
       // autopopulate: true,
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: 'Users',
       // autopopulate: true,
     },
   },
   { versionKey: false, timestamps: true }
 );
-AddressSchema.plugin(require("mongoose-autopopulate"));
-export default model("Addresses", AddressSchema);
+AddressSchema.plugin(require('mongoose-autopopulate'));
+export default model('Addresses', AddressSchema);

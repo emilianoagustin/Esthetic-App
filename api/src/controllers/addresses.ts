@@ -11,13 +11,13 @@ export const getAllAddresses: RequestHandler = async (req, res) => {
       const foundAddress = await Addresses.find({ user: user });
       if (foundAddress) return res.send(foundAddress);
       return res.status(404).send({
-        message: "El usuario no registra ningún domicilio al momento.",
+        message: 'El usuario no registra ningún domicilio al momento.',
       });
     } else if (provider) {
       const foundAddress = await Addresses.find({ provider: provider });
       if (foundAddress) return res.send(foundAddress);
       return res.status(404).send({
-        message: "El prestador no registra ningún domicilio al momento.",
+        message: 'El prestador no registra ningún domicilio al momento.',
       });
     }
   } catch (error: any) {
@@ -35,13 +35,13 @@ export const getOneAddress: RequestHandler = async (req, res) => {
       if (foundAddress) return res.send(foundAddress);
       return res
         .status(404)
-        .send({ message: "Domicilio de usuario no encontrado" });
+        .send({ message: 'Domicilio de usuario no encontrado' });
     } else if (provider) {
       const foundAddress = await Addresses.findById({ id: idAd });
       if (foundAddress) return res.send(foundAddress);
       return res
         .status(404)
-        .send({ message: "Domicilio de prestador no encontrado" });
+        .send({ message: 'Domicilio de prestador no encontrado' });
     }
   } catch (error: any) {
     res.send(error);
@@ -62,7 +62,7 @@ export const createAddress: RequestHandler = async (req, res) => {
           message: `Ya tienes una domicilio llamado ${req.body.name}. Quieres agregar tu nuevo domicilio con otro nombre o registrar uno nuevo?`,
         });
       } else {
-        console.log("USER: ", user.id);
+        console.log('USER: ', user.id);
         const newAddress = new Addresses({
           ...req.body,
           user: user.id,
@@ -85,7 +85,7 @@ export const createAddress: RequestHandler = async (req, res) => {
           message: `Ya tienes una domicilio llamado ${req.body.name}. Quieres agregar tu nuevo domicilio con otro nombre o registrar uno nuevo?`,
         });
       } else {
-        console.log("PROVIDERS: ", provider.id);
+        console.log('PROVIDERS: ', provider.id);
         const newAddress = new Addresses({
           ...req.body,
           provider: provider.id,
@@ -118,11 +118,11 @@ export const updateAddress: RequestHandler = async (req, res) => {
       if (updateAddress)
         return res.status(201).send({
           data: updateAddress,
-          message: "Domicilio actualizado con éxito.",
+          message: 'Domicilio actualizado con éxito.',
         });
       return res
         .status(404)
-        .send({ message: "Domicilio de usuario no encontrado" });
+        .send({ message: 'Domicilio de usuario no encontrado' });
     } else if (provider) {
       const updateAddress = await Addresses.findByIdAndUpdate(idAd, req.body, {
         new: true,
@@ -130,11 +130,11 @@ export const updateAddress: RequestHandler = async (req, res) => {
       if (updateAddress)
         return res.status(201).send({
           data: updateAddress,
-          message: "Domicilio actualizado con éxito.",
+          message: 'Domicilio actualizado con éxito.',
         });
       return res
         .status(404)
-        .send({ message: "Domicilio de prestador no encontrado" });
+        .send({ message: 'Domicilio de prestador no encontrado' });
     }
     if (provider) {
       const updateAddress = await Addresses.findByIdAndUpdate(idAd, req.body, {
@@ -167,7 +167,7 @@ export const deleteAddress: RequestHandler = async (req, res) => {
         });
       return res
         .status(404)
-        .send({ message: "Domicilio de usuario no encontrado" });
+        .send({ message: 'Domicilio de usuario no encontrado' });
     } else if (provider) {
       const deleteAddress = await Addresses.findByIdAndDelete(idAd);
       if (deleteAddress)
@@ -176,7 +176,7 @@ export const deleteAddress: RequestHandler = async (req, res) => {
         });
       return res
         .status(404)
-        .send({ message: "Domicilio de prestador no encontrado" });
+        .send({ message: 'Domicilio de prestador no encontrado' });
     }
   } catch (error: any) {
     res.status(500).send({ message: 'Ha habido un problema con tu pedido' });

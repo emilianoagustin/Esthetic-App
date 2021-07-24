@@ -6,11 +6,17 @@ const initialState = {
     loading: true,
     data: [],
   },
+  allProviders: {
+    loading: true,
+    data: [],
+  },
   userActive: '',
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
+  servicesByProvider: [],
+  providerEventsHours: {},
   providersAddresses: [],
   provider_address_status: {},
   provider_address_update_status: {},
@@ -20,8 +26,8 @@ const initialState = {
     loading: true,
     data: {},
   },
-  userReservations:{loading: true,
-    data: []}
+  userReservations: { loading: true, data: [] },
+  keyword: '',
 };
 
 const appReducer = (state = initialState, action) => {
@@ -109,17 +115,26 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+      break;
+
+    //GET SERVICES BY PROVIDER
+    case actionsTypes.GET_SERVICES_BY_PROVIDER:
       return {
         ...state,
-        providersByService: { loading: false, error: action.payload },
+        servicesByProvider: action.payload,
+      };
+    case actionsTypes.GET_KEYWORD_SEARCHBAR:
+      return {
+        ...state,
+        keyword: action.payload,
       };
 
     //GET PROVIDERS' DETAILS
-    // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
-    //   return {
-    //     ...state,
-    //     providerDetails: { loading: true },
-    //   };
+    case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+      return {
+        ...state,
+        providerDetails: { loading: true },
+      };
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
@@ -135,29 +150,36 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.GET_PROVIDERS_ADDRESSES:
       return {
         ...state,
-        providersAddresses: action.payload
+        providersAddresses: action.payload,
       };
 
     //SET PROVIDER ADDRESS
     case actionsTypes.SET_PROVIDER_ADDRESS:
       return {
         ...state,
-        provider_address_status: { message: action.payload }
-      }
+        provider_address_status: { message: action.payload },
+      };
 
-      //SET PROVIDER ADDRESS UPDATE
+    //SET PROVIDER ADDRESS UPDATE
     case actionsTypes.SET_PROVIDER_ADDRESS_UPDATE:
       return {
         ...state,
-        provider_address_update_status: { message: action.payload }
-      }
+        provider_address_update_status: { message: action.payload },
+      };
 
-      //SET PROVIDER UPDATE
+    //SET PROVIDER UPDATE
     case actionsTypes.SET_PROVIDER_UPDATE:
       return {
         ...state,
-        provider_update_status: { message: action.payload }
-      }
+        provider_update_status: { message: action.payload },
+      };
+
+    //EVENTS HOURS PROVIDER
+    case actionsTypes.GET_PROVIDERS_EVENTS_HOURS:
+      return {
+        ...state,
+        providerEventsHours: action.payload,
+      };
 
     ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
@@ -196,10 +218,9 @@ const appReducer = (state = initialState, action) => {
         userData: { loading: false, error: action.payload },
       };
 
+    //GET USER RESERVATIONS
 
-      //GET USER RESERVATIONS
-
-      case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
+    case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
       return {
         ...state,
         userReservations: { loading: true },
@@ -214,8 +235,6 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
-
-
 
 
     default:

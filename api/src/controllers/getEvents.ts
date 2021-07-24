@@ -9,62 +9,60 @@ import Bags from '../models/Bags';
 import Rating from '../models/Rating';
 
 export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
+  let reservations: any = [];
 
-    let reservations: any = []
+  if (req.body.user !== '') {
+    const user: any = await Users.findById(req.body.user);
+    const bag: any = await Bags.findOne({ user: user });
+    reservations = bag.reservations;
+  }
 
-    if (req.body.user !== '') {
-        const user: any = await Users.findById(req.body.user);
-        const bag: any = await Bags.findOne({ user: user });
-        reservations = bag.reservations;
-    }
+  Providers.findById(req.body.provider)
+    .then((prov: any) => {
+      Calendar.findOne({ provider: prov }).then((result: any) => {
+        const events: Array<any> = [];
 
-    Providers.findById(req.body.provider)
-        .then((prov: any) => {
-            Calendar.findOne({ provider: prov })
-                .then((result: any) => {
-                    const events: Array<any> = [];
+        result.eventsHours.forEach((hour: Number, index: any) => {
+          let validate = isValidDate(req.body.date, hour);
 
-                    result.eventsHours.forEach((hour: Number, index: any) => {
-                        let validate = isValidDate(req.body.date, hour);
+          let cartItem = false;
 
-                        let cartItem = false;
+          reservations.forEach((reservation: any) => {
+            if (
+              reservation.providerID === req.body.provider &&
+              reservation.date === req.body.date &&
+              reservation.hour === hour
+            ) {
+              cartItem = true;
+            }
+          });
 
-                        reservations.forEach((reservation: any) => {
-                            if (reservation.providerID === req.body.provider &&
-                                reservation.date === req.body.date &&
-                                reservation.hour === hour) {
-                                cartItem = true;
-                            }
-                        })
+          events[index] = {
+            isActive: validate,
+            isAvailable: true,
+            date: req.body.date,
+            hour: hour,
+            isCartItem: cartItem,
+          };
+        });
 
-                        events[index] = {
-                            isActive: validate,
-                            isAvailable: true,
-                            date: req.body.date,
-                            hour: hour,
-                            isCartItem: cartItem
-                        }
-                    })
+        result.events.map((event: any) => {
+          if (event.date === req.body.date) {
+            result.eventsHours.forEach((hour: Number, index: any) => {
+              if (event.hour === hour) {
+                events[index] = event;
+              }
+            });
+          }
+        });
 
-                    result.events.map((event: any) => {
-                        if (event.date === req.body.date) {
-                            result.eventsHours.forEach((hour: Number, index: any) => {
-                                if (event.hour === hour) {
-                                    events[index] = event;
+        return res.status(200).json(events);
+      });
+    })
 
-                                }
-                            })
-                        }
-                    });
-
-                    return res.status(200).json(events);
-                })
-
-        })
-
-        .catch(() => {
-            return res.status(404).json({ message: 'No se encontraron Eventos' });
-        })
+    .catch(() => {
+      return res.status(404).json({ message: 'No se encontraron Eventos' });
+    });
 };
 
 export const getEventsByRole: RequestHandler = async (req, res) => {
@@ -134,12 +132,10 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
             }
             events.push(eventData);
         }
-
         res.status(200).send(events);
-    } catch (error) {
-        res.send(error);
-    }
-
+  } catch (error) {
+    res.send(error);
+  }
 };
 
 export const cancelEvent: RequestHandler = async (req, res) => {

@@ -1,9 +1,14 @@
 import { Router } from 'express';
-import { CreateCalendar } from '../controllers/calendar';
+import {
+  CreateCalendar,
+  getHoursByProvider,
+  updateEventsHoursProvider,
+} from '../controllers/calendar';
 import {
   addServiceToProvider,
   getProvidersByService,
-  addAllServicesToProvider
+  addAllServicesToProvider,
+  getServicesByProvider,
 } from '../controllers/servicesProviders';
 import {
   getAllProviders,
@@ -32,8 +37,13 @@ router.get('/:id', getProviderById);
 router.delete('/:id', deleteProvider);
 router.put('/:id', updateProvider);
 
-//Calendar Routes, ADD service to provider Route
+//Calendar Routes to provider Route
 router.post('/calendar', CreateCalendar);
+router.get('/calendar/:id', getHoursByProvider);
+router.put('/calendar/:id', updateEventsHoursProvider);
+
+//service to provider Route
+router.get('/:id/services', getServicesByProvider);
 router.post('/services', addServiceToProvider);
 router.post('/allServices', addAllServicesToProvider);
 router.get('/services/:serviceName', getProvidersByService);
