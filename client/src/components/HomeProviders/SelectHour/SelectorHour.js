@@ -8,13 +8,18 @@ import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
 } from '@material-ui/pickers';
-import { addHoursJobToProvider } from '../../../Redux/actions/actions';
+import {
+  addHoursJobToProvider,
+  getEventsHoursProvider,
+  updateEventsHoursProvider,
+} from '../../../Redux/actions/actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import './SelectorHour.scss';
+import { add } from 'date-fns/esm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MaterialUIPickers() {
+export default function MaterialUIPickers({ type }) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -64,8 +69,13 @@ export default function MaterialUIPickers() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addHoursJobToProvider(addHours));
-    alert('por favor haz click en siguiente');
+    if (type === 'Horarios') {
+      dispatch(updateEventsHoursProvider(provider.providerFound._id, addHours));
+      alert('Actualizaste correctamente tus horarios de trabajo 😎');
+    } else {
+      dispatch(addHoursJobToProvider(addHours));
+      alert('por favor haz click en siguiente');
+    }
   };
 
   //remove hour not desire
@@ -75,6 +85,7 @@ export default function MaterialUIPickers() {
       eventsHours: [],
     });
   };
+
   console.log('xxxxxx--->', addHours);
 
   return (
