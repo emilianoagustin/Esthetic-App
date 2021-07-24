@@ -6,6 +6,7 @@ import Calendar from '../models/Calendar';
 import { isValidDate } from '../utils/functions';
 import Providers from '../models/Providers';
 import Bags from '../models/Bags';
+import Rating from '../models/Rating';
 
 export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
 
@@ -89,6 +90,7 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
 
             if (event.isActive) {
                 if (!isValidDate(event.date, event.hour)) {
+                    event.condition = 'finalized';
                     event.isActive = false;
                     event.ratingAlert = true;
                     await event.save();
@@ -97,6 +99,7 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
 
             const eventData = {
                 _id: event._id,
+                condition: event.condition,
                 isActive: event.isActive,
                 userAlert: event.userAlert,
                 providerAlert: event.providerAlert,
@@ -140,13 +143,55 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
 };
 
 export const cancelEvent: RequestHandler = async (req, res) => {
+    try {
+        const { role } = req.params;
 
+        const event = await Events.findById(req.body.event);
+        event.isActive = false;
+        event.condition = 'cancelled';
+
+        if (role === 'user') event.providerAlert = true;
+        else event.userAlert = true;
+
+        await event.save();
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const giveReview: RequestHandler = async (req, res) => {
+    try {
+        const event = await Events.findById(req.body.event);
+        const calendar = await Calendar.findById(event.calendar);
 
+        const review = new Rating({
+            assessment: req.body.assessment,
+            Avg_assessment: req.body.Avg_assessment,
+            comments: req.body.comments,
+            provider: calendar.provider,
+            user: event.user,
+        })
+
+        await review.save();
+        event.ratingAlert = false;
+        await event.save();
+
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const removeAlert: RequestHandler = async (req, res) => {
+    try {
+        const event = await Events.findById(req.body.event);
+        event.userAlert = false;
+        event.providerAlert = false;
+        await event.save()
 
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
 };
