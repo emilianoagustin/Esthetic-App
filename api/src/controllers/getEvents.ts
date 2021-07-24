@@ -6,6 +6,7 @@ import Calendar from '../models/Calendar';
 import { isValidDate } from '../utils/functions';
 import Providers from '../models/Providers';
 import Bags from '../models/Bags';
+import Rating from '../models/Rating';
 
 export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
   let reservations: any = [];
@@ -65,64 +66,128 @@ export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
 };
 
 export const getEventsByRole: RequestHandler = async (req, res) => {
-  const { role, id } = req.params;
+    const { role, id } = req.params;
 
-  try {
-    let user: any;
+    try {
+        let user: any;
 
-    if (role === 'user') {
-      user = await Users.findById(id);
-    } else {
-      user = await Providers.findById(id);
-    }
+        if (role === 'user') {
+            user = await Users.findById(id);
+        } else {
+            user = await Providers.findById(id);
+        }
 
-    let events: Array<any> = [];
+        let events: Array<any> = [];
 
-    for (let i = 0; i < user.events.length; i++) {
-      const actual = user.events[i];
-      const event = await Events.findById(actual);
-      const eventUser = await Users.findById(event.user);
-      const eventCalendar = await Calendar.findById(event.calendar);
-      const eventProvider = await Providers.findById(eventCalendar.provider);
+        for (let i = 0; i < user.events.length; i++) {
+            const actual = user.events[i];
+            const event = await Events.findById(actual);
+            const eventUser = await Users.findById(event.user);
+            const eventCalendar = await Calendar.findById(event.calendar);
+            const eventProvider = await Providers.findById(eventCalendar.provider);
 
-      const eventData = {
-        _id: event._id,
-        isActive: event.isActive,
-        userAlert: event.userAlert,
-        providerAlert: event.providerAlert,
-        hour: event.hour,
-        date: event.date,
-        address: {
-          country: event.address.country,
-          state: event.address.state,
-          city: event.address.city,
-          address_1: event.address.address_1,
-          address_details: event.address.address_details,
-          zip_code: event.address.zip_code,
-        },
-        service: {
-          name: event.service.name,
-          price: event.service.price,
-          description: event.service.description,
-        },
-        user: {
-          firstName: eventUser?.firstName,
-          lastName: eventUser?.lastName,
-          gender: eventUser?.gender,
-          phone: eventUser?.phone,
-        },
-        provider: {
-          firstName: eventProvider?.firstName,
-          lastName: eventProvider?.lastName,
-          gender: eventProvider?.gender,
-          phone: eventProvider?.phone,
-        },
-      };
-      events.push(eventData);
-    }
+            if (event.isActive) {
+                if (!isValidDate(event.date, event.hour)) {
+                    event.condition = 'finalized';
+                    event.isActive = false;
+                    event.ratingAlert = true;
+                    await event.save();
+                }
+            }
 
-    res.status(200).send(events);
+            const eventData = {
+                _id: event._id,
+                condition: event.condition,
+                isActive: event.isActive,
+                userAlert: event.userAlert,
+                providerAlert: event.providerAlert,
+                ratingAlert: event.ratingAlert,
+                hour: event.hour,
+                date: event.date,
+                address: {
+                    country: event.address.country,
+                    state: event.address.state,
+                    city: event.address.city,
+                    address_1: event.address.address_1,
+                    address_details: event.address.address_details,
+                    zip_code: event.address.zip_code,
+                },
+                service: {
+                    name: event.service.name,
+                    price: event.service.price,
+                    description: event.service.description,
+                },
+                user: {
+                    firstName: eventUser?.firstName,
+                    lastName: eventUser?.lastName,
+                    gender: eventUser?.gender,
+                    phone: eventUser?.phone,
+                },
+                provider: {
+                    firstName: eventProvider?.firstName,
+                    lastName: eventProvider?.lastName,
+                    gender: eventProvider?.gender,
+                    phone: eventProvider?.phone,
+                }
+            }
+            events.push(eventData);
+        }
+        res.status(200).send(events);
   } catch (error) {
     res.send(error);
   }
+};
+
+export const cancelEvent: RequestHandler = async (req, res) => {
+    try {
+        const { role } = req.params;
+
+        const event = await Events.findById(req.body.event);
+        event.isActive = false;
+        event.condition = 'cancelled';
+
+        if (role === 'user') event.providerAlert = true;
+        else event.userAlert = true;
+
+        await event.save();
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
+};
+
+export const giveReview: RequestHandler = async (req, res) => {
+    try {
+        const event = await Events.findById(req.body.event);
+        const calendar = await Calendar.findById(event.calendar);
+
+        const review = new Rating({
+            assessment: req.body.assessment,
+            Avg_assessment: req.body.Avg_assessment,
+            comments: req.body.comments,
+            provider: calendar.provider,
+            user: event.user,
+        })
+
+        await review.save();
+        event.ratingAlert = false;
+        await event.save();
+
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
+};
+
+export const removeAlert: RequestHandler = async (req, res) => {
+    try {
+        const event = await Events.findById(req.body.event);
+        event.userAlert = false;
+        event.providerAlert = false;
+        await event.save()
+
+        res.status(200).send(event);
+    } catch (error) {
+        res.send(error);
+    }
 };
