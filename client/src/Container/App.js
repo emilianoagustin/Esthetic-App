@@ -15,6 +15,7 @@ import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
 import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
 import Providers from '../components/SearchProvider/Providers';
 import CovidProtocol from '../components/CovidProtocol/CovidProtocol';
+import Footer from '../components/Footer/Footer';
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
       <Route path='/search' component={Providers} />
       <Route path='/covid' component={CovidProtocol} />
 
+      <Route path='/' component={Footer} />
     </React.Fragment>
   );
 };

@@ -20,7 +20,7 @@ export const data = [
         img: image3
     },
     {
-        title: 'Desinfectación',
+        title: 'Desinfección',
         subtitle: 'Todas las áreas de trabajo son desinfectadas preventivamente antes de prestar servicios.',
         img: image4
     }
