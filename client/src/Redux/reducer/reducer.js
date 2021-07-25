@@ -25,6 +25,7 @@ const initialState = {
     loading: true,
     data: {},
   },
+  userAddresses: { loading: true, data: [] },
   userReservations: { loading: true, data: [] },
   keyword: "",
 };
@@ -209,6 +210,69 @@ const appReducer = (state = initialState, action) => {
         userData: { loading: false, error: action.payload },
       };
 
+    /// GET USER ADDRESES
+    case actionsTypes.GET_USER_ADDRESSES_REQUEST:
+      return {
+        ...state,
+        userAddresses: { loading: true },
+      };
+    case actionsTypes.GET_USER_ADDRESSES_SUCCESS:
+      return {
+        ...state,
+        userAddresses: { loading: false, data: action.payload },
+      };
+    case actionsTypes.GET_USER_ADDRESSES_FAIL:
+      return {
+        ...state,
+        userAddresses: { loading: false, error: action.payload },
+      };
+
+    //CREATE USER ADDRESS
+
+    case actionsTypes.ADD_USER_ADDRESS_REQUEST:
+      return {
+        ...state,
+        userAddresses: {...state.userAddresses, loading:true},
+      };
+    case actionsTypes.ADD_USER_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        userAddresses: {
+          loading: false,
+          data: [...state.userAddresses.data, action.payload.data],
+        },
+      };
+    case actionsTypes.ADD_USER_ADDRESS_FAIL:
+      return {
+        ...state,
+        userAddresses: { loading: false, error: action.payload },
+      };
+
+    //DETELE USER ADDRESS
+
+    case actionsTypes.DELETE_USER_ADDRESS_REQUEST:
+      return {
+        ...state,
+        userAddresses: {...state.userAddresses, loading: true },
+      };
+    case actionsTypes.DELETE_USER_ADDRESS_SUCCESS:
+     
+      return {
+        ...state,
+        userAddresses: {
+          loading: false,
+          data: state.userAddresses.data.filter(
+            (a) => a._id !== action.payload
+          ),
+          
+        },
+      };
+    case actionsTypes.DELETE_USER_ADDRESS_FAIL:
+      return {
+        ...state,
+        userAddresses: { loading: false, error: action.payload },
+      };
+
     //GET USER RESERVATIONS
 
     case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
@@ -226,7 +290,6 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
-
 
     default:
       return state;

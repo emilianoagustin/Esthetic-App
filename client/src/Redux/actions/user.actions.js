@@ -1,6 +1,12 @@
-import axios from 'axios';
-import actionsTypes from '../constants/constants';
-import { GET_USERS, HOST, RESERVATIONS } from '../../utils/constants';
+import axios from "axios";
+import actionsTypes from "../constants/constants";
+import {
+  EVENTS,
+  GET_USERS,
+  HOST,
+  RESERVATIONS,
+  USER,
+} from "../../utils/constants";
 
 // login
 export const LoginUser = (data) => {
@@ -28,14 +34,14 @@ export const logout = () => {
   return (dispatch) => {
     dispatch({
       type: actionsTypes.LOGOUT,
-      payload: '',
+      payload: "",
     });
   };
 };
 
 export const userActiveSession = () => {
-  window.localStorage.getItem('loggedSpatifyApp');
-  const user = JSON.parse(window.localStorage.getItem('loggedSpatifyApp'));
+  window.localStorage.getItem("loggedSpatifyApp");
+  const user = JSON.parse(window.localStorage.getItem("loggedSpatifyApp"));
   return (dispatch) => {
     dispatch({
       type: actionsTypes.LOGGIN_IN_SESSION,
@@ -69,7 +75,7 @@ export const getUserReservations = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_RESERVATIONS_REQUEST });
 
   try {
-    const { data } = await axios.get(`${HOST}${RESERVATIONS}/${userId}`);
+    const { data } = await axios.get(`${HOST}${EVENTS}${USER}/${userId}`);
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
       payload: data,
@@ -82,8 +88,70 @@ export const getUserReservations = (userId) => async (dispatch) => {
   }
 };
 
-//POST USER DATA ->>> UPDATE PROFILE
+//USER ADDRESSES
 
+//GET
+
+export const getUserAddresses = (userId) => async (dispatch) => {
+  dispatch({ type: actionsTypes.GET_USER_ADDRESSES_REQUEST });
+
+  try {
+    const { data } = await axios.get(`${GET_USERS}/${userId}/addresses`);
+    dispatch({
+      type: actionsTypes.GET_USER_ADDRESSES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_USER_ADDRESSES_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//POST ADDRESS
+
+export const postUserAddresses = (payload) => async (dispatch) => {
+  dispatch({ type: actionsTypes.ADD_USER_ADDRESS_REQUEST });
+
+  try {
+    const {data} = await axios.post(`${GET_USERS}/${payload.userId}/addresses`, payload.input);
+    console.log("Esto es data" , data)
+    dispatch({
+      type: actionsTypes.ADD_USER_ADDRESS_SUCCESS,
+      payload: data,
+    });   
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.ADD_USER_ADDRESS_FAIL,
+      payload: error.message,
+    });
+    
+  }
+};
+
+//DELETE  //"/:id/addresses/:idAd"
+
+export const deletetUserAddresses = (payload) => async (dispatch) => {
+  dispatch({ type: actionsTypes.DELETE_USER_ADDRESS_REQUEST });
+console.log("Se dice que este es el payload.addres.id", payload.addressId,)
+  try {
+    const { data } = await axios.delete(
+      `${GET_USERS}/${payload.userId}/addresses/${payload.addressId}`
+    );
+    dispatch({
+      type: actionsTypes.DELETE_USER_ADDRESS_SUCCESS,
+      payload: payload.addressId,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.DELETE_USER_ADDRESS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//POST USER DATA ->>> UPDATE PROFILE
 
 export const putUserData = (userId, updatedData) => async (dispatch) => {
   dispatch({ type: actionsTypes.POST_USER_DATA_PROFILE_REQUEST });
@@ -101,4 +169,3 @@ export const putUserData = (userId, updatedData) => async (dispatch) => {
     });
   }
 };
-
