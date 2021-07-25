@@ -58,9 +58,6 @@ function Footer() {
                     </div>
                 </Grid>
             </Grid>
-            {/* <Grid item container justifyContent='flex-start' alignItems='flex-end'>
-                <span className={classes.footerCopyright}>© Copyright 2021 G14</span>
-            </Grid> */}
         </Grid>
     )
 }

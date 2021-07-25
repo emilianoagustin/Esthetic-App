@@ -95,19 +95,6 @@ function CovidProtocol() {
                     })
                 }
                 </Grid>
-                {/* <Grid container direction='row' justifyContent='space-evenly' className={classes.container}>
-                    <Grid item className={classes.containerCard}>
-                        <Typography variant='h4' className={classes.containerText}>
-                            Equipamiento para protección
-                        </Typography>
-                        <Typography variant='subtitle1'>
-                            Nuestros prestadores utilizan barbijos A3, mascara protectora y guantes descartables
-                        </Typography>
-                    </Grid>
-                    <Grid item className={classes.containerCard}>
-                        <img className={classes.containerImg} src={Covid1}/>
-                    </Grid>
-                </Grid> */}
             </div>
         </div>
     )
