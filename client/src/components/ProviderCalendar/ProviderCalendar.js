@@ -8,6 +8,7 @@ import './ProviderCalendar.scss';
 import Reservation from './Reservation/Reservation.js';
 import LoadingReservation from './LoadingReservation/LoadingReservation.js';
 import { NavLink } from 'react-router-dom';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 
 export default function ProviderCalendar({ match }) {
     const [provider, setProvider] = useState({});
@@ -23,6 +24,7 @@ export default function ProviderCalendar({ match }) {
     const [date, setDate] = useState('');
     const [PreviousInfo, setInfo] = useState(null);
     const [invalid, setInvalid] = useState(false);
+    const [userID, setUserID] = useState('');
 
     useEffect(() => {
         axios.get(`${HOST}/providers/${providerID}`)
@@ -45,6 +47,15 @@ export default function ProviderCalendar({ match }) {
     }, [])
 
     useEffect(() => {
+        if (localStorage.getItem('loggedSpatifyApp')) {
+            const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
+            if (storageData.userFound.roles[0].name === "user") {
+                setUserID(storageData.userFound._id)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
         const actual = new Date();
         const actualDate = actual.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
         setDate(actualDate)
@@ -55,7 +66,8 @@ export default function ProviderCalendar({ match }) {
             setLoadingEvents(true);
             axios.post(`${HOST}/events/calendar`, {
                 provider: providerID,
-                date: date
+                date: date,
+                user: userID
             })
                 .then(eventsList => {
                     setEvents(eventsList.data)
@@ -65,7 +77,7 @@ export default function ProviderCalendar({ match }) {
                     setError(true);
                 })
         }
-    }, [provider, date])
+    }, [provider, date, ReActive])
 
     const handleDateClick = (e) => {
         if (PreviousInfo) PreviousInfo.dayEl.style.backgroundColor = ''
@@ -156,14 +168,16 @@ export default function ProviderCalendar({ match }) {
                                                                 </div>
                                                                 {
                                                                     e.isActive ?
-                                                                        e.isAvailable ? (
-                                                                            <button
-                                                                                className='card-button'
-                                                                                onClick={() => handleClick(index)}
-                                                                            >
-                                                                                Añadir al bolso
-                                                                            </button>
-                                                                        )
+                                                                        e.isAvailable ?
+                                                                            e.isCartItem ?
+                                                                                (<div className='cartItem'>Guardado<LocalMallOutlinedIcon/></div>) : (
+                                                                                    <button
+                                                                                        className='card-button'
+                                                                                        onClick={() => handleClick(index)}
+                                                                                    >
+                                                                                        Añadir al bolso
+                                                                                    </button>
+                                                                                )
                                                                             : null
                                                                         : null
                                                                 }
@@ -194,10 +208,10 @@ export default function ProviderCalendar({ match }) {
                                                         className='modal-button left'
                                                         onClick={() => setInvalid(false)}
                                                     >CANCELAR</button>
-                                                    <NavLink exact to="/userRegister" className='navlink'>
+                                                    <NavLink exact to="/login" className='navlink'>
                                                         <button
                                                             className='modal-button right'
-                                                        >REGISTRO</button>
+                                                        >INGRESAR</button>
                                                     </NavLink>
                                                 </div>
                                             </div>

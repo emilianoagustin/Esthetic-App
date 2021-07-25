@@ -14,7 +14,6 @@ const ProviderDetails = () => {
   useEffect(() => {
     dispatch(getProviderDetails(id));
   }, [dispatch]);
-  console.log("DETALLES:", providerDetails);
 
   return (
     <div className="container-main">

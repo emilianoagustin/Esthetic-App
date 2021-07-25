@@ -52,7 +52,7 @@ const CheckBoxComponent = ({ data }) => {
     dispatch(addServicesToProvider(serviceAdd));
     alert('por favor continue con el siguiente paso');
   };
-  // console.log('services', serviceAdd);
+  // console.log('NewDataService', serviceAdd);
   return (
     <>
       <form action='' onSubmit={handleSubmit}>

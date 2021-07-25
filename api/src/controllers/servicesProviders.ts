@@ -1,7 +1,7 @@
-import { RequestHandler } from "express";
-import Providers from "../models/Providers";
-import Services from "../models/Services";
-import { getServiceDetail } from "./getServices";
+import { RequestHandler } from 'express';
+import Providers from '../models/Providers';
+import Services from '../models/Services';
+import { getServiceDetail } from './getServices';
 
 export const addServiceToProvider: RequestHandler = async (req, res) => {
   try {
@@ -13,13 +13,13 @@ export const addServiceToProvider: RequestHandler = async (req, res) => {
       if (provider._id == req.body.provider) check = true;
     });
     if (check) {
-      return res.status(301).send("The service has already been registered");
+      return res.status(301).send('The service has already been registered');
     } else {
       provider?.services.push(service);
       provider?.save();
       service.providers.push(provider);
       service.save();
-      return res.status(200).send("Service added successfully");
+      return res.status(200).send('Service added successfully');
     }
   } catch (error) {
     res.status(400).send(error);
@@ -46,7 +46,7 @@ export const getServicesByProvider: RequestHandler = async (req, res) => {
     // const provServices = await Services.findById({
     //   $in: thisProvider.services,
     // });
-    console.log("ARREGLO: ", provServices);
+    // console.log('ARREGLO: ', provServices);
     return res.status(200).send({
       message: `Éstos son los servicios de ${thisProvider?.firstName}`,
       data: provServices,
@@ -88,7 +88,7 @@ export const addAllServicesToProvider: RequestHandler = async (req, res) => {
 
       return res.status(200).send(prov);
     } else {
-      return res.status(404).send("Provider not found");
+      return res.status(404).send('Provider not found');
     }
   } catch (error) {
     res.status(400).send(error);
