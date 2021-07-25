@@ -2,9 +2,10 @@ import { Schema, model } from 'mongoose';
 
 const EventSchema = new Schema(
     {
-        title: {
+        condition: {
             type: String,
-            trim: true,
+            enum: ['calcelled', 'finalized', 'pending'],
+            default: 'pending',
         },
         date: {
             type: String,
@@ -27,6 +28,10 @@ const EventSchema = new Schema(
             default: false,
         },
         providerAlert: {
+            type: Boolean,
+            default: false,
+        },
+        ratingAlert: {
             type: Boolean,
             default: false,
         },

@@ -1,20 +1,14 @@
-import actionsTypes from "../constants/constants";
-import { findService } from "../../utils/filter.js";
+import actionsTypes from '../constants/constants';
+import { findService } from '../../utils/filter.js';
 
 const initialState = {
   services: {
     loading: true,
     data: [],
   },
-<<<<<<< HEAD
-  allProviders: {
-    loading: true,
-    data: [],
-  },
-  userActive: "",
+  userActive: '',
   loginData: {},
-=======
->>>>>>> 74e05bec0fefcff1866463dcf126c102d140015d
+
   serviceDetails: { loading: true, data: {} },
 
   allProviders: {
@@ -24,6 +18,7 @@ const initialState = {
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
   servicesByProvider: [],
+  providerEventsHours: {},
   providersAddresses: [],
   provider_address_status: {},
   provider_address_update_status: {},
@@ -41,8 +36,10 @@ const initialState = {
   },
   userReservations: { loading: true, data: [] },
 
+
   allUsers: [],
   keyword: "",
+
 };
 
 const appReducer = (state = initialState, action) => {
@@ -69,7 +66,7 @@ const appReducer = (state = initialState, action) => {
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
       window.localStorage.setItem(
-        "loggedSpatifyApp",
+        'loggedSpatifyApp',
         JSON.stringify(action.payload)
       );
       return {
@@ -87,7 +84,7 @@ const appReducer = (state = initialState, action) => {
         //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      window.localStorage.setItem("loggedSpatifyApp", "");
+      window.localStorage.setItem('loggedSpatifyApp', '');
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -130,6 +127,7 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+      break;
 
     //GET SERVICES BY PROVIDER
     case actionsTypes.GET_SERVICES_BY_PROVIDER:
@@ -198,6 +196,13 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         provider_update_status: { message: action.payload },
+      };
+
+    //EVENTS HOURS PROVIDER
+    case actionsTypes.GET_PROVIDERS_EVENTS_HOURS:
+      return {
+        ...state,
+        providerEventsHours: action.payload,
       };
 
     ///SEARCH SERVICE BY NAME
