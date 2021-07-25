@@ -14,6 +14,7 @@ import UserProfile from '../components/UserProfile/UserProfile';
 import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
 import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
 import Providers from '../components/SearchProvider/Providers';
+import CovidProtocol from '../components/CovidProtocol/CovidProtocol';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
 
       <Route path='/profile/:id' component={UserProfile} />
       <Route path='/search' component={Providers} />
+      <Route path='/covid' component={CovidProtocol} />
 
     </React.Fragment>
   );
