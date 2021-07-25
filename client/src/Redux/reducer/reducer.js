@@ -1,5 +1,8 @@
+
 import actionsTypes from "../constants/constants";
 import { editAddress, findService } from "../../utils/filter.js";
+
+
 
 const initialState = {
   services: {
@@ -10,12 +13,13 @@ const initialState = {
     loading: true,
     data: [],
   },
-  userActive: "",
+  userActive: '',
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
   servicesByProvider: [],
+  providerEventsHours: {},
   providersAddresses: [],
   provider_address_status: {},
   provider_address_update_status: {},
@@ -27,7 +31,7 @@ const initialState = {
   },
   userAddresses: { loading: true, data: [] },
   userReservations: { loading: true, data: [] },
-  keyword: "",
+  keyword: '',
 };
 
 const appReducer = (state = initialState, action) => {
@@ -54,7 +58,7 @@ const appReducer = (state = initialState, action) => {
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
       window.localStorage.setItem(
-        "loggedSpatifyApp",
+        'loggedSpatifyApp',
         JSON.stringify(action.payload)
       );
       return {
@@ -72,7 +76,7 @@ const appReducer = (state = initialState, action) => {
         //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      window.localStorage.setItem("loggedSpatifyApp", "");
+      window.localStorage.setItem('loggedSpatifyApp', '');
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -115,6 +119,7 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+      break;
 
     //GET SERVICES BY PROVIDER
     case actionsTypes.GET_SERVICES_BY_PROVIDER:
@@ -171,6 +176,13 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         provider_update_status: { message: action.payload },
+      };
+
+    //EVENTS HOURS PROVIDER
+    case actionsTypes.GET_PROVIDERS_EVENTS_HOURS:
+      return {
+        ...state,
+        providerEventsHours: action.payload,
       };
 
     ///SEARCH SERVICE BY NAME
