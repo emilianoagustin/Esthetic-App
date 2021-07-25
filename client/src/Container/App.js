@@ -42,7 +42,6 @@ const App = () => {
 
       <Route path='/profile/:id' component={UserProfile} />
       <Route path='/search' component={Providers} />
-
     </React.Fragment>
   );
 };
