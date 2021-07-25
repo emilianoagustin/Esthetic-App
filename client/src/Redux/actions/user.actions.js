@@ -75,7 +75,7 @@ export const getUserReservations = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_RESERVATIONS_REQUEST });
 
   try {
-    const { data } = await axios.get(`${HOST}${EVENTS}${USER}/${userId}`);
+    const { data } = await axios.get(`${HOST}${EVENTS}/${USER}/${userId}`);
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
       payload: data,
@@ -115,27 +115,28 @@ export const postUserAddresses = (payload) => async (dispatch) => {
   dispatch({ type: actionsTypes.ADD_USER_ADDRESS_REQUEST });
 
   try {
-    const {data} = await axios.post(`${GET_USERS}/${payload.userId}/addresses`, payload.input);
-    console.log("Esto es data" , data)
+    const { data } = await axios.post(
+      `${GET_USERS}/${payload.userId}/addresses`,
+      payload.input
+    );
+    console.log("Esto es data", data);
     dispatch({
       type: actionsTypes.ADD_USER_ADDRESS_SUCCESS,
       payload: data,
-    });   
+    });
   } catch (error) {
     dispatch({
       type: actionsTypes.ADD_USER_ADDRESS_FAIL,
       payload: error.message,
     });
-    
   }
 };
 
 //DELETE  //"/:id/addresses/:idAd"
 
-export const deletetUserAddresses = (payload) => async (dispatch) => {
+export const deleteUserAddresses = (payload) => async (dispatch) => {
   dispatch({ type: actionsTypes.DELETE_USER_ADDRESS_REQUEST });
-console.log("Se dice que este es el payload.addres.id", payload.addressId,)
-  try {
+    try {
     const { data } = await axios.delete(
       `${GET_USERS}/${payload.userId}/addresses/${payload.addressId}`
     );
@@ -146,6 +147,29 @@ console.log("Se dice que este es el payload.addres.id", payload.addressId,)
   } catch (error) {
     dispatch({
       type: actionsTypes.DELETE_USER_ADDRESS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+/// PUT ADDRESS
+
+export const editUserAddresses = (payload) => async (dispatch) => {
+  dispatch({ type: actionsTypes.EDIT_USER_ADDRESS_REQUEST });
+  const addressId = payload.addressId;
+
+  try {
+    const { data } = await axios.put(
+      `${GET_USERS}/${payload.userId}/addresses/${addressId}`
+    );
+    console.log(data, "Aca esta la data del objeto editado");
+    dispatch({
+      type: actionsTypes.EDIT_USER_ADDRESS_SUCCESS,
+      payload: { addressId, data },
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.EDIT_USER_ADDRESS_FAIL,
       payload: error.message,
     });
   }

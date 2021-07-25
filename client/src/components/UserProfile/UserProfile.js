@@ -22,10 +22,7 @@ function UserProfile() {
         <div className="user-profile-container">
           <UserProfileInfo />
           <UserBanner />
-
-          <UserReservations />
-
-       
+          <UserReservations />       
         </div>
       </div>
     </div>

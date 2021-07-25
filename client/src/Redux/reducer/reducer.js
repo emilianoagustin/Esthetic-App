@@ -1,5 +1,5 @@
 import actionsTypes from "../constants/constants";
-import { findService } from "../../utils/filter.js";
+import { editAddress, findService } from "../../utils/filter.js";
 
 const initialState = {
   services: {
@@ -232,7 +232,7 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.ADD_USER_ADDRESS_REQUEST:
       return {
         ...state,
-        userAddresses: {...state.userAddresses, loading:true},
+        userAddresses: { ...state.userAddresses, loading: true },
       };
     case actionsTypes.ADD_USER_ADDRESS_SUCCESS:
       return {
@@ -253,10 +253,9 @@ const appReducer = (state = initialState, action) => {
     case actionsTypes.DELETE_USER_ADDRESS_REQUEST:
       return {
         ...state,
-        userAddresses: {...state.userAddresses, loading: true },
+        userAddresses: { ...state.userAddresses, loading: true },
       };
     case actionsTypes.DELETE_USER_ADDRESS_SUCCESS:
-     
       return {
         ...state,
         userAddresses: {
@@ -264,10 +263,34 @@ const appReducer = (state = initialState, action) => {
           data: state.userAddresses.data.filter(
             (a) => a._id !== action.payload
           ),
-          
         },
       };
     case actionsTypes.DELETE_USER_ADDRESS_FAIL:
+      return {
+        ...state,
+        userAddresses: { loading: false, error: action.payload },
+      };
+
+    //EDIT USER ADDRESS
+
+    case actionsTypes.EDIT_USER_ADDRESS_REQUEST:
+      return {
+        ...state,
+        userAddresses: { ...state.userAddresses, loading: true },
+      };
+    case actionsTypes.EDIT_USER_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        userAddresses: {
+          loading: false,
+          data: editAddress(
+            state.userAddresses.data,
+            action.payload.addressId,
+            action.payload.data.data
+          ),
+        },
+      };
+    case actionsTypes.EDIT_USER_ADDRESS_FAIL:
       return {
         ...state,
         userAddresses: { loading: false, error: action.payload },

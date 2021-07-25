@@ -21,6 +21,7 @@ function UserProfileInfo() {
   const [newAddressInfo, setnewAddressInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
+  
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData.data);
@@ -84,7 +85,7 @@ function UserProfileInfo() {
           <hr />
           <hr />
           <div className="acordion-container">
-            <AccordionPrueba newAddressInfo={newAddressInfo} />
+            <AccordionPrueba />
           </div>
         </div>
       </div>
