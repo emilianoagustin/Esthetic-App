@@ -4,15 +4,17 @@ import { getUserReservations } from "../../../Redux/actions/user.actions";
 import "./UserReservations.css";
 
 const ID = window.localStorage.getItem("loggedSpatifyApp")
-  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
+  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp")).userFound._id
   : null;
 
 function UserReservations() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReservations.data);
 
+  console.log("Esto es userData de User Reservations", userData)
+
   useEffect(() => {
-    if (ID.userFound?._id) {
+    if (ID) {
       dispatch(getUserReservations(ID));
     }
   }, []);
