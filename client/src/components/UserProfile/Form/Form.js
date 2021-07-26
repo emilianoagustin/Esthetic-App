@@ -6,6 +6,10 @@ import { GET_USERS } from "../../../utils/constants";
 import { validate } from "../../../utils/validate-user-profile";
 import "./Form.css";
 
+const ID = window.localStorage.getItem("loggedSpatifyApp")
+  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
+  : null;
+
 function Form({ showModal, setShowModal }) {
   const [errors, setErrors] = useState({
     firstName: false,
@@ -17,6 +21,18 @@ function Form({ showModal, setShowModal }) {
     firstName: "",
     lastName: "",
     phone: null,
+   /*  addresses: {
+      name: "",
+      country: "",
+      state: "",
+      city: "",
+      address_1: "",
+      address_details: "",
+      zip_code: "",
+      is_main: false,
+      provider: "",
+      user: ID.userFound._id, 
+    },*/
   });
 
   const [userId, setUserId] = useState("");
@@ -32,12 +48,11 @@ function Form({ showModal, setShowModal }) {
   };
 
   const onSubmitHandler = async (e) => {
-
-    /* e.preventDefault(); */
+    e.preventDefault();
     try {
-        
       const res = await axios.post(`${GET_USERS}/${userId}`, input);
       console.log(res);
+      input = setShowModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +99,7 @@ function Form({ showModal, setShowModal }) {
                 />
                 {errors.name && <p className="danger">{errors.lastName}</p>}
               </div>
+
               <div className="form-element">
                 <label>Apellido</label>
                 <input
@@ -102,9 +118,10 @@ function Form({ showModal, setShowModal }) {
                   className={errors.phone && "danger"}
                   name="number"
                   type="number"
-                  
                   placeholder="Ingrese su numero de telefono"
-                  onChange={(e) => setInput({...input, phone: parseInt(e.target.value)})}
+                  onChange={(e) =>
+                    setInput({ ...input, phone: parseInt(e.target.value) })
+                  }
                 />
                 {errors.phone && <p className="danger">{errors.phone}</p>}
               </div>

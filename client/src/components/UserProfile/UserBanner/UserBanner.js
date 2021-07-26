@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
 import Image from "../../../img/banner.jpg"
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile } from "../../../Redux/actions/user.actions";
 /* import "./UserBanner.css"; */
 
 const ID = window.localStorage.getItem("loggedSpatifyApp")
@@ -92,6 +94,13 @@ const ID = window.localStorage.getItem("loggedSpatifyApp")
 
 function UserBanner() {
 
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userData.data);
+
+  useEffect(() => {
+    dispatch(getUserProfile(ID.userFound._id));
+  }, []);
+
     const classes = useStyles();
   return (
     /*   <div className="banner-profile-container">
@@ -102,7 +111,7 @@ function UserBanner() {
       <Box className={classes.containerBanner} >
         <img  className={classes.bannerImg}  src={Image} />
         <Typography variant="h4" className={classes.bannerText}>
-          ¡Hola {ID && ID.userFound.firstName}!
+          ¡Hola {userData && userData.firstName}!
         </Typography>
         <Typography variant="subtitle1" className={classes.bannerTextSubt}>
           En este espacio vas a poder ver y editar tu perfil y tambien consultar tus proximos turnos

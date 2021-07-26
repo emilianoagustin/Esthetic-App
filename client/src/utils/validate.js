@@ -25,4 +25,12 @@ export const Validate = (input) => {
     if(!input.city) errors.city = required;
 
     return errors
-}
+};
+
+export const formIsValid = (address, provider, errors) => {
+    return (
+        Object.values(address).some((value) => value !== '') &&
+        Object.values(provider).every((value) => value !== '') &&
+        Object.values(errors).every((value) => value === '')
+    );
+};
