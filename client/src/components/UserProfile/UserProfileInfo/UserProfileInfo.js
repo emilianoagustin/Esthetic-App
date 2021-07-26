@@ -21,7 +21,6 @@ function UserProfileInfo() {
   const [newAddressInfo, setnewAddressInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
-  
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData.data);
@@ -36,17 +35,13 @@ function UserProfileInfo() {
     <div>
       <div className="user-profile-info-container">
         <div className="profile-data">
-          <div className="profile-img">
-            {/*    {userData.img ? (
-              <img
-                className="img"
-                src={userData.img}
-                alt="Service Image"
-              ></img>
-            ) : ( */}
-            {/*   <img className="img" src={defaultImg} alt="Default Image"></img> */}
-            {/*  )} */}
-          </div>
+        {/*   <div className="profile-img">
+            {userData.img ? (
+              <img className="img" src={userData.img} alt="Service Image"></img>
+            ) : (
+              <img className="img" src={defaultImg} alt="Default Image"></img>
+            )}
+          </div> */}
         </div>
         <div className="profile-info">
           <div className="profile-header">
