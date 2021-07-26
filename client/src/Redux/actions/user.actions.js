@@ -103,7 +103,6 @@ export const getAllUsers = () => async (dispatch) => {
 };
       //USER ADDRESSES
 
-//GET
 
 export const getUserAddresses = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_ADDRESSES_REQUEST });

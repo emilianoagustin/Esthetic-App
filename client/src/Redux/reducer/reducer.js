@@ -355,6 +355,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         allProviders: { loading: false, data: action.payload },
       };
+      
     ///RENDER SEARCHBAR 
     case actionsTypes.RENDER_SEARCHBAR:
       return {
