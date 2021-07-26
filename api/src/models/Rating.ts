@@ -9,13 +9,6 @@ const RatingSchema = new Schema(
       min: 0,
       max: 5,
     },
-    Avg_assessment: {
-      type: Number,
-      required: true,
-      default: 4,
-      min: 0,
-      max: 5,
-    },
     comments: {
       type: String,
       required: true,
@@ -29,6 +22,11 @@ const RatingSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "Users",
+      autopopulate: true,
+    },
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: "Events",
       autopopulate: true,
     },
   },

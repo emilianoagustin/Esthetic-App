@@ -21,6 +21,7 @@ const initialState = {
   servicesByProvider: [],
   providerEventsHours: {},
   providersAddresses: [],
+  providersRating: [],
   provider_address_status: {},
   provider_address_update_status: {},
   provider_update_status: {},
@@ -84,7 +85,7 @@ const appReducer = (state = initialState, action) => {
         userActive: action.payload,
       };
 
-    case actionsTypes.LOGGIN_IN_SESSION:
+    case actionsTypes.LOGIN_IN_SESSION:
       return {
         ...state,
         userActive: action.payload,
@@ -145,9 +146,17 @@ const appReducer = (state = initialState, action) => {
         providerDetails: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDER_DETAILS_FAIL:
+
+    //PROVIDERS' RATING
+    case actionsTypes.GET_ALL_RATING_BY_PROVIDER:
       return {
         ...state,
-        providerDetails: { loading: false, error: action.payload },
+        providersRating: action.payload,
+      };
+    case actionsTypes.SET_RATING_BY_USER:
+      return {
+        ...state,
+        providersRating: action.payload,
       };
 
     //GET PROVIDERS ADDRESSES
@@ -193,7 +202,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //SET RESERVATIONS FOR USERS
-
     case actionsTypes.SET_RESERVATION_STATUS:
       return {
         ...state,
