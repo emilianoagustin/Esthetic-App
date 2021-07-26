@@ -64,7 +64,7 @@ function Providers({ data }) {
   const serviceSearch = [
     <Select
       options={precios}
-      placeholder="Filtrar por precio"
+      placeholder="Ordenar por precio"
       onChange={(e) => handleSelect(e)}
     />,
     <SearchBar state={state} />,
