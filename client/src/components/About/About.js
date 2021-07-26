@@ -111,7 +111,7 @@ function About() {
                             <Typography className={classes.subtitle}>
                                 ¿Días y horas libres? ¿Tus clientes se pierden? ¿Promociones sin resultados?<br/>
                                 Es hora de ser el profesional del bienestar de una manera única y especial.
-                                <strong className={classes.strong}>Spa-tify</strong> es tu solución.
+                                <br/><strong className={classes.strong}>Spa-tify</strong> es tu solución.
                             </Typography>
                         </Grid>
                         <Grid item container justifyContent='center' alignItems='center' className={classes.containerButton}>
