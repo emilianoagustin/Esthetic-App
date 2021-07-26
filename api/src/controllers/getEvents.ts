@@ -78,7 +78,10 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
             user = await Calendar.findOne({ provider: prov });
         }
 
-        const data = user.events.map(async (actual: any) => {
+        const events: Array<any> = [];
+
+        for (let i = 0; i < user.events.length; i++) {
+            const actual = user.events[i];
             const event = await Events.findById(actual);
             const eventUser = await Users.findById(event.user);
             const eventCalendar = await Calendar.findById(event.calendar);
@@ -92,6 +95,8 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     await event.save();
                 }
             }
+            console.log('holaaaa')
+
             const eventData = {
                 _id: event._id,
                 condition: event.condition,
@@ -127,10 +132,11 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     phone: eventProvider?.phone,
                 }
             }
-            return eventData;
-        })
+            console.log(eventData)
+            events.push(eventData);
+        }
 
-        res.status(200).json(data);
+        res.status(200).json(events);
     } catch (error) {
         res.send(error);
     }

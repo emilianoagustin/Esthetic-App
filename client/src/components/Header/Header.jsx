@@ -115,12 +115,15 @@ export default function PrimarySearchAppBar() {
   useEffect(() => {
     if (localStorage.getItem('loggedSpatifyApp')) {
       const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
-      if (storageData.userFound.roles[0].name === "user") {
-        setUser('user');
-        setID(storageData.userFound._id);
-      } else {
-        setUser('provider');
-        setID(storageData.providerFound._id);
+      if (storageData.userFound) {
+        if (storageData.userFound.roles[0].name === "user") {
+          setUser('user');
+          console.log(storageData.userFound._id)
+          setID(storageData.userFound._id);
+        } else {
+          setUser('provider');
+          setID(storageData.providerFound._id);
+        }
       }
     }
   }, [])
@@ -149,8 +152,6 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleRedirect = (e) => {
-    console.log("entre");
-    console.log(loginData.providerFound);
     if (user === 'user') {
       history.push(`/profile/${ID}`);
     } else if (user === 'provider') {
