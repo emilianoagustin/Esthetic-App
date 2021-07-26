@@ -1,22 +1,23 @@
-import React from "react";
-import { Route } from "react-router-dom";
-import Header from "../components/Header/Header";
-import Login from "../components/Login/Login";
-import Home from "../components/Home/Home";
-import UserRegister from "../components/UserRegister/UserRegister";
-import Section from "../components/Section/Section.js";
-import Cart from "../components/Cart/Cart";
-import ServiceUpload from "../components/Section/Services/Service/ServiceUpload/ServiceUpload";
-import { ProvidersByService } from "../components/Section/Providers/ProvidersByService";
-import ProviderCalendar from "../components/ProviderCalendar/ProviderCalendar";
-import ProviderProfile from "../components/ProviderProfile/ProviderProfile";
-import UserProfile from "../components/UserProfile/UserProfile";
-import ProviderDetails from "../components/ProviderDetails/ProviderDetails";
-import HomeProvider from "../components/HomeProviders/HomePage/HomeProvider";
-import Providers from "../components/SearchProvider/Providers";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import Login from '../components/Login/Login';
+import Home from '../components/Home/Home';
+import UserRegister from '../components/UserRegister/UserRegister';
+import Section from '../components/Section/Section.js';
+import Cart from '../components/Cart/Cart';
+import ServiceUpload from '../components/Section/Services/Service/ServiceUpload/ServiceUpload';
+import { ProvidersByService } from '../components/Section/Providers/ProvidersByService';
+import ProviderCalendar from '../components/ProviderCalendar/ProviderCalendar';
+import ProviderProfile from '../components/ProviderProfile/ProviderProfile';
+import UserProfile from '../components/UserProfile/UserProfile';
+import ProviderDetails from '../components/ProviderDetails/ProviderDetails';
+import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
+import Providers from '../components/SearchProvider/Providers';
 import ProviderRating from "../components/Section/ProviderRating/ProviderRating";
-import CovidProtocol from "../components/CovidProtocol/CovidProtocol";
-import Footer from "../components/Footer/Footer";
+import CovidProtocol from '../components/CovidProtocol/CovidProtocol';
+import Footer from '../components/Footer/Footer';
+import About from '../components/About/About';
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
       <Route path="/search" component={Providers} />
       <Route path="/covid" component={CovidProtocol} />
       <Route path="/" component={Footer} />
+      <Route path='/about' component={About} />
     </React.Fragment>
   );
 };

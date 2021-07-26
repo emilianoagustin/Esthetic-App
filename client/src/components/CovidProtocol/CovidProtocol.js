@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Image from '../../img/banner.jpg';
-import Covid1 from '../../img/covid1.png';
 import { data } from '../../utils/covidData';
 
 const useStyles = makeStyles(() => ({
@@ -27,11 +26,13 @@ const useStyles = makeStyles(() => ({
         left: 16,
         color: 'rgb(121, 47, 111)',
         padding: 10,
-        width: '40%'
+        width: '40%',
+    },
+    containerMain:{
+        width: '90vw'
     },
     container: {
         width: '40%',
-        // backgroundColor: 'hsl(190, 50%,30%)',
         padding: 20,
         borderBottom: '5px solid hsl(190, 50%,30%)',
         margin: 40
@@ -39,16 +40,17 @@ const useStyles = makeStyles(() => ({
     containerCard: {
         width: 'auto'
     },
-    containerCard2: {
+    containerText: {
         width: '30%'
     },
-    containerText: {
-        marginBottom: 10
+    containerTitle: {
+        marginBottom: 10,
+        color: 'hsl(308deg 30% 33%)'
     },
-    containerImg: {
+    img: {
         width: 'auto',
     },
-    divImg:{
+    containerImg:{
         width: '100%',
     }
 }));
@@ -58,42 +60,46 @@ function CovidProtocol() {
     return (
         <div className='container-main'>
             <div className='container'>
-                <Grid container direction='column'>
-                    <Grid item container direction='row'>
-                        <div className={classes.bannerContainer}>
-                            <img className={classes.bannerImg} src={Image}/>
-                            <Typography className={classes.bannerText} variant='h3'>En Spa-tify nos cuidamos entre todos</Typography>
-                            <Typography className={classes.bannerSubtitle} variant='h5'>
-                                A continuación te detallamos los protocolos y medidas de seguridad que toman todos
-                                nuestros prestadores para poder brindar un servicio seguro y sin riesgos ante la pandemia 
-                                de COVID-19.
-                            </Typography>
-                        </div>
-                    </Grid>
-                </Grid>
+                <Grid container direction='column' className={classes.containerMain}>
 
-                <Grid container justifyContent='space-evenly'>
-                {
-                    data.map( (d, i) => {
-                        return(
-                            <Grid key={i} item container direction='row' justifyContent='space-evenly' className={classes.container}>
-                                <Grid item className={classes.containerCard2}>
-                                    <Typography variant='h4' className={classes.containerText}>
-                                        {d.title}
-                                    </Typography>
-                                    <Typography variant='subtitle1'>
-                                        {d.subtitle}
-                                    </Typography>
+                    <Grid item container direction='column'>
+                        <Grid item container direction='row'>
+                            <div className={classes.bannerContainer}>
+                                <img className={classes.bannerImg} src={Image}/>
+                                <Typography className={classes.bannerText} variant='h3'>En Spa-tify nos cuidamos entre todos</Typography>
+                                <Typography className={classes.bannerSubtitle} variant='h5'>
+                                    A continuación te detallamos los protocolos y medidas de seguridad que toman todos
+                                    nuestros prestadores para poder brindar un servicio seguro y sin riesgos ante la pandemia 
+                                    de COVID-19.
+                                </Typography>
+                            </div>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item container justifyContent='space-evenly'>
+                    {
+                        data.map( (d, i) => {
+                            return(
+                                <Grid key={i} item container direction='row' justifyContent='space-evenly' className={classes.container}>
+                                    <Grid item className={classes.containerText}>
+                                        <Typography variant='h4' className={classes.containerTitle}>
+                                            {d.title}
+                                        </Typography>
+                                        <Typography variant='subtitle1'>
+                                            {d.subtitle}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item container className={classes.containerCard} alignContent='flex-end'>
+                                        <div className={classes.containerImg}>
+                                            <img className={classes.img} src={d.img}/>
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                                <Grid item container className={classes.containerCard} alignContent='flex-end'>
-                                    <div className={classes.divImg}>
-                                        <img className={classes.containerImg} src={d.img}/>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        )
-                    })
-                }
+                            )
+                        })
+                    }
+                    </Grid>
+
                 </Grid>
             </div>
         </div>
