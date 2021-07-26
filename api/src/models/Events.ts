@@ -1,45 +1,49 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const EventSchema = new Schema(
-    {
-        title: {
-            type: String,
-            trim: true,
-        },
-        date: {
-            type: String,
-            required: true,
-        },
-        hour: {
-            type: Number,
-            required: true,
-        },
-        isActive: {
-            type: Boolean,
-            default: true,
-        },
-        isAvailable: {
-            type: Boolean,
-            default: true,
-        },
-        service: {
-            type: Schema.Types.ObjectId,
-            ref: 'Services',
-        },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'Users',
-        },
-        calendar: {
-            type: Schema.Types.ObjectId,
-            ref: 'Calendar',
-        },
-        address: {
-            type: Schema.Types.ObjectId,
-            ref: 'Addresses',
-        },
+  {
+    title: {
+      type: String,
+      trim: true,
     },
-    { versionKey: false, timestamps: true }
+    date: {
+      type: String,
+      required: true,
+    },
+    hour: {
+      type: Number,
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    isAvailable: {
+      type: Boolean,
+      default: true,
+    },
+    service: {
+      type: Schema.Types.ObjectId,
+      ref: "Services",
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "Users",
+    },
+    calendar: {
+      type: Schema.Types.ObjectId,
+      ref: "Calendar",
+    },
+    address: {
+      type: Schema.Types.ObjectId,
+      ref: "Addresses",
+    },
+    rating: {
+      type: Schema.Types.ObjectId,
+      ref: "Rating",
+    },
+  },
+  { versionKey: false, timestamps: true }
 );
-EventSchema.plugin(require('mongoose-autopopulate'));
-export default model('Events', EventSchema);
+EventSchema.plugin(require("mongoose-autopopulate"));
+export default model("Events", EventSchema);

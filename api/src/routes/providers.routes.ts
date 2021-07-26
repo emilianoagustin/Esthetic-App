@@ -20,6 +20,11 @@ import {
   updateAddress,
   deleteAddress,
 } from "../controllers/addresses";
+import {
+  getAllRating,
+  getOneRating,
+  createRating,
+} from "../controllers/rating";
 
 import upload from "../libs/multer";
 //import passport from 'passport';
@@ -46,5 +51,9 @@ router.get("/:id/addresses/:idAd", getOneAddress);
 router.post("/:id/addresses", createAddress);
 router.put("/:id/addresses/:idAd", updateAddress);
 router.delete("/:id/addresses/:idAd", deleteAddress);
+
+// <<Routes to providers' ratings>>
+router.get("/:id/rating", getAllRating);
+router.get("/:id/rating/:idrt", getOneRating);
 
 export default router;

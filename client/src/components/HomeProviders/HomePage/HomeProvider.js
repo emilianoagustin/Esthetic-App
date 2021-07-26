@@ -6,7 +6,7 @@ import RecipeReviewCard from '../PendingServices/PendingServices';
 
 //siguiente variable es solo para efectos de prueba (a la espera de la ruta para renderizar)
 
-const buyedServices = [
+const boughtServices = [
   {
     image: 'https://pymstatic.com/44253/conversions/xavier-molina-medium.jpg',
     firstName: 'Mario',
@@ -69,7 +69,7 @@ const HomeProvider = () => {
         {users.services?.length < 1 ? (
           <VerticalLinearStepper />
         ) : (
-          buyedServices.map((user) => (
+          boughtServices.map((user) => (
             <RecipeReviewCard data={user} key={user._id} />
           ))
         )}
@@ -80,4 +80,4 @@ const HomeProvider = () => {
 
 export default HomeProvider;
 
-// <h1>muestros los servicios</h1>
+// <h1>muestro los servicios</h1>

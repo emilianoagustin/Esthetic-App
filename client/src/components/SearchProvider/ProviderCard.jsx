@@ -159,10 +159,10 @@ export default function RecipeReviewCard({ data }) {
                 <Typography paragraph>Correo:</Typography>
                 <Typography paragraph>{data.email}</Typography>
 
-                <Typography paragraph>Telefono:</Typography>
+                <Typography paragraph>Teléfono:</Typography>
                 <Typography paragraph>{data.phone}</Typography>
 
-                <Typography paragraph>Genero:</Typography>
+                <Typography paragraph>Género:</Typography>
                 <Typography paragraph>{data.gender}</Typography>
               </>
             )}
