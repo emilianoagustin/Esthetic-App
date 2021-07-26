@@ -1,5 +1,8 @@
+
 import actionsTypes from "../constants/constants";
 import { editAddress, findService } from "../../utils/filter.js";
+
+
 
 const initialState = {
   services: {
@@ -10,13 +13,15 @@ const initialState = {
     loading: true,
     data: [],
   },
-  userActive: "",
+  userActive: '',
   loginData: {},
   serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
   servicesByProvider: [],
+  providerEventsHours: {},
   providersAddresses: [],
+  providersRating: [],
   provider_address_status: {},
   provider_address_update_status: {},
   provider_update_status: {},
@@ -27,7 +32,7 @@ const initialState = {
   },
   userAddresses: { loading: true, data: [] },
   userReservations: { loading: true, data: [] },
-  keyword: "",
+  keyword: '',
 };
 
 const appReducer = (state = initialState, action) => {
@@ -54,7 +59,7 @@ const appReducer = (state = initialState, action) => {
       };
     case actionsTypes.LOGIN_SUCCESSFUL:
       window.localStorage.setItem(
-        "loggedSpatifyApp",
+        'loggedSpatifyApp',
         JSON.stringify(action.payload)
       );
       return {
@@ -72,7 +77,7 @@ const appReducer = (state = initialState, action) => {
         //error: action.payload.userActive,
       };
     case actionsTypes.LOGOUT:
-      window.localStorage.setItem("loggedSpatifyApp", "");
+      window.localStorage.setItem('loggedSpatifyApp', '');
       // window.localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -80,7 +85,7 @@ const appReducer = (state = initialState, action) => {
         userActive: action.payload,
       };
 
-    case actionsTypes.LOGGIN_IN_SESSION:
+    case actionsTypes.LOGIN_IN_SESSION:
       return {
         ...state,
         userActive: action.payload,
@@ -115,6 +120,7 @@ const appReducer = (state = initialState, action) => {
         providersByService: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDERS_BY_SERVICE_FAIL:
+      break;
 
     //GET SERVICES BY PROVIDER
     case actionsTypes.GET_SERVICES_BY_PROVIDER:
@@ -140,9 +146,17 @@ const appReducer = (state = initialState, action) => {
         providerDetails: { loading: false, data: action.payload },
       };
     case actionsTypes.GET_PROVIDER_DETAILS_FAIL:
+
+    //PROVIDERS' RATING
+    case actionsTypes.GET_ALL_RATING_BY_PROVIDER:
       return {
         ...state,
-        providerDetails: { loading: false, error: action.payload },
+        providersRating: action.payload,
+      };
+    case actionsTypes.SET_RATING_BY_USER:
+      return {
+        ...state,
+        providersRating: action.payload,
       };
 
     //GET PROVIDERS ADDRESSES
@@ -173,6 +187,13 @@ const appReducer = (state = initialState, action) => {
         provider_update_status: { message: action.payload },
       };
 
+    //EVENTS HOURS PROVIDER
+    case actionsTypes.GET_PROVIDERS_EVENTS_HOURS:
+      return {
+        ...state,
+        providerEventsHours: action.payload,
+      };
+
     ///SEARCH SERVICE BY NAME
     case actionsTypes.SEARCH_SERVICE_BY_NAME:
       return {
@@ -181,7 +202,6 @@ const appReducer = (state = initialState, action) => {
       };
 
     //SET RESERVATIONS FOR USERS
-
     case actionsTypes.SET_RESERVATION_STATUS:
       return {
         ...state,

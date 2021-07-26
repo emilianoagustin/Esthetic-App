@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import defaultImg from "../../../../img/wall-cart.jpg";
+import defaultImg from "../../../../img/spa_default_1.jpg";
 import "./Provider.scss";
 
 function Provider({ provider, service }) {
@@ -39,12 +39,23 @@ function Provider({ provider, service }) {
               Ver Perfil
             </NavLink>
             <NavLink
-              className={provider.hasCalendar ? "navLink card-button" : "navlink card-button inactive"}
-              to={provider.hasCalendar ? `/services/providers/${service}/${provider._id}/calendar` : `/services/providers/${service}`}
+              className={
+                provider.hasCalendar
+                  ? "navLink card-button"
+                  : "navlink card-button inactive"
+              }
+              to={
+                provider.hasCalendar
+                  ? `/services/providers/${service}/${provider._id}/calendar`
+                  : `/services/providers/${service}`
+              }
             >
               {provider.hasCalendar ? "Ver Agenda" : "Sin Agenda"}
             </NavLink>
-            <NavLink className="navLink card-button" to="/">
+            <NavLink
+              className="navLink card-button"
+              to={`/providers/${provider._id}/rating`}
+            >
               Ver Reseñas
             </NavLink>
           </div>
