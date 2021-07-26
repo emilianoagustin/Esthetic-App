@@ -15,6 +15,8 @@ import ProviderDetails from "../components/ProviderDetails/ProviderDetails";
 import HomeProvider from "../components/HomeProviders/HomePage/HomeProvider";
 import Providers from "../components/SearchProvider/Providers";
 import ProviderRating from "../components/Section/ProviderRating/ProviderRating";
+import CovidProtocol from "../components/CovidProtocol/CovidProtocol";
+import Footer from "../components/Footer/Footer";
 
 const App = () => {
   return (
@@ -39,11 +41,11 @@ const App = () => {
         path="/services/providers/:service/:provider/calendar"
         component={ProviderCalendar}
       />
-
       <Route exact path="/providers/:id" component={ProviderDetails} />
-
       <Route path="/profile/:id" component={UserProfile} />
       <Route path="/search" component={Providers} />
+      <Route path="/covid" component={CovidProtocol} />
+      <Route path="/" component={Footer} />
     </React.Fragment>
   );
 };

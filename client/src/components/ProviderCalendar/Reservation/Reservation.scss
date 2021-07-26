@@ -17,6 +17,7 @@
     border: 1px solid #888;
     padding: 30px;
     border-radius: 0.5em;
+    min-height: 150px;
     width: fit-content; /* Could be more or less, depending on screen size */
     position: relative;
   }
@@ -28,9 +29,11 @@
     max-width: 400px;
     margin: 20px 0 20px 0;
     tbody{
+      margin-top: 5px;
       display: table;
+      border: 1px solid rgb(134, 134, 134);
       td{
-        border: 1px solid black;
+        border: 1px solid rgb(134, 134, 134);
         padding: 5px 15px 5px 15px;
       }
     }
@@ -66,9 +69,12 @@
     display: flex;
     justify-content: space-between;
     select{
-     height: max-content;
      border-radius: 0.2em;
      margin-left: 5px;
      padding: 0 5px 0 5px;
     }
+  }
+
+  .address-select {
+    
   }

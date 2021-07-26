@@ -99,20 +99,22 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                             <td>Dirección</td>
                             <td className='td-address'>
                                 <span>
-                                    {data.address}
+                                    {addresses && addresses.length ? (data.address): 'No dispone de direcciones'}
                                 </span>
                                 <span>
-                                    {"Cambiar"}
+                                    {addresses && addresses.length ? ("Cambiar"): null}
                                     {
                                         addresses && addresses.length ? (
-                                            <select onChange={(e) => handleChange(e)}>
+                                            <select className='address-select' onChange={(e) => handleChange(e)}>
                                                 {
                                                     addresses.map((el, index) => (
                                                         <option key={index} value={el.name}>{el.name}</option>
                                                     ))
                                                 }
                                             </select>
-                                        ) : "No dispone de direcciones"
+                                        ) : (
+                                            <button className='address-button'>Agregar</button>
+                                        )
                                     }
                                 </span>
                             </td>
@@ -125,10 +127,14 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                     className='modal-button left'
                     onClick={() => handleActive()}
                 >CANCELAR</button>
-                <button
-                    className='modal-button right'
-                    onClick={handleAccept}
-                >ACEPTAR</button>
+                {
+                    addresses && addresses.length ? (
+                        <button
+                            className='modal-button right'
+                            onClick={handleAccept}
+                        >ACEPTAR</button>
+                    ) : null
+                }
             </div>
         </div>
     );

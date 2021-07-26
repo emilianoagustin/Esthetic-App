@@ -63,7 +63,7 @@ function getStepContent(step, services) {
     case 2:
       return (
         <>
-          <FormAdresses />
+          <FormAdresses type='addresses' />
         </>
       );
     case 3:

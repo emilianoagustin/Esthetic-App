@@ -130,3 +130,15 @@ export const payReservations: RequestHandler = async (req, res) => {
         return res.send(error);
     }
 }
+
+export const deleteReservation: RequestHandler = async (req, res) => {
+    try {
+        const user = await Users.findById(req.params.id)
+        const bag = await Bags.findOneAndUpdate({ user: user },
+            { $pull: { reservations: req.body } })
+        await bag.save()
+        return res.status(200).send(bag.reservations);
+    } catch (error) {
+        return res.send(error);
+    }
+};

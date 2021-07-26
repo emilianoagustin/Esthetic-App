@@ -1,13 +1,41 @@
-import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { putUserData } from "../../../Redux/actions/user.actions";
+import { GET_USERS } from "../../../utils/constants";
 import { validate } from "../../../utils/validate-user-profile";
 import "./Form.css";
 
+const ID = window.localStorage.getItem("loggedSpatifyApp")
+  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
+  : null;
+
 function Form({ showModal, setShowModal }) {
-  const [errors, setErrors] = useState({});
-  const [input, setInput] = useState({
-    name: "",
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    phone: false,
   });
+
+  const [input, setInput] = useState({
+    firstName: "",
+    lastName: "",
+    phone: null,
+   /*  addresses: {
+      name: "",
+      country: "",
+      state: "",
+      city: "",
+      address_1: "",
+      address_details: "",
+      zip_code: "",
+      is_main: false,
+      provider: "",
+      user: ID.userFound._id, 
+    },*/
+  });
+
+  const [userId, setUserId] = useState("");
 
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -19,12 +47,27 @@ function Form({ showModal, setShowModal }) {
     }
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-
-    console.log("Esto es input", input);
-    dispatch(/* createVideogame */ input);
+    try {
+      const res = await axios.post(`${GET_USERS}/${userId}`, input);
+      console.log(res);
+      input = setShowModal(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (window.localStorage.getItem("loggedSpatifyApp")) {
+      const userData = JSON.parse(
+        window.localStorage.getItem("loggedSpatifyApp")
+      );
+      if (userData.userFound.roles[0].name === "user") {
+        setUserId(userData.userFound._id);
+      }
+    }
+  }, []);
 
   const handleInputChange = function (e) {
     setInput({
@@ -32,11 +75,11 @@ function Form({ showModal, setShowModal }) {
       [e.name]: e.value,
     });
 
-    var objError = validate({
+    /*  var objError = validate({
       ...input,
       [e.name]: e.value,
     });
-    setErrors(objError);
+    setErrors(objError); */
   };
 
   return (
@@ -56,6 +99,7 @@ function Form({ showModal, setShowModal }) {
                 />
                 {errors.name && <p className="danger">{errors.lastName}</p>}
               </div>
+
               <div className="form-element">
                 <label>Apellido</label>
                 <input
@@ -73,10 +117,11 @@ function Form({ showModal, setShowModal }) {
                 <input
                   className={errors.phone && "danger"}
                   name="number"
-                  type="text"
-                  value={input.phone}
+                  type="number"
                   placeholder="Ingrese su numero de telefono"
-                  onChange={(e) => handleInputChange(e.target)}
+                  onChange={(e) =>
+                    setInput({ ...input, phone: parseInt(e.target.value) })
+                  }
                 />
                 {errors.phone && <p className="danger">{errors.phone}</p>}
               </div>
@@ -86,7 +131,7 @@ function Form({ showModal, setShowModal }) {
                 type="submit"
                 onClick={(e) => onSubmitHandler(e)}
               >
-                Confirmar
+                ACTUALIZAR
               </button>
             </form>
           </div>

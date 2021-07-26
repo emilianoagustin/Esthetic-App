@@ -18,10 +18,13 @@ import { createRating } from "../controllers/rating";
 const router = Router();
 
 // <<PLAIN USERS ROUTES>>
-router.get("/", usersCtrl.getUsers);
-router.get("/:id", usersCtrl.getUser);
-router.delete("/:id", usersCtrl.deleteUser);
-router.put("/:id", usersCtrl.updateUser);
+
+router.get('/', usersCtrl.getUsers);
+router.get('/:id', usersCtrl.getUser);
+router.delete('/:id', usersCtrl.deleteUser);
+router.put('/:id', usersCtrl.updateUser);
+router.post('/:id', usersCtrl.updateUser);
+
 
 // <<Routes to users' addresses>>
 router.get("/:id/addresses", getAllAddresses);
