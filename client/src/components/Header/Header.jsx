@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -109,6 +109,21 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [zona, setzona] = React.useState(null);
   const [render, setRender] = React.useState("");
+  const [ID, setID] = useState('');
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('loggedSpatifyApp')) {
+      const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
+      if (storageData.userFound.roles[0].name === "user") {
+        setUser('user');
+        setID(storageData.userFound._id);
+      } else {
+        setUser('provider');
+        setID(storageData.providerFound._id);
+      }
+    }
+  }, [])
 
   const open = Boolean(anchorEl);
   const abrir = Boolean(zona);
@@ -136,12 +151,10 @@ export default function PrimarySearchAppBar() {
   const handleRedirect = (e) => {
     console.log("entre");
     console.log(loginData.providerFound);
-    if (loginData.userFound) {
-      let id = loginData.userFound?._id;
-      history.push(`/profile/${id}`);
-    } else if (loginData.providerFound) {
-      let id = loginData.providerFound?._id;
-      history.push(`/providers/${id}/profile`);
+    if (user === 'user') {
+      history.push(`/profile/${ID}`);
+    } else if (user === 'provider') {
+      history.push(`/providers/${ID}/profile`);
     }
     setAnchorEl(null);
   };
@@ -208,20 +221,20 @@ export default function PrimarySearchAppBar() {
 
   let loginProfile = loginData.userFound
     ? [
-        <Avatar
-          onClick={handleClick}
-          alt="Remy Sharp"
-          src="/static/images/avatar/1.jpg"
-        />,
-        <Menu
-          id="fade-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          TransitionComponent={Fade}
-        >
-          {/* <Link
+      <Avatar
+        onClick={handleClick}
+        alt="Remy Sharp"
+        src="/static/images/avatar/1.jpg"
+      />,
+      <Menu
+        id="fade-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        {/* <Link
         to={`/user/profile/`}
         
         <Link
@@ -229,21 +242,21 @@ export default function PrimarySearchAppBar() {
         
         style={{ color: 'rgb(121, 47, 111)', textDecoration: 'none' }}
       >  */}
-          <MenuItem
+        <MenuItem
             /* onClick={handleClose} */ onClick={(e) => handleRedirect(e)}
-          >
-            Perfil
-          </MenuItem>
-          {/*   </Link> */}
-          <Link
-            to={"/perfil/historial"}
-            style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
-          >
-            <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
-          </Link>
-          <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
-        </Menu>,
-      ]
+        >
+          Perfil
+        </MenuItem>
+        {/*   </Link> */}
+        <Link
+          to={"/perfil/historial"}
+          style={{ color: "rgb(121, 47, 111)", textDecoration: "none" }}
+        >
+          <MenuItem onClick={handleClose}>Historial De Compras</MenuItem>
+        </Link>
+        <MenuItem onClick={handleCloseLogin}>Cerrar Sesión</MenuItem>
+      </Menu>,
+    ]
     : loginProvider;
 
   const zonas = [
@@ -301,7 +314,7 @@ export default function PrimarySearchAppBar() {
             </Link>
           </Typography>
           <Link to={"/search"}>
-            <div style={{marginLeft: "4rem"}}>BUSQUEDA</div>
+            <div style={{ marginLeft: "4rem" }}>BUSQUEDA</div>
           </Link>
 
           {/*   <SearchBar /> */}
