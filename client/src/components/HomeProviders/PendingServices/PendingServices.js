@@ -25,6 +25,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 //
 import "./PendingServices.scss";
 import img from "../../../img/hombre_barberia_2.jpg";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -61,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeReviewCard({ data }) {
-  console.log(data);
   const whatsApp = "https://web.whatsapp.com/";
   const classes = useStyles();
   const history = useHistory();
@@ -92,67 +92,55 @@ export default function RecipeReviewCard({ data }) {
   
   return (
     <div className="card-services">
-      <Card
-        className={classes.root}
-        style={{
-          height: "29rem",
-          width: "21rem",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
+      <Card className={classes.root}>
         <Typography variant="h3"></Typography>
-        <div style={{ marginTop: "-1.5rem" }}>
-          <CardHeader
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                className={classes.avatar}
-                src={data.image}
-              ></Avatar>
-            }
-            action={
-              <>
-                <IconButton
-                  aria-label="settings"
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleEdit}>Editar 🖊</MenuItem>
-                  <MenuItem onClick={handleClose}>Remover</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-              </>
-            }
-            title={
-              data?.name ? data.name : `${data.firstName} ${data.lastName}`
-            }
-            subheader={data.price ? `$ ${data.price}` : ""}
-          />
-        </div>
+
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="recipe"
+              className={classes.avatar}
+              src={data.image}
+            ></Avatar>
+          }
+          action={
+            <>
+              <IconButton
+                aria-label="settings"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleEdit}>Editar 🖊</MenuItem>
+                <MenuItem onClick={handleClose}>Remover</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </>
+          }
+          title={data.name ? data.name : `${data.firstName} ${data.lastName}`}
+          subheader={data.price ? `$ ${data.price}` : ""}
+        />
         <Link to={`/services/providers/${data.name}`}>
           <CardMedia
             className={classes.media}
-            image={img}
-            title="Paella dish"
+            image={data.image}
+            title="Servicios"
           />
         </Link>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {data.description && data.description.slice(0, 86).concat("...")}
             {data.services &&
-              "Los servicios adquiridos y los datos principales del cliente se encuentran al desplegando la flecha..."}
+              "Los servicios adquiridos y los datos principales del cliente se encuentran al desplegar la flecha..."}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -210,10 +198,10 @@ export default function RecipeReviewCard({ data }) {
                 <Typography paragraph>Correo:</Typography>
                 <Typography paragraph>{data.email}</Typography>
 
-                <Typography paragraph>Telefono:</Typography>
+                <Typography paragraph>Teléfono:</Typography>
                 <Typography paragraph>{data.phone}</Typography>
 
-                <Typography paragraph>Genero:</Typography>
+                <Typography paragraph>Género:</Typography>
                 <Typography paragraph>{data.gender}</Typography>
               </>
             )}

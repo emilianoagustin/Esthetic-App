@@ -165,19 +165,11 @@ export default function RecipeReviewCard({ data }) {
                   {data.email}
                 </Typography>
 
-                <Typography paragraph className={classes.cardTitle}>
-                  Telefono:
-                </Typography>
-                <Typography paragraph className={classes.cardContent}>
-                  {data.phone}
-                </Typography>
+                <Typography paragraph>Teléfono:</Typography>
+                <Typography paragraph>{data.phone}</Typography>
 
-                <Typography paragraph className={classes.cardTitle}>
-                  Genero:
-                </Typography>
-                <Typography paragraph className={classes.cardContent}>
-                  {data.gender}
-                </Typography>
+                <Typography paragraph>Género:</Typography>
+                <Typography paragraph>{data.gender}</Typography>
               </>
             )}
           </CardContent>

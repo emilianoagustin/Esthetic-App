@@ -46,6 +46,7 @@ export const getProviderDetails = (providerId) => async (dispatch) => {
     });
   }
 };
+
 export const getAllProviders = () => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_ALL_PROVIDERS });
   try {
@@ -87,6 +88,31 @@ export const handleSetSearchBar = (data) => (dispatch) => { 
   console.log(data)
   dispatch({ type: actionsTypes.SET_SEARCHBAR ,  payload: data})
 } 
+export const getProviderRating = (providerId) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`${HOST}/providers/${providerId}/rating`);
+    dispatch({
+      type: actionsTypes.GET_ALL_RATING_BY_PROVIDER,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const postProviderRating = ({ id, providerId }) =>
+  async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${HOST}/users/${id}/rating/${providerId}`
+      );
+      dispatch({
+        type: actionsTypes.SET_RATING_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST });
@@ -107,8 +133,7 @@ export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   }
 };
 
-export const updateProvider =
-  (providerId, providerData) => async (dispatch) => {
+export const updateProvider = (providerId, providerData) => async (dispatch) => {
     try {
       const { data } = await axios.put(
         `${GET_PROVIDERS}/${providerId}`,
