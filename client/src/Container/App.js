@@ -16,6 +16,7 @@ import HomeProvider from '../components/HomeProviders/HomePage/HomeProvider';
 import Providers from '../components/SearchProvider/Providers';
 import CovidProtocol from '../components/CovidProtocol/CovidProtocol';
 import Footer from '../components/Footer/Footer';
+import About from '../components/About/About';
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
       <Route path='/profile/:id' component={UserProfile} />
       <Route path='/search' component={Providers} />
       <Route path='/covid' component={CovidProtocol} />
+      <Route path='/about' component={About} />
 
       <Route path='/' component={Footer} />
     </React.Fragment>
