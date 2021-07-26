@@ -9,60 +9,60 @@ import Bags from '../models/Bags';
 import Rating from '../models/Rating';
 
 export const getCalendarEventsByDay: RequestHandler = async (req, res) => {
-  let reservations: any = [];
+    let reservations: any = [];
 
-  if (req.body.user !== '') {
-    const user: any = await Users.findById(req.body.user);
-    const bag: any = await Bags.findOne({ user: user });
-    reservations = bag.reservations;
-  }
+    if (req.body.user !== '') {
+        const user: any = await Users.findById(req.body.user);
+        const bag: any = await Bags.findOne({ user: user });
+        reservations = bag.reservations;
+    }
 
-  Providers.findById(req.body.provider)
-    .then((prov: any) => {
-      Calendar.findOne({ provider: prov }).then((result: any) => {
-        const events: Array<any> = [];
+    Providers.findById(req.body.provider)
+        .then((prov: any) => {
+            Calendar.findOne({ provider: prov }).then((result: any) => {
+                const events: Array<any> = [];
 
-        result.eventsHours.forEach((hour: Number, index: any) => {
-          let validate = isValidDate(req.body.date, hour);
+                result.eventsHours.forEach((hour: Number, index: any) => {
+                    let validate = isValidDate(req.body.date, hour);
 
-          let cartItem = false;
+                    let cartItem = false;
 
-          reservations.forEach((reservation: any) => {
-            if (
-              reservation.providerID === req.body.provider &&
-              reservation.date === req.body.date &&
-              reservation.hour === hour
-            ) {
-              cartItem = true;
-            }
-          });
+                    reservations.forEach((reservation: any) => {
+                        if (
+                            reservation.providerID === req.body.provider &&
+                            reservation.date === req.body.date &&
+                            reservation.hour === hour
+                        ) {
+                            cartItem = true;
+                        }
+                    });
 
-          events[index] = {
-            isActive: validate,
-            isAvailable: true,
-            date: req.body.date,
-            hour: hour,
-            isCartItem: cartItem,
-          };
-        });
+                    events[index] = {
+                        isActive: validate,
+                        isAvailable: true,
+                        date: req.body.date,
+                        hour: hour,
+                        isCartItem: cartItem,
+                    };
+                });
 
-        result.events.map((event: any) => {
-          if (event.date === req.body.date) {
-            result.eventsHours.forEach((hour: Number, index: any) => {
-              if (event.hour === hour) {
-                events[index] = event;
-              }
+                result.events.map((event: any) => {
+                    if (event.date === req.body.date) {
+                        result.eventsHours.forEach((hour: Number, index: any) => {
+                            if (event.hour === hour) {
+                                events[index] = event;
+                            }
+                        });
+                    }
+                });
+
+                return res.status(200).json(events);
             });
-          }
+        })
+
+        .catch(() => {
+            return res.status(404).json({ message: 'No se encontraron Eventos' });
         });
-
-        return res.status(200).json(events);
-      });
-    })
-
-    .catch(() => {
-      return res.status(404).json({ message: 'No se encontraron Eventos' });
-    });
 };
 
 export const getEventsByRole: RequestHandler = async (req, res) => {
@@ -74,13 +74,11 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
         if (role === 'user') {
             user = await Users.findById(id);
         } else {
-            user = await Providers.findById(id);
+            const prov = await Providers.findById(id);
+            user = await Calendar.findOne({ provider: prov });
         }
 
-        let events: Array<any> = [];
-
-        for (let i = 0; i < user.events.length; i++) {
-            const actual = user.events[i];
+        const data = user.events.map(async (actual: any) => {
             const event = await Events.findById(actual);
             const eventUser = await Users.findById(event.user);
             const eventCalendar = await Calendar.findById(event.calendar);
@@ -94,7 +92,6 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     await event.save();
                 }
             }
-
             const eventData = {
                 _id: event._id,
                 condition: event.condition,
@@ -130,12 +127,13 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     phone: eventProvider?.phone,
                 }
             }
-            events.push(eventData);
-        }
-        res.status(200).send(events);
-  } catch (error) {
-    res.send(error);
-  }
+            return eventData;
+        })
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const cancelEvent: RequestHandler = async (req, res) => {
@@ -160,14 +158,18 @@ export const giveReview: RequestHandler = async (req, res) => {
     try {
         const event = await Events.findById(req.body.event);
         const calendar = await Calendar.findById(event.calendar);
+        const provider: any = await Providers.findById(calendar.provider);
 
         const review = new Rating({
             assessment: req.body.assessment,
-            Avg_assessment: req.body.Avg_assessment,
             comments: req.body.comments,
             provider: calendar.provider,
             user: event.user,
+            event: req.body.event
         })
+
+        provider.rating.push(review);
+        await provider.save();
 
         await review.save();
         event.ratingAlert = false;
