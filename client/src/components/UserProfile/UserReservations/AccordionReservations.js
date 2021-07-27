@@ -24,22 +24,21 @@ function AccordionReservations() {
         setID(storageData.userFound._id);
       }
     }
-  });
-  useEffect(() => {
-    if (ID) {
-      dispatch(getUserReservations(ID));   
-     
-    }
   }, []);
 
-  const data = useSelector((state) => state.userReservations.data);
-  console.log("Este es el ID del GET Reservations", ID);
-  console.log("Esta es la data de las reservas", data);
+  useEffect(() => {
+    if (ID) {
+      dispatch(getUserReservations(ID));
+    }
+  }, [ID]);
 
+  const data = useSelector((state) => state.userReservations.data);
+  
   let reservations = [];
   if (data && data.length) {
     reservations = data;
   }
+
   /* const deleteAddress = (addressId) => {
     const userId = ID.userFound._id;
     dispatch(deleteUserAddresses({ userId, addressId }));

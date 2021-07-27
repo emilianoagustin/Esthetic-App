@@ -15,6 +15,7 @@ import AccordionPrueba from "./AccordionPrueba";
 const ID = window.localStorage.getItem("loggedSpatifyApp")
   ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
   : null;
+  
 console.log("Este es el ID", ID);
 
 function UserProfileInfo() {
@@ -35,13 +36,13 @@ function UserProfileInfo() {
     <div>
       <div className="user-profile-info-container">
         <div className="profile-data">
-        {/*   <div className="profile-img">
-            {userData.img ? (
+          <div className="profile-img">
+            {/* {userData.img ? (
               <img className="img" src={userData.img} alt="Service Image"></img>
-            ) : (
+            ) : ( */}
               <img className="img" src={defaultImg} alt="Default Image"></img>
-            )}
-          </div> */}
+             {/* )} */}
+          </div> 
         </div>
         <div className="profile-info">
           <div className="profile-header">
