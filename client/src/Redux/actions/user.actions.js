@@ -88,9 +88,21 @@ export const getUserReservations = (userId) => async (dispatch) => {
   }
 };
 
-//USER ADDRESSES
+// GET ALL USERS
+export const getAllUsers = () => async (dispatch) => {
 
-//GET
+  dispatch({ type: actionsTypes.GET_ALL_USERS });
+  try {
+    const { data } = await axios.get(`${GET_USERS}`);
+    dispatch({ type: actionsTypes.GET_ALL_USERS_SUCCES, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_ALL_USERS_FAIL,
+    });
+  }
+};
+      //USER ADDRESSES
+
 
 export const getUserAddresses = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_ADDRESSES_REQUEST });
@@ -108,6 +120,7 @@ export const getUserAddresses = (userId) => async (dispatch) => {
     });
   }
 };
+//POST USER DATA ->>> UPDATE PROFILE
 
 //POST ADDRESS
 

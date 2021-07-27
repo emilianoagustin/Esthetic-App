@@ -22,7 +22,7 @@ export default function Reservation({ handleActive, date, hour, provider, servic
     useEffect(() => {
         if (localStorage.getItem('loggedSpatifyApp')) {
             const storageData = JSON.parse(localStorage.getItem('loggedSpatifyApp'))
-            if (storageData.userFound.roles[0].name === "user") {
+            if (storageData.userFound.roles[0]?.name === "user") {
                 setData({
                     ...data,
                     user: storageData.userFound._id
@@ -99,18 +99,19 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                             <td>Dirección</td>
                             <td className='td-address'>
                                 <span>
-                                    {addresses && addresses.length ? (data.address): 'No dispone de direcciones'}
+                                    {addresses && addresses.length ? data.address : 'No dispone de direcciones'}
                                 </span>
                                 <span>
-                                    {addresses && addresses.length ? ("Cambiar"): null}
+                                    {addresses && addresses.length ? ("Cambiar") : null}
                                     {
                                         addresses && addresses.length ? (
                                             <select className='address-select' onChange={(e) => handleChange(e)}>
                                                 {
                                                     addresses.map((el, index) => (
                                                         <option key={index} value={el.name}>{el.name}</option>
-                                                    ))
-                                                }
+                                                        ))
+                                                    }
+                                                    <option value={'el.name'}>{'el.name'}</option>
                                             </select>
                                         ) : (
                                             <button className='address-button'>Agregar</button>
@@ -136,6 +137,6 @@ export default function Reservation({ handleActive, date, hour, provider, servic
                     ) : null
                 }
             </div>
-        </div>
+        </div >
     );
 }

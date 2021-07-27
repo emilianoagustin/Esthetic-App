@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 //Material UI
@@ -24,6 +24,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 //
 import "./PendingServices.scss";
+import img from "../../../img/hombre_barberia_2.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,8 @@ export default function RecipeReviewCard({ data }) {
     history.push(`/service/upload/${data._id}`);
   };
 
+  useEffect(() => {}, [data]);
+  
   return (
     <div className="card-services">
       <Card className={classes.root}>
