@@ -13,27 +13,33 @@ import { BsTrash } from "react-icons/bs";
 import useReactRouter from "use-react-router";
 import FormEditAddresses from "../Form/FormEditAddresses";
 
-const ID = window.localStorage.getItem("loggedSpatifyApp")
-  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp")).userFound._id
-  : null
-
-function AccordionReservations (){
- /*  const [editAddressModal, setEditAddressModal] = useState(false); */
+function AccordionReservations() {
+  const [ID, setID] = useState("");
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.userReservations.data)
+
+  useEffect(() => {
+    if (localStorage.getItem("loggedSpatifyApp")) {
+      const storageData = JSON.parse(localStorage.getItem("loggedSpatifyApp"));
+      if (storageData.userFound.roles[0].name === "user") {
+        setID(storageData.userFound._id);
+      }
+    }
+  });
+  useEffect(() => {
+    if (ID) {
+      dispatch(getUserReservations(ID));   
+     
+    }
+  }, []);
+
+  const data = useSelector((state) => state.userReservations.data);
+  console.log("Este es el ID del GET Reservations", ID);
+  console.log("Esta es la data de las reservas", data);
 
   let reservations = [];
   if (data && data.length) {
     reservations = data;
-  } 
-
-
-  useEffect(() => {
-    if (ID) {
-      dispatch(getUserReservations(ID));
-    }
-  }, []);
-
+  }
   /* const deleteAddress = (addressId) => {
     const userId = ID.userFound._id;
     dispatch(deleteUserAddresses({ userId, addressId }));
@@ -42,7 +48,6 @@ function AccordionReservations (){
   /* const editAddress = () => {
       setEditAddressModal(prev => !prev)
   } */
-
   const toggle = (i) => {
     if (selected === i) {
       return setSelected(null);
@@ -58,7 +63,7 @@ function AccordionReservations (){
           <div className="accordion-item" onClick={() => toggle(i)}>
             <div className="accordion-title">
               <p>
-                <b>Servicio Contratado:</b> {r.service}
+                <b>Servicio Contratado:</b> {r.service.name}
               </p>
               <span>
                 {selected == i ? <IoIosArrowUp /> : <IoIosArrowDown />}
@@ -74,20 +79,19 @@ function AccordionReservations (){
               {r && (
                 <div>
                   <p className="p">Dia: {r.date}</p>
-                  <p className="p">Hora: {r.hour}</p>
-                  <p className="p">Precio: {r.price}</p>
-                  <p className="p">Prestador: {r.provider}</p>
+                  <p className="p">Hora: {r.hour} Hs.</p>
+                  <p className="p">Precio: ${r.service.price}</p>
+                  <p className="p">
+                    Prestador: {r.provider.firstName} {r.provider.lastName}
+                  </p>
                 </div>
               )}
-              {/* <div className="accordion-item-options">
+              {/*  <div className="accordion-item-options">
                 <i className="trash-icon" onClick={() => deleteAddress(a._id)}>
                   <BsTrash />
                 </i>
-                <i className="edit-icon" onClick={() => editAddress(a._id)}>
-                  <HiOutlinePencilAlt />
-                </i>
+               
               </div> */}
-              {/* <FormEditAddresses addressId={a._id} editAddressModal={editAddressModal} setEditAddressModal={setEditAddressModal} /> */}
             </div>
           </div>
         ))}
