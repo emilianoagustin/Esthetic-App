@@ -6,7 +6,6 @@ export const getServices = () => async (dispatch) => {
   dispatch({
     type: actionsTypes.SET_SERVICES_REQUEST,
   });
-
   try {
     const data = await axios.get(GET_SERVICES);
     dispatch({ type: actionsTypes.SET_SERVICES_SUCCESS, payload: data.data });
@@ -17,7 +16,6 @@ export const getServices = () => async (dispatch) => {
 
 export const getServiceDetails = (serviceId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_SERVICES_DETAILS_REQUEST });
-
   try {
     const { data } = await axios.get(`${GET_SERVICES}/${serviceId}`);
     dispatch({ type: actionsTypes.GET_SERVICES_DETAILS_SUCCES, payload: data });
@@ -71,22 +69,17 @@ export const getProviderServices = (providerId) => async (dispatch) => {
   }
 };
 
+export const handleSearchBar = (data) => (dispatch) => {
+  dispatch({ type: actionsTypes.RENDER_SEARCHBAR, payload: data });
+};
 
-export const handleSearchBar = (data) => (dispatch) => { 
-  console.log("entre aqui")
-  console.log(data)
-  dispatch({ type: actionsTypes.RENDER_SEARCHBAR ,  payload: data})
-} 
-
-export const handleSetSearchBar = (data) => (dispatch) => { 
-  console.log("entre aqui")
-  console.log(data)
-  dispatch({ type: actionsTypes.SET_SEARCHBAR ,  payload: data})
-} 
+export const handleSetSearchBar = (data) => (dispatch) => {
+  dispatch({ type: actionsTypes.SET_SEARCHBAR, payload: data });
+};
 export const getProviderRating = (providerId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${HOST}/providers/${providerId}/rating`);
-    console.log("TODOS LOS REVIEWS: ", data.data);
+    const { data } = await axios.get(`${HOST}/providers/rating/${providerId}`);
+    console.log("DATA ES: ", data);
     dispatch({
       type: actionsTypes.GET_ALL_RATING_BY_PROVIDER,
       payload: data,
@@ -113,7 +106,6 @@ export const getProviderRating = (providerId) => async (dispatch) => {
 
 export const getProvidersbyServiceName = (serviceName) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_PROVIDERS_BY_SERVICE_REQUEST });
-
   try {
     const { data } = await axios.get(
       `${GET_PROVIDERS}/services/${serviceName}`

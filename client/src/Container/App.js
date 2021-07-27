@@ -36,7 +36,7 @@ const App = () => {
       <Route exact path={["/cart", "/cart/:id"]} component={Cart} />
       <Route path="/service/upload/:id" component={ServiceUpload} />
       <Route path="/providers/:id/profile" component={ProviderProfile} />
-      <Route path="/providers/:id/rating" component={ProviderRating} />
+      <Route path="/providers/rating/:id" component={ProviderRating} />
       <Route
         exact
         path="/services/providers/:service/:provider/calendar"

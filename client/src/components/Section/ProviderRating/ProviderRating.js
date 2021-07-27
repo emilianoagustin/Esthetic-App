@@ -10,18 +10,24 @@ import {
 const ProviderRating = () => {
   const dispatch = useDispatch();
   const providerDetails = useSelector((state) => state.providerDetails);
-  const ProviderRating = useSelector((state) => state.providerDetails);
+  const providerRating = useSelector((state) => state.providerRating);
   const { id } = useParams();
-
   useEffect(() => {
     dispatch(getProviderDetails(id));
     dispatch(getProviderRating(id));
   }, [dispatch]);
-
+  console.log("PROVIDERRATING: ", providerRating);
   return (
     <div className="container-main">
       <div className="container">
         <h1 className="h1-details">{`Éstas son las reseñas de ${providerDetails.data?.firstName}`}</h1>
+        {/* <div>
+          {providerRating ? (
+            <h2>providerRating.data.resume?.rating</h2>
+          ) : (
+            <h2>providerRating.data.rating</h2>
+          )}
+        </div> */}
       </div>
     </div>
   );

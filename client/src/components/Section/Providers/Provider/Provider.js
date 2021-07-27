@@ -57,7 +57,7 @@ function Provider({ provider, service }) {
             </NavLink>
             <NavLink
               className="navLink card-button"
-              to={`/providers/${provider._id}/rating`}
+              to={`/providers/rating/${provider._id}`}
             >
               Ver Reseñas
             </NavLink>
