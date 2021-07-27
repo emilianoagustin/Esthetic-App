@@ -75,7 +75,8 @@ export const getUserReservations = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_RESERVATIONS_REQUEST });
 
   try {
-    const { data } = await axios.get(`${HOST}${EVENTS}/${USER}/${userId}`);
+    const { data } = await axios.get(`${HOST}${EVENTS}${USER}/${userId}`);
+   console.log("Aca hago el GET", "`${HOST}${EVENTS}/${USER}/${userId}`")
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
       payload: data,
@@ -87,10 +88,44 @@ export const getUserReservations = (userId) => async (dispatch) => {
     });
   }
 };
+//DELETE USER RESERVATIONS
 
-//USER ADDRESSES
 
-//GET
+export const deleteUserReservation = (userId) => async (dispatch) => {
+  dispatch({ type: actionsTypes.DELETE_USER_RESERVATIONS_REQUEST});
+    try {
+    const { data } = await axios.delete(
+      `${GET_USERS}/${RESERVATIONS}/${userId}/delete`
+    );
+    dispatch({
+      type: actionsTypes.DELETE_USER_RESERVATIONS_SUCCESS,
+      payload: userId,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.DELETE_USER_RESERVATIONS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+
+
+// GET ALL USERS
+export const getAllUsers = () => async (dispatch) => {
+
+  dispatch({ type: actionsTypes.GET_ALL_USERS });
+  try {
+    const { data } = await axios.get(`${GET_USERS}`);
+    dispatch({ type: actionsTypes.GET_ALL_USERS_SUCCES, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actionsTypes.GET_ALL_USERS_FAIL,
+    });
+  }
+};
+      //USER ADDRESSES
+
 
 export const getUserAddresses = (userId) => async (dispatch) => {
   dispatch({ type: actionsTypes.GET_USER_ADDRESSES_REQUEST });
@@ -108,6 +143,7 @@ export const getUserAddresses = (userId) => async (dispatch) => {
     });
   }
 };
+//POST USER DATA ->>> UPDATE PROFILE
 
 //POST ADDRESS
 

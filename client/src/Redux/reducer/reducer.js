@@ -9,13 +9,15 @@ const initialState = {
     loading: true,
     data: [],
   },
+  userActive: '',
+  loginData: {},
+
+  serviceDetails: { loading: true, data: {} },
+
   allProviders: {
     loading: true,
     data: [],
   },
-  userActive: '',
-  loginData: {},
-  serviceDetails: { loading: true, data: {} },
   providerDetails: { loading: true, data: {} },
   providersByService: { loading: true, data: [] },
   servicesByProvider: [],
@@ -26,13 +28,23 @@ const initialState = {
   provider_address_update_status: {},
   provider_update_status: {},
   reservation_status: {},
+
+
+  setStateSearch : "", 
+  renderSearchBar: "",
+  userActive: "",
+  loginData: {},
   userData: {
     loading: true,
     data: {},
   },
   userAddresses: { loading: true, data: [] },
   userReservations: { loading: true, data: [] },
-  keyword: '',
+
+
+  allUsers: [],
+  keyword: "",
+
 };
 
 const appReducer = (state = initialState, action) => {
@@ -135,11 +147,23 @@ const appReducer = (state = initialState, action) => {
       };
 
     //GET PROVIDERS' DETAILS
+    // case actionsTypes.GET_PROVIDER_DETAILS_REQ:
+    //   return {
+    //     ...state,
+    //     providerDetails: { loading: true },
+    //   };
+    case actionsTypes.GET_ALL_PROVIDERS_SUCCES:
+      return {
+        ...state,
+        allProviders: { loading: false, data: action.payload },
+      }
+
     case actionsTypes.GET_PROVIDER_DETAILS_REQ:
       return {
         ...state,
         providerDetails: { loading: true },
       };
+      
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
@@ -333,6 +357,52 @@ const appReducer = (state = initialState, action) => {
         ...state,
         userReservations: { loading: false, error: action.payload },
       };
+    ///GET ALL USERS
+    case actionsTypes.GET_ALL_USERS_SUCCES:
+      return {
+        ...state,
+        allProviders: { loading: false, data: action.payload },
+      };
+      
+    ///RENDER SEARCHBAR 
+    case actionsTypes.RENDER_SEARCHBAR:
+      return {
+        ...state,
+        renderSearchBar: action.payload,
+      };
+    case actionsTypes.SET_SEARCHBAR:
+      return {
+        ...state,
+        setStateSearch: action.payload,
+      };
+
+//DETELE USER RESERVATIOBS
+
+case actionsTypes.DELETE_USER_RESERVATIONS_REQUEST:
+  return {
+    ...state,
+    userReservations: { ...state.userReservations, loading: true },
+  };
+case actionsTypes.DELETE_USER_RESERVATIONS_SUCCESS:
+  return {
+    ...state, /////VER
+    userAddresses: {
+      loading: false,
+      data: state.userAddresses.data.filter(
+        (a) => a._id !== action.payload
+      ),
+    },
+  };
+case actionsTypes.DELETE_USER_ADDRESS_FAIL:
+  return {
+    ...state,
+    userAddresses: { loading: false, error: action.payload },
+  };
+
+
+
+
+
 
     default:
       return state;

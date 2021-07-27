@@ -135,6 +135,7 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
         }
 
         res.status(200).json(events);
+
     } catch (error) {
         res.send(error);
     }
