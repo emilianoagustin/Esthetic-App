@@ -76,6 +76,18 @@ export const getProviderServices = (providerId) => async (dispatch) => {
   }
 };
 
+
+export const handleSearchBar = (data) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(data)
+  dispatch({ type: actionsTypes.RENDER_SEARCHBAR ,  payload: data})
+} 
+
+export const handleSetSearchBar = (data) => (dispatch) => { 
+  console.log("entre aqui")
+  console.log(data)
+  dispatch({ type: actionsTypes.SET_SEARCHBAR ,  payload: data})
+} 
 export const getProviderRating = (providerId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${HOST}/providers/${providerId}/rating`);
