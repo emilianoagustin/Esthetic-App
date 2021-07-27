@@ -95,9 +95,8 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     await event.save();
                 }
             }
-            console.log('holaaaa')
 
-            const eventData = {
+            const eventData: any = {
                 _id: event._id,
                 condition: event.condition,
                 isActive: event.isActive,
@@ -132,7 +131,6 @@ export const getEventsByRole: RequestHandler = async (req, res) => {
                     phone: eventProvider?.phone,
                 }
             }
-            console.log(eventData)
             events.push(eventData);
         }
 
