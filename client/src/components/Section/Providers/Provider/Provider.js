@@ -1,10 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import defaultImg from "../../../../img/spa_default_1.jpg";
 import "./Provider.scss";
 
 function Provider({ provider, service }) {
+  const dispatch = useDispatch();
+  const providerRating = useSelector((state) => state.providerRating);
+
   return (
     <div className="provider-container">
       <NavLink

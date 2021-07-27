@@ -13,7 +13,6 @@ export interface IUser extends Document {
   event: any[];
   addresses: any[];
   creditCards: any[];
-  rating: any[];
   setImage(filename: any): void;
   comparePassword(password: string): Promise<boolean>;
 }
@@ -77,12 +76,6 @@ const UserSchema = new Schema<IUser>(
         type: Schema.Types.ObjectId,
         ref: "CreditCards",
         autopopulate: true,
-      },
-    ],
-    rating: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Rating",
       },
     ],
   },

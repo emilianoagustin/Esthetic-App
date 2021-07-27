@@ -53,10 +53,6 @@ const EventSchema = new Schema(
       ref: "Addresses",
       autopopulate: true,
     },
-    rating: {
-      type: Schema.Types.ObjectId,
-      ref: "Rating",
-    },
   },
   { versionKey: false, timestamps: true }
 );
