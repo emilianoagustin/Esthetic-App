@@ -74,7 +74,7 @@ export const getProviderServices = (providerId) => async (dispatch) => {
 export const getProviderRating = (providerId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`${HOST}/providers/${providerId}/rating`);
-    console.log("TODOS LOS REVIEWS: ", data);
+    console.log("TODOS LOS REVIEWS: ", data.data);
     dispatch({
       type: actionsTypes.GET_ALL_RATING_BY_PROVIDER,
       payload: data,

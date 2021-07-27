@@ -11,11 +11,11 @@ const ProviderRating = () => {
   const dispatch = useDispatch();
   const providerDetails = useSelector((state) => state.providerDetails);
   const ProviderRating = useSelector((state) => state.providerDetails);
-  const { id, idUser } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getProviderDetails(id));
-    dispatch(getProviderRating({ idUser, id }));
+    dispatch(getProviderRating(id));
   }, [dispatch]);
 
   return (

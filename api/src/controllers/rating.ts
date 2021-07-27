@@ -6,19 +6,20 @@ export const getAllRating: RequestHandler = async (req, res) => {
   try {
     let avgAssessment: number = 3.5;
     const provider = await Providers.findById(req.params.id);
+    console.log("ALGO", provider);
     if (provider) {
       const foundRating = await Rating.find({ provider: provider });
       if (foundRating.length) {
         avgAssessment += foundRating.reduce(
           (prev: any, next: any) => (prev += next.assessment)
         );
-        avgAssessment /= (foundRating.length + 1);
+        avgAssessment /= foundRating.length + 1;
         return res.send({
           message: `Éstas son las reseñas de ${provider.firstName}.`,
           data: { rating: avgAssessment, details: foundRating },
         });
       } else {
-        return res.status(404).send({
+        return res.status(400).send({
           message: "Sin reseñas por el momento.",
           data: avgAssessment,
         });
