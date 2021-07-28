@@ -9,28 +9,35 @@ import {
 } from "../../../Redux/actions/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./UserProfileInfo.css";
-
 import AccordionPrueba from "./AccordionPrueba";
-
-const ID = window.localStorage.getItem("loggedSpatifyApp")
-  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
-  : null;
-  
-console.log("Este es el ID", ID);
 
 function UserProfileInfo() {
   const [newAddressInfo, setnewAddressInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
+  const [userID, setUserID] = useState("");
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData.data);
   const userAddresses = useSelector((state) => state.userAddresses.data);
 
   useEffect(() => {
-    dispatch(getUserProfile(ID.userFound._id));
-    dispatch(getUserAddresses(ID.userFound._id));
+    if (window.localStorage.getItem("loggedSpatifyApp")) {
+      const userData = JSON.parse(
+        window.localStorage.getItem("loggedSpatifyApp")
+      );
+      if (userData.userFound.roles[0].name === "user") {
+        setUserID(userData.userFound._id);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (userID !== '') {
+      dispatch(getUserProfile(userID));
+      dispatch(getUserAddresses(userID));
+    }
+  }, [userID]);
 
   return (
     <div>
@@ -40,9 +47,9 @@ function UserProfileInfo() {
             {/* {userData.img ? (
               <img className="img" src={userData.img} alt="Service Image"></img>
             ) : ( */}
-              <img className="img" src={defaultImg} alt="Default Image"></img>
-             {/* )} */}
-          </div> 
+            <img className="img" src={defaultImg} alt="Default Image"></img>
+            {/* )} */}
+          </div>
         </div>
         <div className="profile-info">
           <div className="profile-header">

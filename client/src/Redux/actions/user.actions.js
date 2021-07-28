@@ -152,10 +152,9 @@ export const postUserAddresses = (payload) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      `${GET_USERS}/${payload.userId}/addresses`,
+      `${GET_USERS}/${payload.ID}/addresses`,
       payload.input
     );
-    console.log("Esto es data", data);
     dispatch({
       type: actionsTypes.ADD_USER_ADDRESS_SUCCESS,
       payload: data,
@@ -174,7 +173,7 @@ export const deleteUserAddresses = (payload) => async (dispatch) => {
   dispatch({ type: actionsTypes.DELETE_USER_ADDRESS_REQUEST });
     try {
     const { data } = await axios.delete(
-      `${GET_USERS}/${payload.userId}/addresses/${payload.addressId}`
+      `${GET_USERS}/${payload.ID}/addresses/${payload.addressId}`
     );
     dispatch({
       type: actionsTypes.DELETE_USER_ADDRESS_SUCCESS,
@@ -196,7 +195,7 @@ export const editUserAddresses = (payload) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      `${GET_USERS}/${payload.userId}/addresses/${addressId}`
+      `${GET_USERS}/${payload.ID}/addresses/${addressId}`
     );
     console.log(data, "Aca esta la data del objeto editado");
     dispatch({

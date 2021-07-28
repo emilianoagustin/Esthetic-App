@@ -9,16 +9,26 @@ import { GET_USERS } from "../../../utils/constants";
 import { validate } from "../../../utils/validate-user-profile";
 import "./Form.css";
 
-const ID = window.localStorage.getItem("loggedSpatifyApp")
-  ? JSON.parse(window.localStorage.getItem("loggedSpatifyApp"))
-  : null;
-
 function FormAddresses({ showModal, setShowModal }) {
+  const [ID, setID] = useState("");
+  const dispatch = useDispatch();
+  const modalRef = useRef();
   const [errors, setErrors] = useState({
     firstName: false,
     lastName: false,
     phone: false,
   });
+
+  useEffect(() => {
+    if (window.localStorage.getItem("loggedSpatifyApp")) {
+      const userData = JSON.parse(
+        window.localStorage.getItem("loggedSpatifyApp")
+      );
+      if (userData.userFound.roles[0].name === "user") {
+        setID(userData.userFound._id);
+      }
+    }
+  }, []);
 
   const [input, setInput] = useState({
     addresses: {
@@ -31,14 +41,9 @@ function FormAddresses({ showModal, setShowModal }) {
       zip_code: "",
       is_main: false,
       provider: "",
-      user: ID.userFound._id,
+      user: ID,
     },
   });
-
-  const [userId, setUserId] = useState("");
-
-  const dispatch = useDispatch();
-  const modalRef = useRef();
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
@@ -49,32 +54,22 @@ function FormAddresses({ showModal, setShowModal }) {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const userId = ID.userFound._id;
-    dispatch(postUserAddresses({ userId, input }));
+    console.log(ID)
+    if (ID !== '') {
+      dispatch(postUserAddresses({ ID, input }));
+    }
   };
 
-  useEffect(() => {
-    if (window.localStorage.getItem("loggedSpatifyApp")) {
-      const userData = JSON.parse(
-        window.localStorage.getItem("loggedSpatifyApp")
-      );
-      if (userData.userFound.roles[0].name === "user") {
-        setUserId(userData.userFound._id);
-      }
-    }
-  }, []);
 
   const handleInputChange = function (e) {
-    setInput({
-      ...input,
-      [e.name]: e.value,
-    });
-
-    /*  var objError = validate({
-      ...input,
-      [e.name]: e.value,
-    });
-    setErrors(objError); */
+    if (e.name === 'is__main') {
+      console.log(e)
+    } else {
+      setInput({
+        ...input,
+        [e.name]: e.value,
+      });
+    }
   };
 
   return (
@@ -82,102 +77,109 @@ function FormAddresses({ showModal, setShowModal }) {
       {showModal && (
         <div className="wrapper" ref={modalRef} onClick={closeModal}>
           <div className="form-container">
-            <form>
-              <div className="form-element-a">
-                <label>Referencia: </label>
-                <input
-                  className={errors.name && "danger"}
-                  name="name"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.name && <p className="danger">{errors.name}</p>}
-              </div>
-              <div>
-                <label>Pais: </label>
-                <input
-                  className={errors.country && "danger"}
-                  name="country"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.country && <p className="danger">{errors.country}</p>}
-              </div>
+            <div className="form-element-a">
+              <h3 className='modal-title'>NUEVA DIRECCIÓN</h3>
+              <label>Referencia: </label>
+              <input
+                className={errors.name && "danger"}
+                name="name"
+                type="text"
+                placeholder="Nombre para la dirección"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.name && <p className="danger">{errors.name}</p>}
+            </div>
+            <div>
+              <label>Pais: </label>
+              <input
+                className={errors.country && "danger"}
+                name="country"
+                type="text"
+                placeholder="Ingrese el País"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.country && <p className="danger">{errors.country}</p>}
+            </div>
 
-              <div>
-                <label>Provincia: </label>
-                <input
-                  className={errors.state && "danger"}
-                  name="state"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.state && <p className="danger">{errors.state}</p>}
-              </div>
+            <div>
+              <label>Provincia: </label>
+              <input
+                className={errors.state && "danger"}
+                name="state"
+                type="text"
+                placeholder="Ingrese la Provincia"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.state && <p className="danger">{errors.state}</p>}
+            </div>
 
-              <div>
-                <label>Ciudad: </label>
-                <input
-                  className={errors.city && "danger"}
-                  name="city"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.city && <p className="danger">{errors.city}</p>}
-              </div>
-              <div>
-                <label>Calle: </label>
-                <input
-                  className={errors.address_1 && "danger"}
-                  name="address_1"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.address_1 && (
-                  <p className="danger">{errors.address_1}</p>
-                )}
-              </div>
+            <div>
+              <label>Ciudad: </label>
+              <input
+                className={errors.city && "danger"}
+                name="city"
+                type="text"
+                placeholder="Ingrese la Ciudad"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.city && <p className="danger">{errors.city}</p>}
+            </div>
+            <div>
+              <label>Calle: </label>
+              <input
+                className={errors.address_1 && "danger"}
+                name="address_1"
+                type="text"
+                placeholder="Ingrese la Calle"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.address_1 && (
+                <p className="danger">{errors.address_1}</p>
+              )}
+            </div>
 
-              <div>
-                <label>Detalles: </label>
-                <input
-                  className={errors.address_details && "danger"}
-                  name="address_details"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.address_details && (
-                  <p className="danger">{errors.address_details}</p>
-                )}
-              </div>
+            <div>
+              <label>Detalles: </label>
+              <input
+                className={errors.address_details && "danger"}
+                name="address_details"
+                type="text"
+                placeholder="Ingrese los detalles"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.address_details && (
+                <p className="danger">{errors.address_details}</p>
+              )}
+            </div>
 
-              <div>
-                <label>Codigo Postal: </label>
-                <input
-                  className={errors.zip_code && "danger"}
-                  name="zip_code"
-                  type="text"
-                  placeholder="Ingrese su direccion"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-                {errors.zip_code && <p className="danger">{errors.zip_code}</p>}
-              </div>
-              <div>
-                <label>Direccion Principal: </label>
-                <input
-                  className={errors.zip_code && "danger"}
-                  name="is_main"
-                  type="checkbox"
-                  onChange={(e) => handleInputChange(e.target)}
-                />
-              </div>
+            <div>
+              <label>Codigo Postal: </label>
+              <input
+                className={errors.zip_code && "danger"}
+                name="zip_code"
+                type="text"
+                placeholder="Ingrese el código postal"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+              {errors.zip_code && <p className="danger">{errors.zip_code}</p>}
+            </div>
+            <span className='main_address'>
+              <label>Direccion Principal: </label>
+              <input
+                className={errors.zip_code && "danger"}
+                name="is_main"
+                type="checkbox"
+                onChange={(e) => handleInputChange(e.target)}
+              />
+            </span>
 
+            <div className='form-buttons'>
+              <button
+                className="button"
+                onClick={() => setShowModal(false)}
+              >
+                CANCELAR
+              </button>
               <button
                 className="button"
                 type="submit"
@@ -185,7 +187,8 @@ function FormAddresses({ showModal, setShowModal }) {
               >
                 AGREGAR
               </button>
-            </form>
+            </div>
+
           </div>
         </div>
       )}
