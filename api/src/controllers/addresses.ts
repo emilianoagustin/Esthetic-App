@@ -64,7 +64,7 @@ export const createAddress: RequestHandler = async (req, res) => {
       } else {
         const newAddress = new Addresses({
           ...req.body,
-          user: user.id,
+          user: user
         });
         newAddress.save();
         user.addresses.push(newAddress);

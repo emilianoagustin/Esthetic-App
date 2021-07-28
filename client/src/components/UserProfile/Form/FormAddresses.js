@@ -31,18 +31,14 @@ function FormAddresses({ showModal, setShowModal }) {
   }, []);
 
   const [input, setInput] = useState({
-    addresses: {
-      name: "",
-      country: "",
-      state: "",
-      city: "",
-      address_1: "",
-      address_details: "",
-      zip_code: "",
-      is_main: false,
-      provider: "",
-      user: ID,
-    },
+    name: "",
+    country: "",
+    state: "",
+    city: "",
+    address_1: "",
+    address_details: "",
+    zip_code: "",
+    is_main: false
   });
 
   const closeModal = (e) => {
@@ -54,22 +50,23 @@ function FormAddresses({ showModal, setShowModal }) {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(ID)
     if (ID !== '') {
       dispatch(postUserAddresses({ ID, input }));
     }
   };
 
-
   const handleInputChange = function (e) {
-    if (e.name === 'is__main') {
-      console.log(e)
-    } else {
-      setInput({
-        ...input,
-        [e.name]: e.value,
-      });
-    }
+    setInput({
+      ...input,
+      [e.name]: e.value,
+    });
+  };
+
+  const handleMain = (e) => {
+    setInput({
+      ...input,
+      is_main: e.target.checked,
+    });
   };
 
   return (
@@ -169,7 +166,7 @@ function FormAddresses({ showModal, setShowModal }) {
                 className={errors.zip_code && "danger"}
                 name="is_main"
                 type="checkbox"
-                onChange={(e) => handleInputChange(e.target)}
+                onChange={(e) => handleMain(e)}
               />
             </span>
 
