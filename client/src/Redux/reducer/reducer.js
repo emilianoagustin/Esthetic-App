@@ -23,7 +23,7 @@ const initialState = {
   servicesByProvider: [],
   providerEventsHours: {},
   providersAddresses: [],
-  providersRating: [],
+  providersRating: {},
   provider_address_status: {},
   provider_address_update_status: {},
   provider_update_status: {},
