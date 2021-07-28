@@ -76,7 +76,7 @@ export const getUserReservations = (userId) => async (dispatch) => {
 
   try {
     const { data } = await axios.get(`${HOST}${EVENTS}${USER}/${userId}`);
-   console.log("Aca hago el GET", "`${HOST}${EVENTS}/${USER}/${userId}`")
+    console.log("Aca hago el GET", "`${HOST}${EVENTS}/${USER}/${userId}`")
     dispatch({
       type: actionsTypes.GET_USER_RESERVATIONS_SUCCESS,
       payload: data,
@@ -92,8 +92,8 @@ export const getUserReservations = (userId) => async (dispatch) => {
 
 
 export const deleteUserReservation = (userId) => async (dispatch) => {
-  dispatch({ type: actionsTypes.DELETE_USER_RESERVATIONS_REQUEST});
-    try {
+  dispatch({ type: actionsTypes.DELETE_USER_RESERVATIONS_REQUEST });
+  try {
     const { data } = await axios.delete(
       `${GET_USERS}/${RESERVATIONS}/${userId}/delete`
     );
@@ -124,7 +124,7 @@ export const getAllUsers = () => async (dispatch) => {
     });
   }
 };
-      //USER ADDRESSES
+//USER ADDRESSES
 
 
 export const getUserAddresses = (userId) => async (dispatch) => {
@@ -171,9 +171,9 @@ export const postUserAddresses = (payload) => async (dispatch) => {
 
 export const deleteUserAddresses = (payload) => async (dispatch) => {
   dispatch({ type: actionsTypes.DELETE_USER_ADDRESS_REQUEST });
-    try {
+  try {
     const { data } = await axios.delete(
-      `${GET_USERS}/${payload.ID}/addresses/${payload.addressId}`
+      `${GET_USERS}/${payload.userID}/addresses/${payload.addressId}`
     );
     dispatch({
       type: actionsTypes.DELETE_USER_ADDRESS_SUCCESS,
@@ -182,29 +182,6 @@ export const deleteUserAddresses = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actionsTypes.DELETE_USER_ADDRESS_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-/// PUT ADDRESS
-
-export const editUserAddresses = (payload) => async (dispatch) => {
-  dispatch({ type: actionsTypes.EDIT_USER_ADDRESS_REQUEST });
-  const addressId = payload.addressId;
-
-  try {
-    const { data } = await axios.put(
-      `${GET_USERS}/${payload.ID}/addresses/${addressId}`
-    );
-    console.log(data, "Aca esta la data del objeto editado");
-    dispatch({
-      type: actionsTypes.EDIT_USER_ADDRESS_SUCCESS,
-      payload: { addressId, data },
-    });
-  } catch (error) {
-    dispatch({
-      type: actionsTypes.EDIT_USER_ADDRESS_FAIL,
       payload: error.message,
     });
   }

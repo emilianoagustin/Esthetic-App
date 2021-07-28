@@ -1,6 +1,6 @@
 
 import actionsTypes from "../constants/constants";
-import { editAddress, findService } from "../../utils/filter.js";
+import { findService } from "../../utils/filter.js";
 
 
 
@@ -30,7 +30,7 @@ const initialState = {
   reservation_status: {},
 
 
-  setStateSearch : "", 
+  setStateSearch: "",
   renderSearchBar: "",
   userActive: "",
   loginData: {},
@@ -163,7 +163,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         providerDetails: { loading: true },
       };
-      
+
     case actionsTypes.GET_PROVIDER_DETAILS_SUCC:
       return {
         ...state,
@@ -315,31 +315,6 @@ const appReducer = (state = initialState, action) => {
         userAddresses: { loading: false, error: action.payload },
       };
 
-    //EDIT USER ADDRESS
-
-    case actionsTypes.EDIT_USER_ADDRESS_REQUEST:
-      return {
-        ...state,
-        userAddresses: { ...state.userAddresses, loading: true },
-      };
-    case actionsTypes.EDIT_USER_ADDRESS_SUCCESS:
-      return {
-        ...state,
-        userAddresses: {
-          loading: false,
-          data: editAddress(
-            state.userAddresses.data,
-            action.payload.addressId,
-            action.payload.data.data
-          ),
-        },
-      };
-    case actionsTypes.EDIT_USER_ADDRESS_FAIL:
-      return {
-        ...state,
-        userAddresses: { loading: false, error: action.payload },
-      };
-
     //GET USER RESERVATIONS
 
     case actionsTypes.GET_USER_RESERVATIONS_REQUEST:
@@ -363,7 +338,7 @@ const appReducer = (state = initialState, action) => {
         ...state,
         allProviders: { loading: false, data: action.payload },
       };
-      
+
     ///RENDER SEARCHBAR 
     case actionsTypes.RENDER_SEARCHBAR:
       return {
@@ -376,28 +351,28 @@ const appReducer = (state = initialState, action) => {
         setStateSearch: action.payload,
       };
 
-//DETELE USER RESERVATIOBS
+    //DETELE USER RESERVATIOBS
 
-case actionsTypes.DELETE_USER_RESERVATIONS_REQUEST:
-  return {
-    ...state,
-    userReservations: { ...state.userReservations, loading: true },
-  };
-case actionsTypes.DELETE_USER_RESERVATIONS_SUCCESS:
-  return {
-    ...state, /////VER
-    userAddresses: {
-      loading: false,
-      data: state.userAddresses.data.filter(
-        (a) => a._id !== action.payload
-      ),
-    },
-  };
-case actionsTypes.DELETE_USER_ADDRESS_FAIL:
-  return {
-    ...state,
-    userAddresses: { loading: false, error: action.payload },
-  };
+    case actionsTypes.DELETE_USER_RESERVATIONS_REQUEST:
+      return {
+        ...state,
+        userReservations: { ...state.userReservations, loading: true },
+      };
+    case actionsTypes.DELETE_USER_RESERVATIONS_SUCCESS:
+      return {
+        ...state, /////VER
+        userAddresses: {
+          loading: false,
+          data: state.userAddresses.data.filter(
+            (a) => a._id !== action.payload
+          ),
+        },
+      };
+    case actionsTypes.DELETE_USER_ADDRESS_FAIL:
+      return {
+        ...state,
+        userAddresses: { loading: false, error: action.payload },
+      };
 
 
 
